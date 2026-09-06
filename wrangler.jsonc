@@ -37,7 +37,7 @@
   "vars": {
     // El sitio vive en www; el apex redirige alli. Se aceptan los dos porque
     // Turnstile devuelve el hostname desde el que se cargo la pagina.
-    "TURNSTILE_HOSTNAMES": "www.hotelarcosinn.com,hotelarcosinn.com",
+    "TURNSTILE_HOSTNAMES": "www.hotelarcosinn.com,hotelarcosinn.com,hotel-los-arcos.hotel-quinta-azul.workers.dev",
     "CORREO_DESTINO": "losarcos105@gmail.com",
     "CORREO_ORIGEN": "reservas@hotelarcosinn.com",
     "ENTORNO": "produccion"

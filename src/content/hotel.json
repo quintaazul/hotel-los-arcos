@@ -4,12 +4,10 @@
   "sitio": "https://www.hotelarcosinn.com",
   "idioma": "es-MX",
   "zonaHoraria": "America/Monterrey",
-
   "telefono": "+528126155485",
   "whatsapp": "528126155485",
   "correo": "losarcos105@gmail.com",
   "horarioAtencion": "7:00 a 23:00, todos los días",
-
   "direccion": {
     "calle": "Mariano Escobedo 105-A, entre Bernardo Reyes y Morelos, Col. Centro",
     "ciudad": "García",
@@ -17,18 +15,28 @@
     "codigoPostal": "66000",
     "pais": "MX"
   },
-  "geo": { "lat": 25.8163, "lng": -100.5945 },
-
-  "rating": { "valor": "4.5", "resenas": "105" },
-
-  "precios": { "desde": "900", "moneda": "MXN" },
-  "ofertas": ["Habitación Sencilla", "Habitación Triple", "Departamento con cocina"],
+  "geo": {
+    "lat": 25.8163,
+    "lng": -100.5945
+  },
+  "rating": {
+    "valor": "4.5",
+    "resenas": "105"
+  },
+  "precios": {
+    "desde": "900",
+    "moneda": "MXN"
+  },
+  "ofertas": [
+    "Habitación Sencilla",
+    "Habitación Triple",
+    "Departamento con cocina"
+  ],
   "checkin": "14:00",
   "checkout": "11:00",
   "aceptaMascotas": false,
   "rangoPrecio": "$$",
   "formasDePago": "Efectivo, Tarjeta de crédito",
-
   "amenidades": [
     "Alberca y chapoteadero",
     "WiFi gratis",
@@ -37,8 +45,9 @@
     "Áreas verdes y jardín",
     "Palapa para eventos"
   ],
-
-  "redes": ["https://www.facebook.com/profile.php?id=100063553089595"],
-
-  "_nota": "Fuente unica de verdad. Alimenta a la vez el texto visible y el JSON-LD. OJO con el dominio: el sitio vive en www y el apex redirige alli, pero los canonical de Webflow apuntaban al apex, que redirige (defecto 4 de la auditoria). Aqui la URL canonica es la www, que es donde esta el contenido."
+  "redes": [
+    "https://www.facebook.com/profile.php?id=100063553089595"
+  ],
+  "turnstileSitekey": "0x4AAAAAAEp0gFQd6jsJHiw2",
+  "_nota": "Fuente unica de verdad. Alimenta a la vez el texto visible y el JSON-LD. OJO con el dominio: el sitio vive en www y el apex redirige alli, pero los canonical de Webflow apuntaban al apex, que redirige (defecto 4 de la auditoria). Aqui la URL canonica es la www, que es donde esta el contenido. La clave de Turnstile es PUBLICA por diseño (va en el HTML), asi que vive aqui y no en un .env ignorado: de lo contrario un clon nuevo compilaria con la clave de prueba sin avisar."
 }
