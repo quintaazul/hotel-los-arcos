@@ -1,0 +1,158 @@
+---
+import hotel from '../content/hotel.json';
+import '../styles/webflow.shared.css';
+import '../styles/webflow-inline.css';
+import '../styles/migracion.css';
+
+export interface Props {
+  /** Title de la pagina. Obligatorio: sin el, seo-check falla el build. */
+  title: string;
+  /** Meta description. Obligatoria por la misma razon. */
+  description: string;
+  /** Imagen para Open Graph. Ruta absoluta desde la raiz del sitio. */
+  ogImage?: string;
+  /** JSON-LD adicional de la pagina (FAQPage, etc.). */
+  schema?: Record<string, unknown> | null;
+}
+
+const { title, description, ogImage = '/og/los-arcos.jpg', schema = null } = Astro.props;
+
+// Canonical derivado de la URL real de la pagina. En Webflow habia que
+// escribirlo a mano y cuatro paginas se quedaron sin el (defecto 3).
+const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || Astro.site!.href;
+const ogImageAbs = new URL(ogImage, Astro.site).href;
+
+const schemaHotel = {
+  '@context': 'https://schema.org',
+  '@type': 'Hotel',
+  name: hotel.nombre,
+  description: hotel.descripcionCorta,
+  url: hotel.sitio,
+  telephone: hotel.telefono,
+  image: ogImageAbs,
+  priceRange: hotel.rangoPrecio,
+  currenciesAccepted: hotel.precios.moneda,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: hotel.direccion.calle,
+    addressLocality: hotel.direccion.ciudad,
+    addressRegion: hotel.direccion.estado,
+    postalCode: hotel.direccion.codigoPostal,
+    addressCountry: hotel.direccion.pais,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: hotel.geo.lat, longitude: hotel.geo.lng },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: hotel.rating.valor,
+    reviewCount: hotel.rating.resenas,
+  },
+  amenityFeature: hotel.amenidades.map((name) => ({
+    '@type': 'LocationFeatureSpecification',
+    name,
+    value: true,
+  })),
+  email: hotel.correo,
+  paymentAccepted: hotel.formasDePago,
+  // Los Arcos ofrece tres tipos, no uno.
+  makesOffer: hotel.ofertas.map((name) => ({
+    '@type': 'Offer',
+    name,
+    priceCurrency: hotel.precios.moneda,
+    price: hotel.precios.desde,
+    availability: 'https://schema.org/InStock',
+  })),
+  checkinTime: hotel.checkin,
+  checkoutTime: hotel.checkout,
+  petsAllowed: hotel.aceptaMascotas,
+  sameAs: hotel.redes,
+};
+---
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={hotel.nombre} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageAbs} />
+    <meta property="og:locale" content="es_MX" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/*
+      Se usa la API v1 de Google Fonts, la MISMA que usaba Webflow, y no la v2.
+      No es descuido: la v2 sirve Fraunces como fuente variable, cuyas metricas
+      son ligeramente mas estrechas. Con la v2, "Atención personal por WhatsApp"
+      ocupaba 2 lineas en vez de 3 y la seccion quedaba 52 px mas baja que el
+      original. Cargando los mismos archivos, el texto se corta igual.
+    */}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fraunces:500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,500&display=swap" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schemaHotel)} />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // ---- Pestañas -------------------------------------------------------
+      // Sustituye el componente de pestañas de Webflow. Mismas clases, mismo
+      // aspecto; ademas responde a las flechas del teclado, que antes no.
+      document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((grupo) => {
+        const pestanas = [...grupo.querySelectorAll<HTMLElement>('.w-tab-link')];
+        const paneles = [...grupo.querySelectorAll<HTMLElement>('.w-tab-pane')];
+
+        const activar = (i: number, mueveFoco = true) => {
+          pestanas.forEach((p, j) => {
+            p.classList.toggle('w--current', i === j);
+            p.setAttribute('aria-selected', String(i === j));
+            p.setAttribute('tabindex', i === j ? '0' : '-1');
+          });
+          paneles.forEach((p, j) => p.classList.toggle('w--tab-active', i === j));
+          if (mueveFoco) pestanas[i]?.focus();
+        };
+
+        pestanas.forEach((p, i) => {
+          p.addEventListener('click', () => activar(i, false));
+          p.addEventListener('keydown', (e) => {
+            const salto = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+            if (!salto) return;
+            e.preventDefault();
+            activar((i + salto + pestanas.length) % pestanas.length);
+          });
+        });
+      });
+
+      // ---- Revelado al hacer scroll ---------------------------------------
+      // Sustituye la interaccion IX2 de Webflow. Si el navegador no soporta
+      // IntersectionObserver, se muestra todo de inmediato: nunca queda oculto.
+      const revelables = document.querySelectorAll<HTMLElement>('[data-revelar]');
+      if (revelables.length) {
+        if (!('IntersectionObserver' in window)) {
+          revelables.forEach((el) => el.setAttribute('data-visible', ''));
+        } else {
+          const obs = new IntersectionObserver(
+            (entradas) => {
+              entradas.forEach((e) => {
+                if (e.isIntersecting) {
+                  e.target.setAttribute('data-visible', '');
+                  obs.unobserve(e.target);
+                }
+              });
+            },
+            { rootMargin: '0px 0px -10% 0px' }
+          );
+          revelables.forEach((el) => obs.observe(el));
+        }
+      }
+    </script>
+  </body>
+</html>

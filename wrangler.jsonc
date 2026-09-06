@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "hotel-los-arcos",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-09-05",
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true,
+    "traces": { "enabled": true }
+  },
+
+  // Copia de cada solicitud. Si el correo falla, el lead NO se pierde.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "los-arcos-solicitudes",
+      "database_id": "f3e2e6a9-f6f0-4db0-96e4-ba83cfbbfaf5"
+    }
+  ],
+
+  // Enviar a una direccion de destino verificada es gratis en cualquier plan
+  // de Cloudflare y no consume cuota. El binding queda atado a una sola
+  // direccion: aunque alguien ejecutara codigo aqui, no podria escribir a nadie mas.
+  "send_email": [
+    {
+      "name": "CORREO",
+      "destination_address": "losarcos105@gmail.com"
+    }
+  ],
+
+  "vars": {
+    // El sitio vive en www; el apex redirige alli. Se aceptan los dos porque
+    // Turnstile devuelve el hostname desde el que se cargo la pagina.
+    "TURNSTILE_HOSTNAMES": "www.hotelarcosinn.com,hotelarcosinn.com",
+    "CORREO_DESTINO": "losarcos105@gmail.com",
+    "CORREO_ORIGEN": "reservas@hotelarcosinn.com",
+    "ENTORNO": "produccion"
+  }
+
+  // El secreto de Turnstile NO va aqui:
+  //   npx wrangler secret put TURNSTILE_SECRET
+}

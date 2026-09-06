@@ -1,0 +1,44 @@
+---
+// Pagina de error 404.
+//
+// La de Webflow era un copiar y pegar de Quinta Azul que nunca se actualizo:
+//   - "Ver habitaciones" apuntaba a /hospedaje, ruta que NO existe en este
+//     sitio (da 404): una pagina de error con un enlace roto.
+//   - El boton de WhatsApp mandaba al 528129218643, el telefono de Quinta
+//     Azul, asi que un cliente de Los Arcos acababa escribiendole al otro hotel.
+//   - El texto hablaba de "tu descanso con alberca", copy de Quinta Azul.
+// Los tres corregidos aqui. Los datos salen de hotel.json, que es la fuente
+// unica, asi que no pueden volver a desincronizarse.
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import hotel from '../content/hotel.json';
+import '../styles/page.404.css';
+
+const wa = `https://wa.me/${hotel.whatsapp}?text=Hola%2C%20quiero%20reservar%20en%20Hotel%20Los%20Arcos%20Inn`;
+---
+<Base
+  title="Página no encontrada | Hotel Los Arcos Inn"
+  description="La página que buscas no existe. Vuelve al inicio o escríbenos por WhatsApp para reservar en Hotel Los Arcos Inn, García, Nuevo León."
+>
+  <div class="page-wrapper">
+    <Navbar />
+    <main class="main-wrapper">
+      <section class="section_404-1">
+        <div class="container-large">
+          <div class="qa-404-content-1">
+            <div class="qa-404-number-1">404</div>
+            <h1 class="heading-style-h1 qa-404-title">Ups, esta página se nos escapó</h1>
+            <p class="text-size-medium qa-404-text-1">El enlace puede estar roto o la página se movió. Pero tu estancia en García, Nuevo León, a minutos de las Grutas, te sigue esperando.</p>
+            <div class="button-group is-center">
+              <a href="/" class="button">Volver al inicio</a>
+              <a href="/habitaciones" class="button is-secondary">Ver habitaciones</a>
+              <a href={wa} class="button is-secondary" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</Base>
