@@ -1,0 +1,7 @@
+# Todo el sitio es publico: no hay nada que ocultar a los buscadores.
+User-agent: *
+Allow: /
+
+# Astro genera este indice en cada build, asi que nunca se desincroniza
+# de las paginas reales. El robots.txt de Webflow apuntaba a /sitemap.xml.
+Sitemap: https://www.hotelarcosinn.com/sitemap-index.xml

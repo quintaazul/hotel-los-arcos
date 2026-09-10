@@ -91,3 +91,83 @@ decision del cliente.
 Igual que en Quinta Azul: wrangler **simula** el envio de correo, y Turnstile
 corre con claves de prueba que no ejecutan el desafio real. Ambas cosas solo se
 pueden comprobar de verdad despues de desplegar.
+
+---
+
+# Auditoria previa a la Fase 3
+
+Medido el 10-sep-2026 contra https://www.hotelarcosinn.com en vivo. Paginas:
+home, habitaciones, celebraciones, ubicacion, contacto y 404. Anchos: 1920,
+1440, 1366, 1024, 768, 430, 390, 375 y 360 px.
+
+## Animaciones de Webflow: inventario y estado
+
+Las interacciones (IX2) se extrajeron del JavaScript que publica Webflow. Son
+las mismas que en Quinta Azul (el sitio es un duplicado):
+
+| Donde | Animacion original | Pantallas | Antes de la auditoria | Ahora |
+|-------|--------------------|-----------|-----------------------|-------|
+| home, alberca | La foto pasa de 200% a 100% de ancho en 1.4 s al entrar en pantalla | desde 768 px | Sustituida por otra y activa tambien en celular | Igual que Webflow |
+| habitaciones, tarjetas | Al pasar el raton: tarjeta 50% a 70%, velo 0.5 a 0.7, aparece el texto | desde 992 px | Perdida | Igual |
+| contacto, titulo | "Tu reserva comienza / aquí mismo" entran desde los lados con el scroll | desde 480 px | Perdida | Igual |
+| contacto y ubicacion, preguntas | Acordeon; el + gira 45 grados | todas | **Rota: las respuestas no se podian abrir** | Igual, y con teclado |
+| menu movil | Baja desde la barra en 0.4 s | menos de 992 px | Aparecia de golpe | Igual |
+| pestanas | Salida 0.1 s, entrada 0.3 s | todas | Cambio de golpe | Igual |
+
+Probado en local: foto 1216 a 608 px, tarjetas 592/592 a 687/497 px y de
+vuelta, acordeon 0 a 96 px y de vuelta, titulo en -20% al primer cuarto del
+scroll (Webflow en vivo: -20%), pestanas con desvanecido.
+
+## Menu movil abierto y orden del CSS
+
+Aqui se detecto el problema (captura de Emilio en tablet): enlaces en una sola
+linea, botones angostos y letra de 18 px en vez de 16. Causas y arreglo, igual
+que en Quinta Azul: faltaban las marcas que Webflow pone al abrir el menu, y el
+CSS se cargaba en otro orden que el original. Ahora el menu abierto mide lo
+mismo que en Webflow: enlaces de 839x48 px uno debajo de otro, botones de
+839x34 px, letra de 16 px.
+
+## Comparacion completa: 6 paginas x 9 anchos
+
+- **home, habitaciones, celebraciones, ubicacion y contacto:** identicas en los
+  9 anchos (como mucho 1 px de redondeo en la altura total).
+- **404:** la de Webflow no carga sus estilos en linea ni sus fuentes. La
+  nuestra usa los del resto del sitio. Diferencia intencional.
+- **Menu movil abierto:** identico en los 5 anchos menores de 992 px.
+
+## Contraste del naranja de marca
+
+axe marca 16 elementos por pagina (18 en contacto): texto blanco sobre el
+naranja #e3791c (contraste 2.99; el minimo es 4.5, o 3 en titulos grandes).
+Se comparo elemento por elemento con Webflow en vivo en la home y en contacto:
+**es exactamente la misma lista**. No lo introdujo la migracion; corregirlo es
+cambiar el color de marca, decision del cliente para el rediseno. (La tabla de
+la Fase 1 decia "1" porque contaba reglas, no elementos.)
+
+## Corregido en esta auditoria
+
+1. Animaciones perdidas o cambiadas (tabla de arriba) y acordeon roto.
+2. Menu movil abierto distinto del original y orden del CSS invertido.
+3. La imagen para redes sociales (`og:image`) daba 404. Creada en `public/og/`
+   (1200x630); el build ahora falla si falta.
+4. Faltaba `robots.txt`. Creado, con la ruta del sitemap; el build lo exige.
+5. La pagina de habitaciones todavia descargaba jQuery de un CDN externo.
+   Eliminado; su efecto se reimplemento sin librerias.
+6. La galeria de celebraciones tenia sus datos vacios en Webflow y al hacer
+   clic la pagina saltaba al inicio. Ahora abre la foto en un visor.
+7. La etiqueta "¿Cuál es tu motivo de visita?" ahora es de bloque, como el
+   `<label>` original.
+8. 3 errores de tipos de TypeScript heredados de la Fase 2 (0 ahora).
+9. Faltaba el README del repositorio.
+
+## Otras comprobaciones
+
+- `astro check`: 0 errores, 0 advertencias.
+- Verificacion SEO propia: pasa en todas; comparador estructural 5/5.
+- Enlaces y recursos: 27 rutas internas, todas responden 200.
+- Sin scroll horizontal en ningun ancho.
+- Desplegado en https://hotel-los-arcos.hotel-quinta-azul.workers.dev, version
+  `ea827a6e-4ac9-4389-90de-63bc065eb9aa`: mismos archivos que el build local,
+  HTTPS, rutas 200, 404 real, robots, sitemap e imagen OG 200. Turnstile carga
+  sin errores (en localhost da el error 110200 porque ese dominio no esta
+  autorizado en el widget; es lo esperado).
