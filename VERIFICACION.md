@@ -211,3 +211,24 @@ de hoy fue solo mover los dos hostnames a sus Workers.
 - Web Analytics: falta dar de alta `www.hotelarcosinn.com` en el panel. El
   token se guarda en `hotel.json` (`analyticsToken`) y el fragmento ya esta en
   `Base.astro`; Cloudflare NO lo inyecta solo en sitios servidos por un Worker.
+
+## Rendimiento y regresion de peso (17-sep-2026)
+
+Misma regresion que en Quinta Azul: Webflow servia cada foto en cuatro tamanos
+y al portar solo se copio el atributo `sizes`, sin los tamanos, asi que un
+telefono bajaba la imagen completa.
+
+| | Antes | Ahora |
+|---|---|---|
+| Rendimiento (Lighthouse movil) | 66 | 71 |
+| LCP | 11.0 s | 5.5 s |
+| Peso de la pagina | 2,091 KB | 766 KB |
+
+Arreglado en `Foto.astro`. El comparador estructural sigue en 5/5 paginas
+identicas. CLS 0 y bloqueo de hilo 0 ms.
+
+## Web Analytics: el beacon NO esta reportando
+
+Igual que en Quinta Azul: el envio a `/cdn-cgi/rum` da 404 y el reintento
+contra `cloudflareinsights.com` lo bloquea CORS. Falta cambiar el sitio a
+**Enable with JS Snippet installation** en Manage Site y volver a comprobar.
