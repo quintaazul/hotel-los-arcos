@@ -49,6 +49,6 @@
     "https://www.facebook.com/profile.php?id=100063553089595"
   ],
   "turnstileSitekey": "0x4AAAAAAEp0gFQd6jsJHiw2",
-  "analyticsToken": "",
+  "analyticsToken": "64a1d2d0868f468e92bd1041ce1b4000",
   "_nota": "Fuente unica de verdad. Alimenta a la vez el texto visible y el JSON-LD. OJO con el dominio: el sitio vive en www y el apex redirige alli, pero los canonical de Webflow apuntaban al apex, que redirige (defecto 4 de la auditoria). Aqui la URL canonica es la www, que es donde esta el contenido. La clave de Turnstile es PUBLICA por diseño (va en el HTML), asi que vive aqui y no en un .env ignorado: de lo contrario un clon nuevo compilaria con la clave de prueba sin avisar."
 }
