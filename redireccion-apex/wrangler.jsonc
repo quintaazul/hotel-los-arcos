@@ -1,0 +1,14 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  // Redireccion sin www -> www (ver worker.js).
+  // Se despliega aparte:  npx wrangler deploy -c redireccion-apex/wrangler.jsonc
+  "name": "hotel-los-arcos-apex",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-05",
+
+  // Solo debe responder en hotelarcosinn.com: nada de workers.dev ni previews.
+  "workers_dev": false,
+  "preview_urls": false,
+
+  "routes": [{ "pattern": "hotelarcosinn.com", "custom_domain": true }]
+}

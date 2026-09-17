@@ -171,3 +171,43 @@ la Fase 1 decia "1" porque contaba reglas, no elementos.)
   HTTPS, rutas 200, 404 real, robots, sitemap e imagen OG 200. Turnstile carga
   sin errores (en localhost da el error 110200 porque ese dominio no esta
   autorizado en el widget; es lo esperado).
+
+---
+
+# Fase 3: publicacion en www.hotelarcosinn.com
+
+17-sep-2026. La zona se creo el 10-sep con copia exacta de los registros que
+servian a Webflow y los nameservers ya apuntaban a Cloudflare, asi que el corte
+de hoy fue solo mover los dos hostnames a sus Workers.
+
+## Como quedo
+
+- `www.hotelarcosinn.com` -> Worker del sitio (Custom Domain).
+- `hotelarcosinn.com` -> Worker de `redireccion-apex/`, que hace 301 al www
+  conservando ruta y parametros. En Webflow el apex tambien redirigia.
+- Always Use HTTPS: el `http://` responde 301 al `https://`.
+- Email Routing activo; `losarcos105@gmail.com` verificado el 16-sep-2026.
+- Sin copia en `*.workers.dev`, y ese hostname salio del widget de Turnstile
+  y de `TURNSTILE_HOSTNAMES`.
+
+## Verificado en vivo
+
+- Las 5 paginas 200; `/no-existe` 404 real; robots, sitemap e imagen OG 200.
+- 27 enlaces y recursos internos, todos 200.
+- `/api/contacto`: GET 405 y POST sin verificacion de Turnstile 403.
+- Sin jQuery y sin recursos de Webflow.
+- El canonical es exactamente la URL que se sirve (se corrigio el defecto que
+  salio al publicar Quinta Azul: apuntaba a `/contacto.html`).
+- El sitemap lista las 5 URLs del www, sin `.html`.
+- Accesibilidad sobre el sitio publicado: solo el contraste del naranja de
+  marca, identico a Webflow.
+- 1.1.1.1, 8.8.8.8 y 9.9.9.9 ya entregan el sitio nuevo.
+
+## Pendiente
+
+- Envio real del formulario desde un telefono: Turnstile bloquea a los
+  navegadores automatizados, asi que el correo no se puede probar sin una
+  persona. La base de datos esta vacia: todavia no ha entrado ninguna.
+- Web Analytics: falta dar de alta `www.hotelarcosinn.com` en el panel. El
+  token se guarda en `hotel.json` (`analyticsToken`) y el fragmento ya esta en
+  `Base.astro`; Cloudflare NO lo inyecta solo en sitios servidos por un Worker.

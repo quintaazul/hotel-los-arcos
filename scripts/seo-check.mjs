@@ -97,6 +97,14 @@ for (const archivo of await paginas(DIST)) {
   else if (!canon.startsWith('https://www.hotelarcosinn.com')) err(`canonical fuera del dominio www: ${canon}`);
   else if (!canon.startsWith('https://www.')) err(`canonical sin www (el apex redirige): ${canon}`);
 
+  // Y tiene que ser EXACTAMENTE la URL que se sirve. Al publicar Quinta Azul
+  // salio que apuntaba a /contacto.html y /index.html, que redirigen; la regla
+  // de arriba solo miraba el dominio y lo dejo pasar.
+  const esperado = 'https://www.hotelarcosinn.com' + ruta;
+  if (canon && canon !== esperado) err(`canonical ${canon} no es la URL que se sirve (${esperado})`);
+  const ogUrl = meta(html, 'og:url');
+  if (ogUrl !== esperado) err(`og:url ${ogUrl} no es la URL que se sirve (${esperado})`);
+
   // [11] En Webflow tres imagenes de la home salieron con alt="" — incluidos
   // los dos logos. Ojo: el defecto real es alt VACIO, no alt ausente, asi que
   // comprobar solo la presencia del atributo no habria detectado nada.
