@@ -227,8 +227,17 @@ telefono bajaba la imagen completa.
 Arreglado en `Foto.astro`. El comparador estructural sigue en 5/5 paginas
 identicas. CLS 0 y bloqueo de hilo 0 ms.
 
-## Web Analytics: el beacon NO esta reportando
+## Web Analytics: por que no reportaba y como se arreglo
 
 Igual que en Quinta Azul: el envio a `/cdn-cgi/rum` da 404 y el reintento
 contra `cloudflareinsights.com` lo bloquea CORS. Falta cambiar el sitio a
 **Enable with JS Snippet installation** en Manage Site y volver a comprobar.
+
+**Resuelto el 17-sep-2026.** El sitio estaba dado de alta en modo
+"instalacion automatica", pensado para paginas que inyecta el propio
+Cloudflare; ahi el beacon reporta a  del mismo dominio, que en
+nuestro caso da 404 porque el origen es un Worker, y el reintento contra
+ lo bloqueaba CORS. Con el sitio en modo **Enable
+with JS Snippet installation**, su token propio y el fragmento tal como lo
+entrega Cloudflare, el envio sale sin errores de consola y las visitas ya
+aparecen en la API de analitica.
