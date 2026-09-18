@@ -121,13 +121,12 @@ const schemaHotel = {
       personales. Su documentacion dice que lo inyecta solo en los sitios que
       pasan por su proxy, pero con el sitio servido por un Worker NO lo hace
       (comprobado en vivo el 17-sep-2026), asi que el fragmento va aqui. El
-      token es publico, por eso vive en hotel.json. Vacio = no se carga nada:
-      falta dar de alta www.hotelarcosinn.com en el panel de Cloudflare.
+      token es publico, por eso vive en hotel.json. Vacio = no se carga nada.
     */}
     {hotel.analyticsToken && (
       <script
         is:inline
-        defer
+        type="module"
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon={`{"token": "${hotel.analyticsToken}"}`}></script>
     )}
