@@ -1,0 +1,23 @@
+---
+// Campo de fecha con calendario propio (no el del navegador). El valor viaja en un campo oculto.
+// `despuesDe` enlaza con otro campo de fecha: esta nunca puede quedar antes que aquella.
+import Icono from '../Icono.astro';
+interface Props { id: string; nombre: string; etiqueta: string; vacio?: string; requerido?: boolean; despuesDe?: string; falta?: string; class?: string }
+const { id, nombre, etiqueta, vacio = 'Elige una fecha', requerido = false, despuesDe, falta = 'Elige una fecha.', class: clase } = Astro.props;
+---
+<div class:list={['campo', clase]} data-fecha data-despues-de={despuesDe} data-falta={falta}>
+  <span class="campo-et" id={id + '-et'}>{etiqueta}{!requerido && <span class="opc"> · opcional</span>}</span>
+  <input type="hidden" id={id} name={nombre} data-requerido={requerido ? '' : undefined} />
+  <button type="button" class="ctrl ctrl-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls={id + '-cal'} aria-labelledby={`${id}-et ${id}-val`}>
+    <Icono n="cal" class="ctrl-ico" /><span class="ctrl-val sin-valor" id={id + '-val'}>{vacio}</span><Icono n="abajo" class="ctrl-flecha" />
+  </button>
+  <div class="flota flota-cal" id={id + '-cal'} role="dialog" aria-label={'Elegir ' + etiqueta.toLowerCase()}>
+    <div class="mes">
+      <div class="mes-cab"><strong data-mes-nombre aria-live="polite"></strong><div class="mes-nav"><button type="button" class="icono-btn" data-mes="-1" aria-label="Mes anterior"><Icono n="izq" /></button><button type="button" class="icono-btn" data-mes="1" aria-label="Mes siguiente"><Icono n="der" /></button></div></div>
+      <div class="dias-sem" aria-hidden="true">{['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((d) => <span>{d}</span>)}</div>
+      <div class="dias" data-dias role="group" aria-label="Días del mes"></div>
+    </div>
+    <div class="flota-pie"><button type="button" class="enlace" data-borrar>Borrar</button><button type="button" class="boton chico" data-listo>Listo</button></div>
+  </div>
+  <p class="campo-error" role="alert"><span></span></p>
+</div>

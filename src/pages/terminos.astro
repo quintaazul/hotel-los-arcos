@@ -1,0 +1,31 @@
+---
+// Términos y condiciones de uso del sitio. Versión de trabajo: la revisa el responsable del hotel antes de
+// publicarse en el dominio real (falta, por ejemplo, la razón social de quien opera el hotel).
+import Legal from '../components/Legal.astro';
+import { H } from '../data/hoteles';
+const dominio = H.sitio.replace('https://', '');
+const apartados: [string, string][] = [['sitio', 'Sobre este sitio'], ['informacion', 'Información y precios'], ['solicitudes', 'Solicitudes de reserva'], ['blog', 'Artículos del blog'], ['fotos-y-textos', 'Fotos y textos'], ['enlaces', 'Enlaces y servicios de terceros'], ['datos', 'Datos personales'], ['responsabilidad', 'Responsabilidad'], ['ley', 'Ley aplicable'], ['contacto', 'Contacto']];
+---
+<Legal pagina="terminos" ruta="/terminos" nombre="Términos y condiciones" actualizado="11 de noviembre de 2026" apartados={apartados}>
+  <p slot="entrada" class="legal-entrada">Al usar el sitio {dominio} aceptas estos términos. Si no estás de acuerdo con alguno, te pedimos no usar el sitio y contactarnos por teléfono.</p>
+  <h2 id="sitio">Sobre este sitio</h2>
+  <p>Este sitio es del {H.nombre}, ubicado en {H.dir1}, {H.dir2}. Sirve para conocer el hotel, sus habitaciones y servicios, y para pedir una reservación o una cotización.</p>
+  <h2 id="informacion">Información y precios</h2>
+  <p>Procuramos que la información esté al día, pero los precios, las promociones y la disponibilidad pueden cambiar sin previo aviso. El precio y las condiciones que valen son los que el hotel te confirma al reservar.</p>
+  <h2 id="solicitudes">Solicitudes de reserva</h2>
+  <p>Enviar el formulario o escribir por WhatsApp es una solicitud, no una reservación confirmada. La reservación existe cuando el hotel confirma la disponibilidad y recibe el anticipo, según las <a href="/politicas">políticas de reservación</a>.</p>
+  <h2 id="blog">Artículos del blog</h2>
+  <p>Los artículos reúnen información útil para tu visita. Cuando citan precios u horarios de lugares que no son del hotel, indican la fecha en que se comprobaron y de dónde salen; esos datos pueden cambiar, así que confírmalos antes de ir.</p>
+  <h2 id="fotos-y-textos">Fotos y textos</h2>
+  <p>Las fotos, los videos, los textos y los logotipos del sitio pertenecen al {H.nombre} o se usan con permiso. No pueden copiarse ni usarse con fines comerciales sin autorización por escrito.</p>
+  <h2 id="enlaces">Enlaces y servicios de terceros</h2>
+  <p>El sitio enlaza a servicios de otras empresas, como WhatsApp, Google Maps, Waze, Facebook e Instagram. Cada uno tiene sus propios términos y su propia política de privacidad, que no dependen del hotel. El mapa del sitio usa datos de OpenStreetMap y Overture Maps.</p>
+  <h2 id="datos">Datos personales</h2>
+  <p>El uso de los datos que nos compartes se explica en el <a href="/aviso-de-privacidad">aviso de privacidad</a>.</p>
+  <h2 id="responsabilidad">Responsabilidad</h2>
+  <p>El sitio se ofrece tal como está. El hotel no responde por interrupciones del servicio, por errores involuntarios en la información ni por el contenido de sitios de terceros a los que se enlaza.</p>
+  <h2 id="ley">Ley aplicable</h2>
+  <p>Estos términos se rigen por las leyes de los Estados Unidos Mexicanos.</p>
+  <h2 id="contacto">Contacto</h2>
+  <p>Para cualquier duda sobre estos términos: WhatsApp y teléfono {H.tel}, todos los días de 7:00 a 23:00{H.correo ? `, o al correo ${H.correo}` : ''}.</p>
+</Legal>

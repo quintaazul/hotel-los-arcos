@@ -1,0 +1,22 @@
+---
+// Sección de preguntas que cierra varias páginas: tres o cuatro de la lista completa (src/data/textos.ts), PROPIAS
+// de esa página (FAQ_DE: ninguna pregunta sale en dos páginas), y el enlace a la página con todas. El marcado para Google (FAQPage) va solo en /preguntas-frecuentes,
+// como pide el plan SEO: aquí son texto normal.
+import { T, FAQ, FAQ_DE, FAQ_TIT, pregunta } from '../data/textos';
+import Titulo from './Titulo.astro';
+import Icono from './Icono.astro';
+interface Props { de?: string }
+const { de = 'inicio' } = Astro.props;
+const lista = (FAQ_DE[de] ?? FAQ_DE.inicio).map(pregunta).filter(Boolean);
+const tit = FAQ_TIT[de] ?? T.inicio.faq;
+const total = FAQ.reduce((n, g) => n + g.items.length, 0);
+---
+<section class="seccion" aria-labelledby="t-faq">
+  <div class="marco faq">
+    <div class="faq-cab">
+      <Titulo lineas={[tit.l]} ovalo={tit.o} id="t-faq" marca />
+      <div data-aparece><a class="enlace" href="/preguntas-frecuentes">Ver las {total} preguntas frecuentes<Icono n="flecha" /></a></div>
+    </div>
+    <div class="faq-texto">{lista.map((p) => <p data-aparece><b>{p.q}</b> {p.a}</p>)}</div>
+  </div>
+</section>

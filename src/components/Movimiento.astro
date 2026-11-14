@@ -1,0 +1,9 @@
+---
+// El código que decide cuándo aparece cada pieza (src/scripts/movimiento.ts).
+// Va en su propio componente porque astro.config.mjs lo reconoce por este nombre de archivo y lo escribe dentro de
+// la página, en lugar de dejarlo como archivo aparte: así no hay descarga que pueda tardar o ser bloqueada.
+// Debe ir en el <head>, antes de cualquier otro código: los que van en archivos aparte no lo hacen esperar.
+---
+<script>
+  import '../scripts/movimiento';
+</script>

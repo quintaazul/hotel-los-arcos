@@ -1,0 +1,22 @@
+# se instalan o se generan
+node_modules/
+dist-qa/
+dist-la/
+.astro/
+.capturas
+.inspeccion
+
+# copias compiladas que se suben a la dirección de prueba (las arma scripts/publicar-prueba.mjs)
+prueba/qa/
+prueba/la/
+.wrangler/
+
+# respaldos locales de trabajo
+respaldo/2026-*/
+
+# de cada equipo: nunca se suben
+.playwright-local
+.dev.vars
+.env
+.env.*
+*.log

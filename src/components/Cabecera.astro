@@ -1,0 +1,40 @@
+---
+import { H, waLink } from '../data/hoteles';
+import Icono from './Icono.astro';
+import Foto from './Foto.astro';
+interface Props { pagina: string; solida?: boolean }
+const { pagina, solida = false } = Astro.props;
+// En la cabecera el logo va en horizontal: el símbolo y, al lado, «Hotel» en versalitas sobre el nombre. Apilado
+// (símbolo arriba, nombre abajo) el nombre quedaba tan chico que no se leía. El nombre de Quinta Azul va escrito con
+// la serif del sitio; el de Los Arcos es su letra original, recortada del logo (scripts/logo-arcos.mjs).
+const simbolo = H.id === 'qa' ? 'simbolo' : 'arcos';
+const NAV: [string, string, string][] = [[H.rutaHabs, '/' + H.rutaHabs, 'Habitaciones'], ...(H.id === 'la' ? [['departamentos', '/departamentos', 'Departamentos'] as [string, string, string]] : []), ['celebraciones', '/celebraciones', 'Celebraciones'], ['ubicacion', '/ubicacion', 'Ubicación'], ['blog', '/blog', 'Blog'], ['contacto', '/contacto', 'Contacto']];
+---
+<a class="salto" href="#contenido">Saltar al contenido</a>
+<header class:list={['cabecera', { solida, fija: solida }]} id="cabecera">
+  <div class="marco">
+    <a class:list={['logo con-nombre', H.id]} href="/" aria-label={H.nombre + ', inicio'}>
+      <Foto src={H.id + '/' + simbolo + '-blanco.png'} alt="" class="l-blanco" sizes="110px" anchos={[128, 256]} prioridad />
+      <Foto src={H.id + '/' + simbolo + '-color.png'} alt="" class="l-color" sizes="110px" anchos={[128, 256]} />
+      <span class="logo-nombre" aria-hidden="true"><small>Hotel</small>{' '}{H.id === 'qa' ? 'Quinta Azul' : <><Foto src="la/nombre-blanco.png" alt="" class="l-blanco" sizes="190px" anchos={[220, 440]} prioridad /><Foto src="la/nombre-color.png" alt="" class="l-color" sizes="190px" anchos={[220, 440]} /></>}</span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      {NAV.map(([id, href, txt]) => <a href={href} aria-current={id === pagina ? 'page' : undefined}>{txt}</a>)}
+    </nav>
+    <a class="boton" href={waLink()} target="_blank" rel="noopener"><Icono n="wa" />Reservar</a>
+    <button type="button" class="menu-btn" id="menu-abrir" aria-expanded="false" aria-controls="hoja-menu">Menú<span class="rayas" aria-hidden="true"><i></i><i></i></span></button>
+    <a class="wa-cab" href={waLink()} target="_blank" rel="noopener" aria-label="Reservar por WhatsApp"><Icono n="wa" /></a>
+  </div>
+</header>
+<div class="hoja-menu" id="hoja-menu" role="dialog" aria-modal="true" aria-label="Menú">
+  <button type="button" class="cerrar-menu" id="menu-cerrar">Cerrar<Icono n="cerrar" /></button>
+  <nav aria-label="Menú móvil">
+    {[['', '/', 'Inicio'] as [string, string, string]].concat(NAV).map(([, href, txt], i) => <a href={href} style={`--i:${i}`}><span>{txt}</span></a>)}
+  </nav>
+  <div class="pie-menu">
+    <a class="boton blanco" href={waLink()} target="_blank" rel="noopener"><Icono n="wa" />Reservar por WhatsApp</a>
+    <p>WhatsApp {H.tel} · de 7 AM a 11 PM</p>
+  </div>
+</div>
+<div class="velo" id="velo"></div>
+<aside class="wa-zona" aria-label="Reserva rápida"><a class="wa-flota" id="wa-flota" href={waLink()} target="_blank" rel="noopener" aria-label="Reservar por WhatsApp"><Icono n="wa" /></a></aside>

@@ -1,0 +1,156 @@
+---
+// Barra de reservas de la portada: llegada, salida, huéspedes y un estimado real. Termina en WhatsApp.
+// Usa los controles propios (calendario y ventanas flotantes de scripts/controles.ts).
+import { H } from '../data/hoteles';
+import Icono from './Icono.astro';
+const datos = { id: H.id, nombre: H.nombre, wa: H.wa, habs: H.habs.map((x) => ({ id: x.id, nombre: x.nombre, precio: x.precio, personas: x.personas })) };
+const SEM = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+---
+<div class="reserva" data-carga style="--d:300ms">
+  <form class="barra" id="f-reserva" aria-label="Arma tu estancia">
+    <div class="barra-campo"><button type="button" class="campo-btn" data-fechas aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-fechas"><span class="et"><Icono n="cal" />Llegada</span><span class="val" id="val-llegada">Elige fecha</span></button></div>
+    <div class="barra-campo"><button type="button" class="campo-btn" data-fechas aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-fechas"><span class="et"><Icono n="cal" />Salida</span><span class="val" id="val-salida">Elige fecha</span></button></div>
+    <div class="barra-campo">
+      <button type="button" class="campo-btn" id="btn-personas" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-personas"><span class="et"><Icono n="persona" />Huéspedes</span><span class="val" id="val-personas">2 adultos</span></button>
+      <div class="flota flota-personas" id="pop-personas" role="dialog" aria-label="Elegir huéspedes">
+        <div class="contador"><div><b>Adultos</b><small>13 años o más</small></div><div class="ctrl-paso"><button type="button" class="icono-btn" data-paso="adultos" data-delta="-1" aria-label="Quitar un adulto"><Icono n="menos" /></button><output id="out-adultos">2</output><button type="button" class="icono-btn" data-paso="adultos" data-delta="1" aria-label="Agregar un adulto"><Icono n="mas" /></button></div></div>
+        <div class="contador"><div><b>Niños</b><small>De 2 a 12 años</small></div><div class="ctrl-paso"><button type="button" class="icono-btn" data-paso="ninos" data-delta="-1" aria-label="Quitar un niño"><Icono n="menos" /></button><output id="out-ninos">0</output><button type="button" class="icono-btn" data-paso="ninos" data-delta="1" aria-label="Agregar un niño"><Icono n="mas" /></button></div></div>
+        <div class="flota-pie"><p id="pers-nota"></p><button type="button" class="boton chico" data-listo>Listo</button></div>
+      </div>
+    </div>
+    <button type="submit" class="boton"><Icono n="wa" /><span>Consultar disponibilidad</span></button>
+    <div class="flota flota-rango" id="pop-fechas" role="dialog" aria-label="Elegir llegada y salida">
+      <div class="flota-cab"><h2>Elige llegada y salida</h2><div class="mes-nav"><button type="button" class="icono-btn" data-mes="-1" aria-label="Mes anterior"><Icono n="izq" /></button><button type="button" class="icono-btn" data-mes="1" aria-label="Mes siguiente"><Icono n="der" /></button></div></div>
+      <div class="cal">
+        {[0, 1].map((i) => (
+          <div class="mes">
+            <div class="mes-cab"><strong data-mes-nombre={i}></strong></div>
+            <div class="dias-sem" aria-hidden="true">{SEM.map((d) => <span>{d}</span>)}</div>
+            <div class="dias" data-dias={i} role="group"></div>
+          </div>
+        ))}
+      </div>
+      <div class="flota-pie"><p id="cal-resumen" aria-live="polite"></p><div class="botones"><button type="button" class="enlace" id="cal-borrar">Borrar</button><button type="button" class="boton chico" data-listo>Listo</button></div></div>
+    </div>
+  </form>
+  <p class="reserva-nota" aria-live="polite"><span>Estimado</span><strong id="val-estimado">—</strong><span id="sub-estimado"></span></p>
+  <script type="application/json" id="datos-reserva" set:html={JSON.stringify(datos)} />
+</div>
+
+<script>
+  import { abrirFlota, cerrarFlotas, HOY, masDias, mismoDia, fechaCorta, fechaMedia, nombreMes, diasDelMes, teclaDeDia } from '../scripts/controles';
+  import { estancia, ponerEstancia, renglonesEstancia, conRenglones, abrir } from '../scripts/whatsapp';
+  const D = JSON.parse(document.getElementById('datos-reserva')!.textContent!);
+  const $ = (s: string, r: ParentNode = document) => r.querySelector(s) as HTMLElement | null;
+  const $$ = (s: string, r: ParentNode = document) => [...r.querySelectorAll(s)] as HTMLElement[];
+  const pop = $('#pop-fechas')!, popPers = $('#pop-personas')!;
+  // Arranca con el próximo fin de semana para que el estimado ya diga algo
+  const inicial = (() => { const v = masDias(HOY, ((5 - HOY.getDay()) + 7) % 7 || 7); return [v, masDias(v, 2)]; })();
+  const r = { llegada: inicial[0] as Date | null, salida: inicial[1] as Date | null, adultos: 2, ninos: 0, mes: new Date(inicial[0].getFullYear(), inicial[0].getMonth(), 1) };
+  // Si la persona ya eligió en esta visita (aquí, en el comparador o en otra página), la barra abre con eso
+  { const g = estancia(); if (g.ll) { r.llegada = new Date(g.ll); r.salida = g.sa ? new Date(g.sa) : null; r.mes = new Date(r.llegada.getFullYear(), r.llegada.getMonth(), 1); } if (g.ad) { r.adultos = Math.min(8, g.ad); r.ninos = Math.min(6, g.ni || 0); } }
+  const avisarFechas = () => ponerEstancia({ ll: r.llegada ? +r.llegada : undefined, sa: r.salida ? +r.salida : undefined }, 'barra');
+  let hover: Date | null = null;
+  const dinero = (n: number) => '$' + n.toLocaleString('es-MX');
+  const noches = () => (r.llegada && r.salida ? Math.round((+r.salida - +r.llegada) / 864e5) : 0);
+  const personas = () => r.adultos + r.ninos;
+  const unMes = () => matchMedia('(max-width: 760px)').matches;
+  type Parte = { hab: { nombre: string; precio: number | null }; n: number };
+  function sugerida(p: number): Parte[] {
+    const h = D.habs;
+    if (D.id === 'qa') return p <= 1 ? [{ hab: h[0], n: 1 }] : [{ hab: h[1], n: Math.floor(p / 2) }, ...(p % 2 ? [{ hab: h[0], n: 1 }] : [])];
+    if (p <= 2) return [{ hab: h[0], n: 1 }];
+    if (p === 3) return [{ hab: h[2], n: 1 }];
+    return [{ hab: h[3], n: Math.ceil(p / 8) }];
+  }
+  const enPlural = (nom: string) => (/^departamento/i.test(nom) ? nom.toLowerCase().replace('departamento', 'departamentos') : nom.toLowerCase().replace('habitación', 'habitaciones') + 's');
+  const conArticulo = (nom: string) => (/^departamento/i.test(nom) ? 'el ' : 'la ') + nom.toLowerCase();
+  const listado = (ps: Parte[]) => (ps.length === 1 && ps[0].n === 1 ? conArticulo(ps[0].hab.nombre) : ps.map((x) => x.n + ' ' + (x.n > 1 ? enPlural(x.hab.nombre) : x.hab.nombre.toLowerCase())).join(' y '));
+  const txtNoches = () => noches() + (noches() === 1 ? ' noche' : ' noches');
+  const txtPersonas = () => r.adultos + (r.adultos === 1 ? ' adulto' : ' adultos') + (r.ninos ? ', ' + r.ninos + (r.ninos === 1 ? ' niño' : ' niños') : '');
+  function actualizar() {
+    const ps = sugerida(personas()), n = noches();
+    const total = ps.reduce((t, x) => t + (x.hab.precio || 0) * x.n, 0), sinPrecio = ps.some((x) => !x.hab.precio);
+    const nombre = ps.map((x) => (x.n > 1 ? x.n + ' × ' : '') + x.hab.nombre.replace('Habitación ', 'hab. ').toLowerCase()).join(' + ');
+    const ll = $('#val-llegada')!, sa = $('#val-salida')!;
+    ll.textContent = r.llegada ? fechaMedia(r.llegada) : 'Elige fecha'; ll.classList.toggle('sin-valor', !r.llegada);
+    sa.textContent = r.salida ? fechaMedia(r.salida) : 'Elige fecha'; sa.classList.toggle('sin-valor', !r.salida);
+    $('#val-personas')!.textContent = txtPersonas();
+    $('#val-estimado')!.textContent = !n ? 'elige tus fechas' : sinPrecio ? 'precio por confirmar' : dinero(total * n) + ' aprox.';
+    $('#sub-estimado')!.textContent = n ? txtNoches() + ' · ' + nombre : '';
+    $('#pers-nota')!.textContent = 'Te sugerimos ' + listado(ps) + '.';
+    $('#out-adultos')!.textContent = String(r.adultos); $('#out-ninos')!.textContent = String(r.ninos);
+    $$('[data-paso]').forEach((b) => { const k = b.dataset.paso as 'adultos' | 'ninos', v = r[k] + +b.dataset.delta!; (b as HTMLButtonElement).disabled = v < (k === 'adultos' ? 1 : 0) || v > (k === 'adultos' ? 8 : 6); });
+  }
+  function pintar(enfocar?: Date) {
+    const fin = r.salida || (r.llegada && hover && hover > r.llegada ? hover : null);
+    [0, 1].forEach((i) => {
+      const m = new Date(r.mes.getFullYear(), r.mes.getMonth() + i, 1);
+      $(`[data-mes-nombre="${i}"]`, pop)!.textContent = nombreMes(m);
+      $(`[data-dias="${i}"]`, pop)!.innerHTML = diasDelMes(m, HOY, (f) => {
+        const c: string[] = [];
+        if (mismoDia(f, r.llegada)) c.push('inicio'); if (mismoDia(f, fin)) c.push('fin');
+        if (r.llegada && fin && f > r.llegada && f < fin) c.push('rango');
+        return c;
+      });
+    });
+    ($('[data-mes="-1"]', pop) as HTMLButtonElement).disabled = r.mes <= new Date(HOY.getFullYear(), HOY.getMonth(), 1);
+    $('#cal-resumen')!.textContent = r.llegada && r.salida ? fechaCorta(r.llegada) + ' → ' + fechaCorta(r.salida) + ' · ' + txtNoches() : r.llegada ? 'Ahora elige la salida' : 'Elige la llegada';
+    const libres = $$('.dia:not(:disabled)', pop).filter((d) => d.offsetParent);
+    const obj = enfocar ? libres.find((d) => +d.dataset.dia! === +enfocar) : null;
+    const tab = obj || libres.find((d) => d.classList.contains('inicio')) || libres[0];
+    if (tab) tab.tabIndex = 0;
+    obj?.focus();
+  }
+  $$('[data-fechas]').forEach((b) => b.addEventListener('click', () => {
+    if (b.getAttribute('aria-expanded') === 'true') return cerrarFlotas(true);
+    const base = r.llegada || HOY; r.mes = new Date(base.getFullYear(), base.getMonth(), 1); hover = null; pintar();
+    abrirFlota(pop, b, { foco: () => $('.dia[tabindex="0"]', pop) });
+  }));
+  $('#btn-personas')!.addEventListener('click', (e) => { const b = e.currentTarget as HTMLElement; b.getAttribute('aria-expanded') === 'true' ? cerrarFlotas(true) : abrirFlota(popPers, b); });
+  pop.addEventListener('click', (e) => {
+    const t = (e.target as HTMLElement).closest('button') as HTMLElement | null; if (!t) return;
+    if (t.dataset.dia) {
+      const f = new Date(+t.dataset.dia);
+      if (!r.llegada || r.salida || f <= r.llegada) { r.llegada = f; r.salida = null; } else r.salida = f;
+      hover = null; pintar(f); actualizar(); avisarFechas();
+    } else if (t.dataset.mes) { r.mes = new Date(r.mes.getFullYear(), r.mes.getMonth() + +t.dataset.mes, 1); pintar(); }
+    else if (t.id === 'cal-borrar') { r.llegada = null; r.salida = null; pintar(); actualizar(); avisarFechas(); }
+    else if (t.dataset.listo !== undefined) cerrarFlotas(true);
+  });
+  pop.addEventListener('pointerover', (e) => {
+    const d = (e.target as HTMLElement).closest('.dia') as HTMLButtonElement | null;
+    if (!d || !r.llegada || r.salida || d.disabled) return;
+    const f = new Date(+d.dataset.dia!); if (mismoDia(f, hover)) return; hover = f;
+    $$('.dia', pop).forEach((b) => { const g = new Date(+b.dataset.dia!); b.classList.toggle('rango', f > r.llegada! && g > r.llegada! && g < f); b.classList.toggle('fin', mismoDia(g, f) && f > r.llegada!); });
+  });
+  pop.addEventListener('keydown', (e) => {
+    const d = (e.target as HTMLElement).closest('.dia') as HTMLElement | null; if (!d) return;
+    let f = teclaDeDia(e, new Date(+d.dataset.dia!)); if (!f) return;
+    e.preventDefault(); if (f < HOY) f = HOY;
+    const finVista = new Date(r.mes.getFullYear(), r.mes.getMonth() + (unMes() ? 1 : 2), 0);
+    if (f > finVista) r.mes = new Date(r.mes.getFullYear(), r.mes.getMonth() + 1, 1);
+    if (f < r.mes) r.mes = new Date(f.getFullYear(), f.getMonth(), 1);
+    pintar(f);
+  });
+  popPers.addEventListener('click', (e) => {
+    const t = (e.target as HTMLElement).closest('button') as HTMLElement | null; if (!t) return;
+    if (t.dataset.paso) { const k = t.dataset.paso as 'adultos' | 'ninos'; r[k] += +t.dataset.delta!; actualizar(); ponerEstancia({ ad: r.adultos, ni: r.ninos, mas: false }, 'barra'); }
+    else if (t.dataset.listo !== undefined) cerrarFlotas(true);
+  });
+  $('#f-reserva')!.addEventListener('submit', (e) => {
+    e.preventDefault(); cerrarFlotas();
+    // Consultar confirma lo que la barra muestra: desde aquí cuenta como elegido para los demás botones
+    const ps = sugerida(personas()), varias = ps.length > 1 || ps[0].n > 1;
+    ponerEstancia({ ll: r.llegada ? +r.llegada : undefined, sa: r.salida ? +r.salida : undefined, ad: r.adultos, ni: r.ninos, mas: false }, 'barra');
+    abrir(D.wa, conRenglones('Hola, quiero reservar en el ' + D.nombre + '. ¿Tienen ' + (varias ? 'disponibles ' : 'disponible ') + listado(ps) + '?', renglonesEstancia()));
+  });
+  // Lo que se elige en otra pieza de la página (el comparador de habitaciones) se refleja aquí
+  document.addEventListener('estancia', (e) => {
+    const d = (e as CustomEvent).detail; if (d.origen === 'barra') return;
+    const g = d.estancia; if (g.ad) { r.adultos = Math.min(8, g.ad); r.ninos = Math.min(6, g.ni || 0); }
+    if (g.ll) { r.llegada = new Date(g.ll); r.salida = g.sa ? new Date(g.sa) : null; }
+    actualizar();
+  });
+  actualizar();
+</script>

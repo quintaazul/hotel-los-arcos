@@ -1,0 +1,43 @@
+---
+import { H, waLink } from '../data/hoteles';
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+import Estrellas from './Estrellas.astro';
+import { velo, claveVelo } from '../lib/velo';
+import { trazoOvalo } from '../lib/ovalo';
+import { T, SEO } from '../data/textos';
+const f = H.hero;
+const sombra = await velo(H.id, f.img, f.ancha);
+const resenasUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(H.nombre + ' García Nuevo León');
+---
+<section class="portada sombreada" id="portada" style={sombra} data-velo={claveVelo(H.id, f.img, f.ancha)}>
+  <div class="portada-foto" data-portada-foto><Foto src={H.id + '/' + f.img} ancha={f.ancha && H.id + '/' + f.ancha} alt={f.alt} prioridad portada sizes="100vw" anchos={[480, 800, 1200, 1600, 2000, 2560]} /></div>
+  <div class="marco portada-marco" data-portada-txt>
+  <div class="portada-int">
+    <div class="portada-txt">
+      <div class="titulo titulo-portada" style={`--largo:${Math.max(f.l1.length, (f.l2 ?? '').length)}`}>
+        <h1 class="clave">{SEO.inicio.h1}</h1>
+        <p class="lema">
+        <span class="l"><span style="--i:0">{f.l1}</span></span>{' '}
+        {f.l2 && <><span class="l"><span style="--i:1">{f.l2}</span></span>{' '}</>}
+        <span class="l o"><span style="--i:2"><span class="ovalo">{f.o}<svg viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d={trazoOvalo(f.o)} /></svg></span></span></span>
+        </p>
+      </div>
+      <p class="bajada" data-carga style="--d:160ms">{f.frase}</p>
+      <a class="nota-google" href={resenasUrl} target="_blank" rel="noopener" data-carga style="--d:200ms"><Icono n="estrella" /><b>{H.rating}</b><span class="sr"> de 5</span> · {H.resenas} reseñas en Google</a>
+      <div class="botones" data-carga style="--d:220ms">
+        <a class="boton blanco" href={waLink()} target="_blank" rel="noopener"><Icono n="wa" />Reservar por WhatsApp</a>
+        <a class="boton contorno" href={'/' + H.rutaHabs}>{T.inicio.verHabs}<span class="flecha"><Icono n="flecha" /></span></a>
+      </div>
+    </div>
+  </div>
+  <!-- Pie: la barra de reservas a la izquierda y la calificación a la derecha, en una misma fila -->
+  <div class="portada-pie">
+    <slot />
+    <a class="tarjeta-google" href={resenasUrl} target="_blank" rel="noopener" data-carga style="--d:320ms">
+      <span class="valor">{H.rating}</span><span class="sr"> de 5 · </span>
+      <span class="tg-txt"><Estrellas valor={H.rating} decorativa /><span class="fila"><Icono n="googleColor" class="color" />{H.resenas} reseñas en Google</span></span>
+    </a>
+  </div>
+  </div>
+</section>

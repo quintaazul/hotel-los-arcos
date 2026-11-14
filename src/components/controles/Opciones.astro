@@ -1,0 +1,12 @@
+---
+// Una sola respuesta entre pocas: pastillas en vez de la bolita del navegador.
+// Cada opción es un texto, o un par [valor que se envía, texto que se ve].
+interface Props { nombre: string; etiqueta: string; opciones: (string | [string, string])[]; valor?: string; class?: string }
+const { nombre, etiqueta, opciones: crudas, class: clase } = Astro.props;
+const opciones = crudas.map((o) => (typeof o === 'string' ? [o, o] : o) as [string, string]);
+const valor = Astro.props.valor ?? opciones[0][0];
+---
+<fieldset class:list={['campo', clase]}>
+  <legend class="campo-et">{etiqueta}</legend>
+  <div class="opciones">{opciones.map(([v, t]) => <label class="pastilla"><input type="radio" name={nombre} value={v} data-texto={t} checked={v === valor} /><span>{t}</span></label>)}</div>
+</fieldset>

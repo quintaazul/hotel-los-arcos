@@ -1,0 +1,253 @@
+---
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-500.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/dm-serif-display/latin-400.css';
+import letra400 from '@fontsource/poppins/files/poppins-latin-400-normal.woff2?url';
+import letra500 from '@fontsource/poppins/files/poppins-latin-500-normal.woff2?url';
+import letraSerif from '@fontsource/dm-serif-display/files/dm-serif-display-latin-400-normal.woff2?url';
+import paleta from '../data/paleta.json';
+import '../styles/sistema.css';
+import '@marca';
+import '../styles/global.css';
+import '../styles/controles.css';
+import '../styles/medios.css';
+import '../styles/movimiento.css';
+import '../styles/efectos.css';
+import '../styles/interiores.css';
+import '../styles/detalles.css';
+import '../styles/blog.css';
+import '../styles/paginas.css';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { H, mapsBuscar } from '../data/hoteles';
+import Cabecera from '../components/Cabecera.astro';
+import Pie from '../components/Pie.astro';
+import Icono from '../components/Icono.astro';
+import Movimiento from '../components/Movimiento.astro';
+
+interface Props { title: string; description: string; pagina?: string; ogFoto?: string; schema?: Record<string, unknown>[]; sinPortada?: boolean; sinIndice?: boolean; articulo?: { publicado: string; actualizado: string; tema: string }; ogAlt?: string }
+const { title, description, pagina = 'inicio', ogFoto = H.hero.img, schema = [], sinPortada = false, sinIndice = false, articulo, ogAlt } = Astro.props;
+
+const todas = import.meta.glob<{ default: ImageMetadata }>('@fotos/*.{webp,jpg,png}', { eager: true });
+const clave = Object.keys(todas).find((k) => k.endsWith('/' + H.id + '/' + ogFoto))!;
+const og = await getImage({ src: todas[clave].default, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 82 });
+const ogAbs = new URL(og.src, Astro.site).href;
+// La foto del hotel en sus datos estructurados es siempre la de su fachada, aunque la página enseñe otra
+const claveHotel = Object.keys(todas).find((k) => k.endsWith('/' + H.id + '/' + H.hero.img))!;
+const fotoHotel = ogFoto === H.hero.img ? ogAbs : new URL((await getImage({ src: todas[claveHotel].default, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 82 })).src, Astro.site).href;
+const claveLogo = Object.keys(todas).find((k) => k.endsWith('/' + H.id + '/logo-color.png'));
+const logoAbs = claveLogo ? new URL((await getImage({ src: todas[claveLogo].default, width: 512, format: 'png' })).src, Astro.site).href : undefined;
+const palapa = H.id === 'qa' ? 'Palapa para fiestas' : 'Palapa techada';
+
+const ruta = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/').replace(/\/$/, '');
+const canonical = ruta ? new URL(ruta, Astro.site).href : Astro.site!.href;
+
+// Datos estructurados del hotel. Sin aggregateRating: Google no permite que el propio negocio marque sus reseñas.
+const hotel: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Hotel',
+  '@id': H.sitio + '/#hotel',
+  name: H.nombre,
+  description: H.descripcion,
+  url: H.sitio,
+  telephone: H.telLink,
+  ...(H.correo ? { email: H.correo } : {}),
+  image: [{ '@type': 'ImageObject', url: fotoHotel, contentUrl: fotoHotel, width: 1200, height: 630, caption: H.hero.alt, creditText: H.nombre, copyrightNotice: '© ' + H.nombre, creator: { '@type': 'Organization', name: H.nombre } }],
+  ...(logoAbs ? { logo: logoAbs } : {}),
+  priceRange: '$$',
+  currenciesAccepted: 'MXN',
+  ...(H.id === 'la' ? { paymentAccepted: 'Efectivo, tarjeta de crédito' } : {}),
+  address: { '@type': 'PostalAddress', streetAddress: H.calle, addressLocality: 'García', addressRegion: 'Nuevo León', postalCode: '66000', addressCountry: 'MX' },
+  geo: { '@type': 'GeoCoordinates', latitude: H.lat, longitude: H.lng },
+  hasMap: mapsBuscar(),
+  sameAs: [H.facebook, H.igUrl],
+  // recepción y reservas: todos los días de 7:00 a 23:00
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '07:00', closes: '23:00' }],
+  contactPoint: [{ '@type': 'ContactPoint', contactType: 'reservations', telephone: H.telLink, availableLanguage: ['es'], areaServed: 'MX', hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '07:00', closes: '23:00' } }],
+  numberOfRooms: H.habitaciones,
+  checkinTime: '14:00',
+  checkoutTime: '11:00',
+  petsAllowed: false,
+  ...(H.id === 'qa' ? { smokingAllowed: false } : {}),
+  availableLanguage: ['es'],
+  amenityFeature: H.incluye.map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+  containsPlace: [
+    { '@type': 'EventVenue', '@id': H.sitio + '/celebraciones#palapa', name: palapa, maximumAttendeeCapacity: 60, url: H.sitio + '/celebraciones' },
+    ...H.habs.map((x) => ({ '@type': x.id === 'depa' ? 'Apartment' : 'HotelRoom', name: x.nombre, description: x.texto, occupancy: { '@type': 'QuantitativeValue', maxValue: x.personas }, ...(x.id === 'depa' ? { numberOfBedrooms: 2 } : x.camas ? { bed: x.camas } : {}), url: H.sitio + (x.id === 'depa' ? '/departamentos' : '/' + H.rutaHabs) })),
+  ],
+  makesOffer: H.habs.filter((x) => x.precio).map((x) => ({
+    '@type': 'Offer', priceCurrency: 'MXN', price: x.precio,
+    priceSpecification: { '@type': 'UnitPriceSpecification', price: x.precio, priceCurrency: 'MXN', unitCode: 'DAY', unitText: 'noche' }, availability: 'https://schema.org/InStock', url: H.sitio + (x.id === 'depa' ? '/departamentos' : '/' + H.rutaHabs),
+    itemOffered: { '@type': x.id === 'depa' ? 'Apartment' : 'HotelRoom', name: x.nombre, occupancy: { '@type': 'QuantitativeValue', maxValue: x.personas }, ...(x.camas ? { bed: x.camas } : {}) }
+  }))
+};
+const esquemas = [hotel, ...schema.map((n) => (n['@type'] === 'BlogPosting' && !n.image ? { ...n, image: [ogAbs] } : n))];
+---
+<!doctype html>
+<html lang="es-MX" data-hotel={H.id}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script is:inline>
+      // Antes de pintar: avisa que hay JavaScript y si se llegó desde otra página del sitio (entrada corta).
+      // Red de seguridad: el código de movimiento va escrito aquí mismo y arranca en cuanto la página termina de leerse.
+      // Si poco después no ha dado señal (navegador muy viejo, un error, algo que lo bloquea), todo lo que esperaba su
+      // turno se muestra de una vez, sin animación. El contenido va primero.
+      (function (d) {
+        var c = d.documentElement.classList; c.add('js');
+        try { if (d.referrer && new URL(d.referrer).origin === location.origin) c.add('interna'); } catch (e) {}
+        function sinSenal() { if (!window.__mov) c.add('sin-mov'); }
+        function alTerminar() { setTimeout(sinSenal, 400); }
+        if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', alTerminar); else alTerminar();
+        setTimeout(sinSenal, 3500);   // tope por si la página tarda en terminar de llegar
+        // Si se llega con un cambio animado entre páginas, se anota antes de pintar (efectos.css: la foto de las guías)
+        try { addEventListener('pagereveal', function (e) { if (e.viewTransition) c.add('con-vt'); }); } catch (e) {}
+      })(document);
+    </script>
+    <Movimiento />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={sinIndice ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <meta name="theme-color" content={paleta[H.id].roles['marca-hondo'].hex} />
+    {[letra500, letra400, letraSerif].map((u) => <link rel="preload" as="font" type="font/woff2" href={u} crossorigin />)}
+    <meta property="og:type" content={articulo ? 'article' : 'website'} />
+    {articulo && <><meta property="article:published_time" content={articulo.publicado} /><meta property="article:modified_time" content={articulo.actualizado} /><meta property="article:section" content={articulo.tema} /></>}
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content={H.nombre} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogAbs} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogAlt ?? title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogAbs} />
+    <link rel="icon" type="image/png" href={H.id === 'qa' ? '/favicon-qa.png' : '/favicon-la.png'} />
+    <link rel="apple-touch-icon" href={H.id === 'qa' ? '/favicon-qa-256.png' : '/favicon-la-256.png'} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={'Blog del ' + H.nombre} href={new URL('/blog/rss.xml', Astro.site).href} />
+    {esquemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <Cabecera pagina={pagina} solida={sinPortada} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Pie />
+    <!-- Visor de fotos: una sola pieza para todo el sitio -->
+    <dialog class="visor" id="visor" aria-label="Fotos" aria-modal="true">
+      <div class="visor-cab"><span class="visor-cuenta" data-visor-cuenta aria-live="polite"></span><button type="button" class="icono-btn" data-visor-cerrar aria-label="Cerrar las fotos"><Icono n="cerrar" /></button></div>
+      <button type="button" class="icono-btn visor-nav ant" data-visor-ir="-1" aria-label="Foto anterior"><Icono n="izq" /></button>
+      <figure class="visor-fig"><img data-visor-img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="1" height="1" decoding="async" /><figcaption data-visor-pie></figcaption></figure>
+      <button type="button" class="icono-btn visor-nav sig" data-visor-ir="1" aria-label="Foto siguiente"><Icono n="der" /></button>
+    </dialog>
+    <script is:inline>
+      // Óvalo dibujado a mano: se calcula con el tamaño real de cada frase y se vuelve a calcular
+      // cada vez que ese tamaño cambia (carga de la letra, giro de pantalla, ventana más chica).
+      (function () {
+        // El trazo es el óvalo de siempre, dibujado a mano: una elipse algo irregular que cierra con doble línea arriba
+        // a la izquierda. Lo que se calcula aquí es dónde va y cuánto mide: la frase queda alineada con su párrafo y el
+        // óvalo se centra en ella y se ensancha lo justo para que ninguna letra toque el trazo (se mide la tinta real
+        // de la primera y la última letra). Si a los lados no hay sitio para una elipse tan ancha (celular, frase
+        // larga), se le llenan un poco los hombros en vez de salirse de la pantalla o pisar la letra.
+        // Puntos del trazo sobre una elipse de radio 1 centrada en 0: arranque, cuatro tramos y la cola (src/lib/ovalo.ts).
+        var D0 = [[-0.936, 0.256], [-1.004, -0.395], [-0.468, -1], [0.085, -1], [0.681, -0.977], [1.032, -0.465], [0.989, 0.116], [0.936, 0.767], [0.426, 1.023], [-0.064, 0.988], [-0.596, 0.953], [-1.032, 0.674], [-0.979, -0.023], [-0.936, -0.488], [-0.638, -0.79], [-0.298, -0.895]];
+        var lienzo = document.createElement('canvas').getContext('2d');
+        function num(v, d) { return typeof v === 'number' && isFinite(v) ? v : d; }
+        // puntos de control con las asas alargadas s veces (s = 1: la elipse tal cual; más: hombros más llenos)
+        function puntos(s) {
+          var P = [D0[0]];
+          for (var i = 1; i < 16; i += 3) { var A = D0[i - 1], B = D0[i + 2]; P.push([A[0] + (D0[i][0] - A[0]) * s, A[1] + (D0[i][1] - A[1]) * s], [B[0] + (D0[i + 1][0] - B[0]) * s, B[1] + (D0[i + 1][1] - B[1]) * s], B); }
+          return P;
+        }
+        // el lazo (sin la cola) como polígono, para saber si un punto queda dentro
+        function contorno(P) {
+          var out = [];
+          for (var i = 0; i < 12; i += 3) for (var j = 0; j < 24; j++) { var t = j / 24, u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t; out.push([a * P[i][0] + b * P[i + 1][0] + c * P[i + 2][0] + d * P[i + 3][0], a * P[i][1] + b * P[i + 1][1] + c * P[i + 2][1] + d * P[i + 3][1]]); }
+          return out;
+        }
+        function dentro(pol, x, y) { var d = false; for (var i = 0, j = pol.length - 1; i < pol.length; j = i++) { var a = pol[i], b = pol[j]; if ((a[1] > y) !== (b[1] > y) && x < (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]) + a[0]) d = !d; } return d; }
+        // Se hace en dos tiempos para no obligar al navegador a recalcular la página óvalo por óvalo: primero se LEEN
+        // las medidas de todos y después se ESCRIBEN todos los trazos. Lo ya medido se guarda, y un óvalo que no
+        // cambió no se vuelve a tocar.
+        var polis = {}, tintas = {};
+        function poli(s) { if (!polis[s]) { var P = puntos(s), pol = contorno(P), mn = 0, mx = 0; pol.forEach(function (q) { if (q[0] < mn) mn = q[0]; if (q[0] > mx) mx = q[0]; }); polis[s] = { P: P, pol: pol, ext: Math.max(-mn, mx) }; } return polis[s]; }
+        function medir(s) {
+          var o = s.parentElement, w = o.offsetWidth, h = o.offsetHeight; if (w < 2 || h < 2) return null;
+          var txt = ((o.firstChild && o.firstChild.nodeValue) || '').trim(); if (!txt) return null;
+          var cs = getComputedStyle(o), e = parseFloat(cs.fontSize) || 16, r = o.getBoundingClientRect(), vw = document.documentElement.clientWidth, linea = o.closest('.l'), tit = o.closest('.titulo');
+          // cuánto puede sobresalir el óvalo a cada lado: sin acercarse al borde de la pantalla ni salirse de su línea
+          var m = { s: s, w: w, h: h, e: e, txt: txt, letra: cs.fontStyle + ' ' + cs.fontWeight + ' ' + e + 'px ' + cs.fontFamily, lh: parseFloat(cs.lineHeight) || e * 1.06, arriba: parseFloat(cs.paddingTop) || 0,
+            izq: r.left, der: Math.min(vw, tit ? tit.getBoundingClientRect().right + e * 0.3 : vw) - r.right, mascara: linea ? (parseFloat(getComputedStyle(linea).paddingLeft) || 1e4) - 2 : 1e4 };
+          m.k = [txt, m.letra, w, h, Math.round(m.izq), Math.round(m.der), Math.round(m.mascara), m.lh, m.arriba].join('|');
+          return s._k === m.k ? null : m;
+        }
+        function trazar(q) {
+          var s = q.s, w = q.w, h = q.h, e = q.e, txt = q.txt, t = tintas[q.letra + '|' + txt];
+          // la tinta de la frase: dónde está la línea de base y cuánto suben y bajan la primera y la última letra
+          if (!t) {
+            lienzo.font = q.letra; var m = lienzo.measureText(txt), m1 = lienzo.measureText(txt.charAt(0)), m2 = lienzo.measureText(txt.charAt(txt.length - 1));
+            t = tintas[q.letra + '|' + txt] = { fa: num(m.fontBoundingBoxAscent, 0), fd: num(m.fontBoundingBoxDescent, 0), A: num(m.actualBoundingBoxAscent, e * 0.75), D: Math.max(0, num(m.actualBoundingBoxDescent, 0)), a1: num(m1.actualBoundingBoxAscent, e * 0.75), d1: Math.max(0, num(m1.actualBoundingBoxDescent, 0)), a2: num(m2.actualBoundingBoxAscent, e * 0.75), d2: Math.max(0, num(m2.actualBoundingBoxDescent, 0)) };
+          }
+          var base = q.arriba + (t.fa ? (q.lh - t.fa - t.fd) / 2 + t.fa : q.lh * 0.8), medio = (t.D - t.A) / 2;
+          var cy = base + medio, b = Math.max(e * 0.7, (t.A + t.D) / 2 + e * 0.27), gap = e * 0.13, gy = e * 0.03;
+          var yI = [-t.a1 - gy - medio, t.d1 + gy - medio], yD = [-t.a2 - gy - medio, t.d2 + gy - medio];
+          var Xmax = Math.max(e * 0.2, Math.min(q.izq - 5, Math.max(q.izq * 0.62, 16), q.der - 5, q.mascara, w * 0.06 + e * 0.42));
+          var S = [1, 1.1, 1.2, 1.32, 1.45], g, a, cabe = false, medioAncho = w / 2 + gap;
+          var libre = function (a) { var x = medioAncho / a; return dentro(g.pol, -x, yI[0] / b) && dentro(g.pol, -x, yI[1] / b) && dentro(g.pol, x, yD[0] / b) && dentro(g.pol, x, yD[1] / b); };
+          for (var i = 0; i < S.length && !cabe; i++) {
+            g = poli(S[i]); var lo = medioAncho, hi = medioAncho + 4 * e;
+            if (libre(hi)) for (var j = 0; j < 14; j++) { var mid = (lo + hi) / 2; if (libre(mid)) hi = mid; else lo = mid; }
+            a = hi; cabe = a * g.ext - w / 2 <= Xmax;
+          }
+          if (!cabe) a = (w / 2 + Xmax) / g.ext;
+          var P = g.P, pt = function (z) { return (w / 2 + a * z[0]).toFixed(1) + ' ' + (cy + b * z[1]).toFixed(1); }, d = 'M ' + pt(P[0]);
+          for (var n = 1; n < 16; n += 3) d += ' C ' + pt(P[n]) + ' ' + pt(P[n + 1]) + ' ' + pt(P[n + 2]);
+          s.setAttribute('viewBox', '0 0 ' + w + ' ' + h); s.setAttribute('preserveAspectRatio', 'none'); s.querySelector('path').setAttribute('d', d); s._k = q.k;
+        }
+        function pintar(lista) { lista.map(medir).forEach(function (q) { if (q) trazar(q); }); }
+        // Si la frase no cabe en su línea, se achica un poco en vez de partirse en dos
+        function encajar() {
+          // Primero se limpian todos, después se miden todos y al final se escriben todos: el navegador acomoda una sola vez
+          var os = [].slice.call(document.querySelectorAll('.ovalo'));
+          os.forEach(function (o) { if (o.style.fontSize || o.style.whiteSpace) { o.style.fontSize = ''; o.style.whiteSpace = ''; } });
+          var med = os.map(function (o) {
+            var cont = o.closest('.titulo') || o.parentElement; if (!cont) return null;
+            var cs = getComputedStyle(o), f = parseFloat(cs.fontSize);
+            return { o: o, f: f, necesita: o.offsetWidth + f * 0.6, disp: cont.clientWidth };   // la frase más lo que sobresale el trazo a la derecha
+          });
+          med.forEach(function (m) {
+            if (!m || m.necesita <= m.disp) return;
+            var nf = m.f * m.disp / m.necesita;
+            if (nf >= m.f * 0.55) m.o.style.fontSize = nf.toFixed(1) + 'px'; else m.o.style.whiteSpace = 'normal';
+          });
+        }
+        // Se dibuja de inmediato midiendo cada óvalo; el aviso de cambio de tamaño (si el navegador lo tiene y lo
+        // entrega a tiempo) solo lo afina después. El dibujo nunca espera a ese aviso.
+        var ro = window.ResizeObserver ? new ResizeObserver(function (es) { pintar(es.map(function (e) { return e.target; })); }) : null;
+        var vistos = [];
+        function todo(limpio) {
+          encajar();
+          var ss = [].slice.call(document.querySelectorAll('.ovalo svg, .nombre-serie svg'));
+          if (limpio === true) { tintas = {}; ss.forEach(function (s) { s._k = ''; }); }   // llegó la letra: lo medido con la de reemplazo ya no vale
+          pintar(ss);
+          if (ro) ss.forEach(function (s) { if (vistos.indexOf(s) < 0) { vistos.push(s); ro.observe(s); } });
+        }
+        todo(); window.__ajustarOvalos = todo;
+        var conLetra = function () { todo(true); };
+        if (document.fonts) { if (document.fonts.ready) document.fonts.ready.then(conLetra); if (document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', conLetra); }
+        addEventListener('load', todo);
+        var t; addEventListener('resize', function () { clearTimeout(t); t = setTimeout(todo, 150); });
+      })();
+    </script>
+    <script>
+      import '../scripts/interfaz';
+      import '../scripts/medios';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,990 @@
+{
+ "qa": {
+  "nombre": "Hotel Quinta Azul",
+  "primario": "azul",
+  "secundario": "agua",
+  "acento": "sol",
+  "neutro": "arena",
+  "familias": {
+   "azul": {
+    "papel": "Primario",
+    "nota": "El azul de la fachada y del logo. Acciones, enlaces y secciones de marca.",
+    "pasos": {
+     "50": "#F4F7FF",
+     "100": "#E6ECFF",
+     "200": "#CFDCFF",
+     "300": "#AEC2FF",
+     "400": "#8AA3F5",
+     "500": "#6B84DD",
+     "600": "#5167BD",
+     "700": "#3B4E9C",
+     "800": "#2B3A7C",
+     "900": "#1D295A",
+     "950": "#10183B"
+    }
+   },
+   "agua": {
+    "papel": "Secundario",
+    "nota": "El turquesa de la alberca. Detalles frescos e ilustraciones.",
+    "pasos": {
+     "50": "#ECFAFE",
+     "100": "#D8F2FA",
+     "200": "#B6E6F4",
+     "300": "#86D1E7",
+     "400": "#4EB7D3",
+     "500": "#009BB8",
+     "600": "#007C94",
+     "700": "#006175",
+     "800": "#004959",
+     "900": "#003440",
+     "950": "#002028"
+    }
+   },
+   "sol": {
+    "papel": "Acento",
+    "nota": "Dorado de atardecer. Estrellas y realces pequeños, nunca fondos grandes.",
+    "pasos": {
+     "50": "#FFF5E7",
+     "100": "#FCEACF",
+     "200": "#F7D7A7",
+     "300": "#EBBB70",
+     "400": "#D79B2A",
+     "500": "#B67F00",
+     "600": "#926500",
+     "700": "#734F00",
+     "800": "#573B00",
+     "900": "#3F2900",
+     "950": "#281800"
+    }
+   },
+   "arena": {
+    "papel": "Neutros",
+    "nota": "De arena cálida (fondos) a tinta azul noche (textos).",
+    "pasos": {
+     "50": "#F8F5F0",
+     "100": "#EFEBE2",
+     "200": "#E1DCD1",
+     "300": "#CCC7BC",
+     "400": "#AAA39D",
+     "500": "#867E7E",
+     "600": "#686067",
+     "700": "#4A4755",
+     "800": "#333243",
+     "900": "#212133",
+     "950": "#151527"
+    }
+   },
+   "exito": {
+    "papel": "Estado: correcto",
+    "nota": "Confirmaciones.",
+    "pasos": {
+     "50": "#EEFBF0",
+     "100": "#DCF4E1",
+     "200": "#BEE9C8",
+     "300": "#93D7A5",
+     "400": "#64BE80",
+     "500": "#38A25E",
+     "600": "#078543",
+     "700": "#006933",
+     "800": "#004F25",
+     "900": "#003818",
+     "950": "#00230D"
+    }
+   },
+   "aviso": {
+    "papel": "Estado: atención",
+    "nota": "Avisos que no bloquean.",
+    "pasos": {
+     "50": "#FFF5E9",
+     "100": "#FEE9D1",
+     "200": "#F9D6AB",
+     "300": "#EEB976",
+     "400": "#DB9838",
+     "500": "#BC7B00",
+     "600": "#976200",
+     "700": "#774C00",
+     "800": "#5B3900",
+     "900": "#412800",
+     "950": "#291700"
+    }
+   },
+   "error": {
+    "papel": "Estado: error",
+    "nota": "Campos mal llenados y fallas.",
+    "pasos": {
+     "50": "#FFF4F2",
+     "100": "#FFE6E3",
+     "200": "#FFCFC9",
+     "300": "#FFABA1",
+     "400": "#FF796D",
+     "500": "#E74F46",
+     "600": "#C52C2A",
+     "700": "#A30D14",
+     "800": "#7F0009",
+     "900": "#5D0005",
+     "950": "#3C0002"
+    }
+   },
+   "info": {
+    "papel": "Estado: información",
+    "nota": "Notas neutras.",
+    "pasos": {
+     "50": "#F0F8FF",
+     "100": "#DEEFFF",
+     "200": "#BFE1FF",
+     "300": "#96CAF7",
+     "400": "#6AAFE7",
+     "500": "#4391CE",
+     "600": "#2274AF",
+     "700": "#045B91",
+     "800": "#00446F",
+     "900": "#003051",
+     "950": "#001D34"
+    }
+   }
+  },
+  "roles": {
+   "fondo": {
+    "de": "arena-50",
+    "hex": "#F8F5F0"
+   },
+   "fondo-2": {
+    "de": "arena-100",
+    "hex": "#EFEBE2"
+   },
+   "fondo-3": {
+    "de": "arena-200",
+    "hex": "#E1DCD1"
+   },
+   "superficie": {
+    "de": "#FFFFFF",
+    "hex": "#FFFFFF"
+   },
+   "fondo-oscuro": {
+    "de": "arena-950",
+    "hex": "#151527"
+   },
+   "fondo-oscuro-2": {
+    "de": "arena-900",
+    "hex": "#212133"
+   },
+   "texto": {
+    "de": "arena-950",
+    "hex": "#151527"
+   },
+   "texto-2": {
+    "de": "arena-700",
+    "hex": "#4A4755"
+   },
+   "texto-3": {
+    "de": "arena-600",
+    "hex": "#686067"
+   },
+   "texto-apagado": {
+    "de": "arena-500",
+    "hex": "#867E7E"
+   },
+   "borde": {
+    "de": "arena-200",
+    "hex": "#E1DCD1"
+   },
+   "borde-fuerte": {
+    "de": "arena-300",
+    "hex": "#CCC7BC"
+   },
+   "borde-control": {
+    "de": "arena-500",
+    "hex": "#867E7E"
+   },
+   "blanco": {
+    "de": "#FFFFFF",
+    "hex": "#FFFFFF"
+   },
+   "sobre-accion": {
+    "de": "#FFFFFF",
+    "hex": "#FFFFFF"
+   },
+   "sobre-oscuro": {
+    "de": "arena-50",
+    "hex": "#F8F5F0"
+   },
+   "sobre-oscuro-2": {
+    "de": "arena-300",
+    "hex": "#CCC7BC"
+   },
+   "marca": {
+    "de": "azul-700",
+    "hex": "#3B4E9C"
+   },
+   "accion": {
+    "de": "azul-700",
+    "hex": "#3B4E9C"
+   },
+   "accion-hover": {
+    "de": "azul-800",
+    "hex": "#2B3A7C"
+   },
+   "accion-activa": {
+    "de": "azul-900",
+    "hex": "#1D295A"
+   },
+   "texto-marca": {
+    "de": "azul-700",
+    "hex": "#3B4E9C"
+   },
+   "marca-hondo": {
+    "de": "azul-900",
+    "hex": "#1D295A"
+   },
+   "marca-suave": {
+    "de": "azul-100",
+    "hex": "#E6ECFF"
+   },
+   "marca-suave-2": {
+    "de": "azul-200",
+    "hex": "#CFDCFF"
+   },
+   "foco": {
+    "de": "azul-600",
+    "hex": "#5167BD"
+   },
+   "secundario": {
+    "de": "agua-600",
+    "hex": "#007C94"
+   },
+   "secundario-suave": {
+    "de": "agua-100",
+    "hex": "#D8F2FA"
+   },
+   "acento": {
+    "de": "sol-500",
+    "hex": "#B67F00"
+   },
+   "estrella": {
+    "de": "sol-400",
+    "hex": "#D79B2A"
+   },
+   "exito": {
+    "de": "exito-600",
+    "hex": "#078543"
+   },
+   "exito-texto": {
+    "de": "exito-700",
+    "hex": "#006933"
+   },
+   "exito-fondo": {
+    "de": "exito-50",
+    "hex": "#EEFBF0"
+   },
+   "exito-borde": {
+    "de": "exito-300",
+    "hex": "#93D7A5"
+   },
+   "aviso": {
+    "de": "aviso-600",
+    "hex": "#976200"
+   },
+   "aviso-texto": {
+    "de": "aviso-700",
+    "hex": "#774C00"
+   },
+   "aviso-fondo": {
+    "de": "aviso-50",
+    "hex": "#FFF5E9"
+   },
+   "aviso-borde": {
+    "de": "aviso-300",
+    "hex": "#EEB976"
+   },
+   "error": {
+    "de": "error-600",
+    "hex": "#C52C2A"
+   },
+   "error-texto": {
+    "de": "error-700",
+    "hex": "#A30D14"
+   },
+   "error-fondo": {
+    "de": "error-50",
+    "hex": "#FFF4F2"
+   },
+   "error-borde": {
+    "de": "error-300",
+    "hex": "#FFABA1"
+   },
+   "info": {
+    "de": "info-600",
+    "hex": "#2274AF"
+   },
+   "info-texto": {
+    "de": "info-700",
+    "hex": "#045B91"
+   },
+   "info-fondo": {
+    "de": "info-50",
+    "hex": "#F0F8FF"
+   },
+   "info-borde": {
+    "de": "info-300",
+    "hex": "#96CAF7"
+   }
+  },
+  "parejas": [
+   {
+    "texto": "texto",
+    "fondo": "fondo",
+    "razon": 16.53,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto",
+    "fondo": "fondo-2",
+    "razon": 15.11,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto",
+    "fondo": "superficie",
+    "razon": 17.97,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-2",
+    "fondo": "fondo",
+    "razon": 8.31,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-2",
+    "fondo": "fondo-2",
+    "razon": 7.6,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-2",
+    "fondo": "superficie",
+    "razon": 9.04,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-3",
+    "fondo": "superficie",
+    "razon": 6.07,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-3",
+    "fondo": "fondo",
+    "razon": 5.58,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-marca",
+    "fondo": "fondo",
+    "razon": 7.01,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-marca",
+    "fondo": "superficie",
+    "razon": 7.62,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-marca",
+    "fondo": "marca-suave",
+    "razon": 6.46,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "sobre-accion",
+    "fondo": "accion",
+    "razon": 7.62,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "sobre-accion",
+    "fondo": "accion-hover",
+    "razon": 10.51,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "blanco",
+    "fondo": "marca-hondo",
+    "razon": 13.84,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "blanco",
+    "fondo": "fondo-oscuro",
+    "razon": 17.97,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "borde-control",
+    "fondo": "superficie",
+    "razon": 3.96,
+    "minimo": 3,
+    "pasa": true
+   },
+   {
+    "texto": "foco",
+    "fondo": "fondo",
+    "razon": 4.8,
+    "minimo": 3,
+    "pasa": true
+   },
+   {
+    "texto": "foco",
+    "fondo": "superficie",
+    "razon": 5.22,
+    "minimo": 3,
+    "pasa": true
+   },
+   {
+    "texto": "exito-texto",
+    "fondo": "exito-fondo",
+    "razon": 6.42,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "aviso-texto",
+    "fondo": "aviso-fondo",
+    "razon": 6.92,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "error-texto",
+    "fondo": "error-fondo",
+    "razon": 7.42,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "info-texto",
+    "fondo": "info-fondo",
+    "razon": 6.73,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "error-texto",
+    "fondo": "superficie",
+    "razon": 8,
+    "minimo": 4.5,
+    "pasa": true
+   }
+  ]
+ },
+ "la": {
+  "nombre": "Hotel Los Arcos Inn",
+  "primario": "terracota",
+  "secundario": "jardin",
+  "acento": "miel",
+  "neutro": "adobe",
+  "familias": {
+   "terracota": {
+    "papel": "Primario",
+    "nota": "El naranja de la marca. El 500 es el color exacto (#EA6C00): es el de los botones, con texto blanco encima (decisión del dueño: da 3.2 a 1, por debajo de lo que pedimos al resto del texto). El texto de color usa el 700.",
+    "pasos": {
+     "50": "#FFF4EF",
+     "100": "#FFE7DB",
+     "200": "#FFD1B9",
+     "300": "#FFAE83",
+     "400": "#F58541",
+     "500": "#EA6C00",
+     "600": "#AE4F00",
+     "700": "#8A3D00",
+     "800": "#692D00",
+     "900": "#4C1E00",
+     "950": "#311100"
+    }
+   },
+   "jardin": {
+    "papel": "Secundario",
+    "nota": "El verde de las palmas y el jardín. Detalles naturales.",
+    "pasos": {
+     "50": "#F0FAF1",
+     "100": "#E1F3E2",
+     "200": "#C7E6CA",
+     "300": "#A3D2A8",
+     "400": "#7CB984",
+     "500": "#599D64",
+     "600": "#3C8048",
+     "700": "#266634",
+     "800": "#174E24",
+     "900": "#0D3717",
+     "950": "#06220C"
+    }
+   },
+   "miel": {
+    "papel": "Acento",
+    "nota": "Dorado cálido. Estrellas y realces pequeños.",
+    "pasos": {
+     "50": "#FEF6E7",
+     "100": "#FAEBD0",
+     "200": "#F3D9A9",
+     "300": "#E6BE72",
+     "400": "#D29E30",
+     "500": "#B28100",
+     "600": "#8F6700",
+     "700": "#705000",
+     "800": "#553C00",
+     "900": "#3D2A00",
+     "950": "#261900"
+    }
+   },
+   "adobe": {
+    "papel": "Neutros",
+    "nota": "De crema (fondos) a café tostado (textos).",
+    "pasos": {
+     "50": "#F9F5F0",
+     "100": "#F1EAE0",
+     "200": "#E5DBCE",
+     "300": "#D1C5B8",
+     "400": "#AEA296",
+     "500": "#8A7E73",
+     "600": "#6E6056",
+     "700": "#56473D",
+     "800": "#403229",
+     "900": "#2D2119",
+     "950": "#20160F"
+    }
+   },
+   "exito": {
+    "papel": "Estado: correcto",
+    "nota": "Confirmaciones.",
+    "pasos": {
+     "50": "#EFFAF0",
+     "100": "#DEF4E1",
+     "200": "#C1E8C8",
+     "300": "#9AD5A5",
+     "400": "#6EBC80",
+     "500": "#47A05F",
+     "600": "#258343",
+     "700": "#07692F",
+     "800": "#004F21",
+     "900": "#003915",
+     "950": "#00230B"
+    }
+   },
+   "aviso": {
+    "papel": "Estado: atención",
+    "nota": "Avisos que no bloquean.",
+    "pasos": {
+     "50": "#FCF6E8",
+     "100": "#F7ECD2",
+     "200": "#EEDBAC",
+     "300": "#DFC178",
+     "400": "#C9A23C",
+     "500": "#AB8500",
+     "600": "#896A00",
+     "700": "#6C5300",
+     "800": "#523E00",
+     "900": "#3B2B00",
+     "950": "#251A00"
+    }
+   },
+   "error": {
+    "papel": "Estado: error",
+    "nota": "Campos mal llenados y fallas.",
+    "pasos": {
+     "50": "#FFF4F3",
+     "100": "#FFE6E4",
+     "200": "#FFCFCA",
+     "300": "#FFABA3",
+     "400": "#FF7871",
+     "500": "#E74E4C",
+     "600": "#C52B30",
+     "700": "#A30B1B",
+     "800": "#7F0010",
+     "900": "#5C0009",
+     "950": "#3C0004"
+    }
+   },
+   "info": {
+    "papel": "Estado: información",
+    "nota": "Notas neutras.",
+    "pasos": {
+     "50": "#EFF8FF",
+     "100": "#DCF0FF",
+     "200": "#BFE2FB",
+     "300": "#96CBF1",
+     "400": "#6AB0E0",
+     "500": "#4393C6",
+     "600": "#2176A8",
+     "700": "#025D8A",
+     "800": "#00466A",
+     "900": "#00314C",
+     "950": "#001E31"
+    }
+   }
+  },
+  "roles": {
+   "fondo": {
+    "de": "adobe-50",
+    "hex": "#F9F5F0"
+   },
+   "fondo-2": {
+    "de": "adobe-100",
+    "hex": "#F1EAE0"
+   },
+   "fondo-3": {
+    "de": "adobe-200",
+    "hex": "#E5DBCE"
+   },
+   "superficie": {
+    "de": "#FFFFFF",
+    "hex": "#FFFFFF"
+   },
+   "fondo-oscuro": {
+    "de": "adobe-950",
+    "hex": "#20160F"
+   },
+   "fondo-oscuro-2": {
+    "de": "adobe-900",
+    "hex": "#2D2119"
+   },
+   "texto": {
+    "de": "adobe-950",
+    "hex": "#20160F"
+   },
+   "texto-2": {
+    "de": "adobe-700",
+    "hex": "#56473D"
+   },
+   "texto-3": {
+    "de": "adobe-600",
+    "hex": "#6E6056"
+   },
+   "texto-apagado": {
+    "de": "adobe-500",
+    "hex": "#8A7E73"
+   },
+   "borde": {
+    "de": "adobe-200",
+    "hex": "#E5DBCE"
+   },
+   "borde-fuerte": {
+    "de": "adobe-300",
+    "hex": "#D1C5B8"
+   },
+   "borde-control": {
+    "de": "adobe-500",
+    "hex": "#8A7E73"
+   },
+   "blanco": {
+    "de": "#FFFFFF",
+    "hex": "#FFFFFF"
+   },
+   "sobre-accion": {
+    "de": "#FFFFFF",
+    "hex": "#FFFFFF"
+   },
+   "sobre-oscuro": {
+    "de": "adobe-50",
+    "hex": "#F9F5F0"
+   },
+   "sobre-oscuro-2": {
+    "de": "adobe-300",
+    "hex": "#D1C5B8"
+   },
+   "marca": {
+    "de": "terracota-500",
+    "hex": "#EA6C00"
+   },
+   "accion": {
+    "de": "terracota-500",
+    "hex": "#EA6C00"
+   },
+   "accion-hover": {
+    "de": "terracota-600",
+    "hex": "#AE4F00"
+   },
+   "accion-activa": {
+    "de": "terracota-700",
+    "hex": "#8A3D00"
+   },
+   "texto-marca": {
+    "de": "terracota-700",
+    "hex": "#8A3D00"
+   },
+   "marca-hondo": {
+    "de": "terracota-900",
+    "hex": "#4C1E00"
+   },
+   "marca-suave": {
+    "de": "terracota-100",
+    "hex": "#FFE7DB"
+   },
+   "marca-suave-2": {
+    "de": "terracota-200",
+    "hex": "#FFD1B9"
+   },
+   "foco": {
+    "de": "terracota-600",
+    "hex": "#AE4F00"
+   },
+   "secundario": {
+    "de": "jardin-600",
+    "hex": "#3C8048"
+   },
+   "secundario-suave": {
+    "de": "jardin-100",
+    "hex": "#E1F3E2"
+   },
+   "acento": {
+    "de": "miel-500",
+    "hex": "#B28100"
+   },
+   "estrella": {
+    "de": "miel-400",
+    "hex": "#D29E30"
+   },
+   "exito": {
+    "de": "exito-600",
+    "hex": "#258343"
+   },
+   "exito-texto": {
+    "de": "exito-700",
+    "hex": "#07692F"
+   },
+   "exito-fondo": {
+    "de": "exito-50",
+    "hex": "#EFFAF0"
+   },
+   "exito-borde": {
+    "de": "exito-300",
+    "hex": "#9AD5A5"
+   },
+   "aviso": {
+    "de": "aviso-600",
+    "hex": "#896A00"
+   },
+   "aviso-texto": {
+    "de": "aviso-700",
+    "hex": "#6C5300"
+   },
+   "aviso-fondo": {
+    "de": "aviso-50",
+    "hex": "#FCF6E8"
+   },
+   "aviso-borde": {
+    "de": "aviso-300",
+    "hex": "#DFC178"
+   },
+   "error": {
+    "de": "error-600",
+    "hex": "#C52B30"
+   },
+   "error-texto": {
+    "de": "error-700",
+    "hex": "#A30B1B"
+   },
+   "error-fondo": {
+    "de": "error-50",
+    "hex": "#FFF4F3"
+   },
+   "error-borde": {
+    "de": "error-300",
+    "hex": "#FFABA3"
+   },
+   "info": {
+    "de": "info-600",
+    "hex": "#2176A8"
+   },
+   "info-texto": {
+    "de": "info-700",
+    "hex": "#025D8A"
+   },
+   "info-fondo": {
+    "de": "info-50",
+    "hex": "#EFF8FF"
+   },
+   "info-borde": {
+    "de": "info-300",
+    "hex": "#96CBF1"
+   }
+  },
+  "parejas": [
+   {
+    "texto": "texto",
+    "fondo": "fondo",
+    "razon": 16.35,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto",
+    "fondo": "fondo-2",
+    "razon": 14.86,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto",
+    "fondo": "superficie",
+    "razon": 17.75,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-2",
+    "fondo": "fondo",
+    "razon": 8.18,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-2",
+    "fondo": "fondo-2",
+    "razon": 7.44,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-2",
+    "fondo": "superficie",
+    "razon": 8.88,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-3",
+    "fondo": "superficie",
+    "razon": 6.05,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-3",
+    "fondo": "fondo",
+    "razon": 5.57,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-marca",
+    "fondo": "fondo",
+    "razon": 7.04,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-marca",
+    "fondo": "superficie",
+    "razon": 7.64,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "texto-marca",
+    "fondo": "marca-suave",
+    "razon": 6.44,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "sobre-accion",
+    "fondo": "accion",
+    "razon": 3.16,
+    "minimo": 3,
+    "pasa": true
+   },
+   {
+    "texto": "sobre-accion",
+    "fondo": "accion-hover",
+    "razon": 5.36,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "blanco",
+    "fondo": "marca-hondo",
+    "razon": 14.07,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "blanco",
+    "fondo": "fondo-oscuro",
+    "razon": 17.75,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "borde-control",
+    "fondo": "superficie",
+    "razon": 3.95,
+    "minimo": 3,
+    "pasa": true
+   },
+   {
+    "texto": "foco",
+    "fondo": "fondo",
+    "razon": 4.94,
+    "minimo": 3,
+    "pasa": true
+   },
+   {
+    "texto": "foco",
+    "fondo": "superficie",
+    "razon": 5.36,
+    "minimo": 3,
+    "pasa": true
+   },
+   {
+    "texto": "exito-texto",
+    "fondo": "exito-fondo",
+    "razon": 6.38,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "aviso-texto",
+    "fondo": "aviso-fondo",
+    "razon": 6.78,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "error-texto",
+    "fondo": "error-fondo",
+    "razon": 7.43,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "info-texto",
+    "fondo": "info-fondo",
+    "razon": 6.66,
+    "minimo": 4.5,
+    "pasa": true
+   },
+   {
+    "texto": "error-texto",
+    "fondo": "superficie",
+    "razon": 8.01,
+    "minimo": 4.5,
+    "pasa": true
+   }
+  ]
+ }
+}

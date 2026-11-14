@@ -1,0 +1,13 @@
+---
+// Páginas siguientes de la lista del blog: /blog/pagina/2, /blog/pagina/3… Solo existen cuando hay más de 9 artículos
+// además del destacado. Son enlaces de verdad (no un botón de «cargar más»), para que Google las pueda recorrer.
+import BlogIndice from '../../../components/BlogIndice.astro';
+import { articulos, POR_PAGINA } from '../../../data/blog';
+export async function getStaticPaths() {
+  const total = Math.max(0, (await articulos()).length - 1);
+  const paginas = Math.ceil(total / POR_PAGINA);
+  return Array.from({ length: Math.max(0, paginas - 1) }, (_, i) => ({ params: { n: String(i + 2) } }));
+}
+const { n } = Astro.params;
+---
+<BlogIndice pagina={Number(n)} />

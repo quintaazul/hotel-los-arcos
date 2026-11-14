@@ -1,0 +1,87 @@
+---
+// Habitaciones: /hospedaje en Quinta Azul y /habitaciones en Los Arcos (se conservan las URL actuales).
+// Orden del documento del rediseño: portada con título y precio, una tarjeta por tipo, galería, antes de reservar,
+// grupos (en Los Arcos, «¿Son cuatro o más?» lleva a Departamentos), dos artículos del blog y los enlaces del plan SEO.
+import Base from '../layouts/Base.astro';
+import PortadaCorta from '../components/PortadaCorta.astro';
+import Reserva from '../components/Reserva.astro';
+import Habitaciones from '../components/Habitaciones.astro';
+import FotoVisor from '../components/FotoVisor.astro';
+import Titulo from '../components/Titulo.astro';
+import Icono from '../components/Icono.astro';
+import Foto from '../components/Foto.astro';
+import Preguntas from '../components/Preguntas.astro';
+import BlogCorto from '../components/BlogCorto.astro';
+import Enlaces from '../components/Enlaces.astro';
+import { H, waLink, dinero } from '../data/hoteles';
+import { T, SEO } from '../data/textos';
+export function getStaticPaths() { return [{ params: { habs: __HOTEL__ === 'qa' ? 'hospedaje' : 'habitaciones' } }]; }
+const reglas: [string, string, string][] = [['Entrada', '2:00 PM', ''], ['Salida', '11:00 AM', ''], ['Anticipo', '50%', 'No se devuelve si cancelas.'], ['Edad', '18+', 'Con identificación oficial.'], ['Mascotas', 'No', ''], H.id === 'qa' ? ['Fumar', 'No', 'En las habitaciones.'] : ['Pago', 'Efectivo y tarjeta', 'Con factura.']];
+const pie = (f: string) => (H.galeria.find(([x]) => x === f) || ['', ''])[1];
+const resto = H.galeria.filter(([f]) => !H.mosaico.includes(f));
+const hora = (x: string) => x.split(' ');
+const conPrecio = H.habs.filter((x) => x.precio);
+const desde = Math.min(...conPrecio.map((x) => x.precio as number));
+const t = T.habitaciones, seo = SEO.habitaciones;
+---
+<Base title={seo.title} description={seo.description} pagina={H.rutaHabs} ogFoto={H.heroes.habitaciones}>
+  <PortadaCorta img={H.heroes.habitaciones} alt={'Habitación del ' + H.nombre + ', en García, Nuevo León'} clave={seo.h1} lineas={[t.portada.l]} ovalo={t.portada.o} frase={t.portada.texto}
+    migas={[['/', 'Inicio'], ['/' + H.rutaHabs, 'Habitaciones']]}
+    botones={[{ t: 'Reservar por WhatsApp', href: waLink(), ico: 'wa', clase: 'blanco', fuera: true }, { t: 'Ver las habitaciones', href: '#habitaciones', clase: 'contorno', flecha: true }]}
+    tarjeta={{ rotulo: 'Precio por noche', valor: dinero(desde), sufijo: 'desde', texto: conPrecio.slice(0, 3).map((x) => x.corto + ' ' + dinero(x.precio as number)).join(' · ') }}>
+    <Reserva slot="barra" />
+  </PortadaCorta>
+  <Habitaciones pagina />
+  <section class="seccion sin-arriba" aria-labelledby="t-galeria">
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={[t.galeria.l]} ovalo={t.galeria.o} id="t-galeria" marca />
+        <div class="lado"><p class="texto" data-aparece>{t.galeria.texto}</p></div>
+      </div>
+      <div class="mosaico">
+        {H.mosaico.map((f, i) => <figure data-revela style={`--i:${i}`}><FotoVisor src={H.id + '/' + f} alt={pie(f)} grupo="galeria" sizes={i === 0 ? '(min-width: 761px) 40vw, 100vw' : i === 1 || i === 4 ? '(min-width: 761px) 24vw, 50vw' : '(min-width: 761px) 32vw, 50vw'} anchos={[480, 800, 1200]} /><figcaption>{pie(f)}</figcaption></figure>)}
+      </div>
+      <div class="mosaico-resto">{resto.map(([f, a]) => <FotoVisor src={H.id + '/' + f} alt={a} grupo="galeria" sizes="1px" anchos={[480]} />)}</div>
+      <div class="mosaico-pie" data-aparece>
+        <p>{H.galeria.length} fotos de las habitaciones{H.id === 'la' ? ' y los departamentos' : ''}, el pasillo y la alberca.</p>
+        <button type="button" class="boton contorno suave" data-visor-abre="galeria"><Icono n="fotos" />Ver las {H.galeria.length} fotos</button>
+      </div>
+    </div>
+  </section>
+  <section class="seccion f-hondo" aria-labelledby="t-reglas" id="antes-de-reservar">
+    <div class="marco sobre-oscuro">
+      <div class="estancia-cab">
+        <Titulo lineas={[t.reglas.l]} ovalo={t.reglas.o} id="t-reglas" />
+        <p class="texto" data-aparece>{t.reglas.texto} Las reglas completas están en las <a href="/politicas">políticas de reservación</a>.</p>
+      </div>
+      <div class="horario" data-aparece>
+        <div><span class="mini">Entrada</span><b>{hora(reglas[0][1])[0]}<small>{hora(reglas[0][1])[1]}</small></b></div>
+        <div class="horario-raya" aria-hidden="true"><span>Tu estancia</span></div>
+        <div><span class="mini">Salida</span><b>{hora(reglas[1][1])[0]}<small>{hora(reglas[1][1])[1]}</small></b></div>
+      </div>
+      <dl class="reglas-fila">{reglas.slice(2).map(([a, b, c], i) => <div data-aparece style={`--orden:${i}`}><dt>{a}</dt><dd>{b}{c && <small>{c}</small>}</dd></div>)}</dl>
+      <div class="incluye-bloque" data-aparece>
+        <span class="rotulo">Todas incluyen</span>
+        <ul class="incluye-fila lista">{H.incluye.map(([ic, x]) => <li><Icono n={ic} />{x}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+  <section class="partida" aria-labelledby="t-grupos">
+    <div class="partida-foto" data-revela data-paralaje><Foto src={H.id + '/' + H.grupos.img} alt={H.grupos.alt} sizes="(min-width: 1025px) 50vw, 100vw" /></div>
+    <div class="partida-txt">
+      <div class="partida-int">
+        <Titulo lineas={[t.grupos.l]} ovalo={t.grupos.o} id="t-grupos" marca />
+        <p class="texto" data-aparece>{t.grupos.texto}</p>
+        <ul class="datos lista">{H.grupos.datos.map(([ic, x], i) => <li data-aparece style={`--orden:${i}`}><Icono n={ic} />{x}</li>)}</ul>
+        <div class="botones" data-aparece>
+          {H.id === 'la' && <a class="boton" href="/departamentos">Departamentos con cocina para 4 a 8 personas<span class="flecha"><Icono n="flecha" /></span></a>}
+          <a class:list={['boton', { 'contorno suave': H.id === 'la' }]} href={waLink('Hola, quiero cotizar habitaciones para un grupo en el ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />Cotizar para un grupo</a>
+        </div>
+      </div>
+    </div>
+    <div class="sello" data-aparece aria-hidden="true"><b>{H.grupos.sello[0]}</b><span>{H.grupos.sello[1]}</span></div>
+  </section>
+  <BlogCorto forma="lista" cuantos={2} lineas={[t.blog.l]} ovalo={t.blog.o} texto={t.blog.texto} />
+  <Enlaces enlaces={t.enlaces} />
+  <Preguntas de="habitaciones" />
+</Base>

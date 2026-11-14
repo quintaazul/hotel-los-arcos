@@ -1,0 +1,34 @@
+---
+// Tarjeta de un artículo del blog, en tres tamaños (así lo pide el documento del rediseño):
+//   destacada  la que abre la página del blog: foto grande y el texto al lado;
+//   normal     la de las listas: foto, tema, título, extracto, fecha y minutos de lectura;
+//   texto      solo el título con su fecha, para el pie de página.
+// El tema es un enlace a su página (no un filtro) y toda la tarjeta lleva al artículo.
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+import { H, foco } from '../data/hoteles';
+import { type Art, tema, urlArt, urlTema, fechaCorta, iso } from '../data/blog';
+interface Props { art: Art; tamano?: 'destacada' | 'normal' | 'texto'; nivel?: 'h2' | 'h3'; sizes?: string; rotulo?: string; orden?: number }
+const { art, tamano = 'normal', nivel = 'h3', sizes, rotulo, orden = 0 } = Astro.props;
+const d = art.data, t = tema(d.tema), Tit = nivel;
+// El extracto va justo debajo del título: si la descripción empieza repitiéndolo («Cómo organizar…: cuándo apartar…»),
+// en la tarjeta se enseña solo lo que sigue a los dos puntos.
+const corte = d.descripcion.indexOf(': '), repite = corte > 0 && d.descripcion.toLowerCase().startsWith(d.titulo.toLowerCase().slice(0, 18));
+const extracto = repite ? d.descripcion.charAt(corte + 2).toUpperCase() + d.descripcion.slice(corte + 3) : d.descripcion;
+---
+{tamano === 'texto' ? (
+  <a class="art-linea" href={urlArt(art)}><span>{d.titulo}</span><time datetime={iso(d.publicado)}>{fechaCorta(d.publicado)}</time></a>
+) : (
+  <article class:list={['art', tamano]} data-aparece style={`--orden:${orden}`}>
+    <a class="art-foto" href={urlArt(art)} tabindex="-1" aria-hidden="true" style={foco(d.foto)}>
+      <Foto src={H.id + '/' + d.foto} alt="" sizes={sizes ?? (tamano === 'destacada' ? '(min-width: 1025px) 56vw, 100vw' : '(min-width: 1025px) 30vw, (min-width: 641px) 46vw, 100vw')} anchos={tamano === 'destacada' ? [640, 960, 1280, 1920] : [480, 800, 1200, 1600]} />
+    </a>
+    <div class="art-txt">
+      <p class="art-sobre">{rotulo && <span class="art-rotulo">{rotulo}</span>}<a class="art-tema" href={urlTema(t.id)}>{t.nombre}</a></p>
+      <Tit class="art-tit"><a href={urlArt(art)}>{d.titulo}</a></Tit>
+      <p class="art-ext">{tamano === 'destacada' ? d.resumen : extracto}</p>
+      <p class="art-meta"><time datetime={iso(d.publicado)}>{fechaCorta(d.publicado)}</time><span aria-hidden="true">·</span><span>{d.lectura} min de lectura</span></p>
+      {tamano === 'destacada' && <a class="enlace art-ir" href={urlArt(art)} aria-hidden="true" tabindex="-1">Leer el artículo<Icono n="flecha" /></a>}
+    </div>
+  </article>
+)}

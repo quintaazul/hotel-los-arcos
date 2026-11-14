@@ -1,0 +1,15 @@
+---
+// «Sigue por aquí»: los enlaces a otras páginas que el plan SEO pide en cada página, con un texto que dice a dónde
+// llevan («Renta de palapa para fiestas», «Todas las preguntas frecuentes»). Es una fila discreta, no una banda:
+// el dueño no quiere otro botón grande de reservar al final (el de la cabecera siempre está a la vista).
+import Icono from './Icono.astro';
+import { T } from '../data/textos';
+interface Props { enlaces: [string, string][]; rotulo?: string; class?: string }
+const { enlaces, rotulo = T.sigue, class: clase } = Astro.props;
+---
+<nav class:list={['marco enlaces-rel', clase]} aria-label={rotulo}>
+  <p class="enlaces-rotulo" data-aparece>{rotulo}</p>
+  <ul class="lista">
+    {enlaces.map(([t, href], i) => <li data-aparece style={`--orden:${i}`}><a href={href}><span>{t}</span><Icono n="flecha" /></a></li>)}
+  </ul>
+</nav>

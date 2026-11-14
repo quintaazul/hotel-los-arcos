@@ -1,0 +1,101 @@
+/* Efectos del catálogo motion-prompt (10 de noviembre de 2026).
+   Siguen las reglas de movimiento.css: solo se animan posición, tamaño, opacidad y recorte; lo atado al scroll lo
+   mueve el navegador; nada visible depende de que el código corra. Sin JavaScript, si el código falla (.sin-mov) o
+   con «reducir movimiento», todo se ve completo y quieto. */
+
+@keyframes punto-entra{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+@keyframes punto-late{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(2.4)}}
+@keyframes linea-crece{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes paso-llega{from{background-color:var(--c-marca-suave);color:var(--c-marca);transform:scale(1)}55%{transform:scale(1.14)}to{background-color:var(--c-accion);color:var(--c-sobre-accion);transform:scale(1)}}
+@keyframes avance{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ───────── 1 · Puntos sobre la foto (n.º 163): «La palapa, punto por punto», en Celebraciones ───────── */
+.puntos-marco{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-10);align-items:center}
+.puntos-cab{grid-column:1 / span 4;display:flex;flex-direction:column;gap:var(--e-6)}
+.puntos-cab .titulo{font-size:clamp(2rem,1.1rem + 2.5vw,3.5rem)}
+.puntos{grid-column:6 / span 7;position:relative}
+.puntos-foto{aspect-ratio:16/10;border-radius:var(--r-media);overflow:hidden;background:var(--c-fondo-2)}
+.puntos-foto picture,.puntos-foto img{display:block;width:100%;height:100%;object-fit:cover}
+/* El índice: los mismos nombres en una lista; pasar por una fila enciende su punto */
+.puntos-indice{display:grid;border-top:var(--linea) solid var(--c-borde)}
+.puntos-indice button{display:flex;align-items:center;gap:var(--e-3);width:100%;padding:var(--e-3) 0;border:0;border-bottom:var(--linea) solid var(--c-borde);background:none;color:var(--c-texto-2);font:inherit;font-size:var(--t-ui);text-align:left;cursor:pointer;transition:color var(--d-ui) ease,padding-left var(--d-medio) var(--curva-salida)}
+.puntos-indice .n,.punto .n{display:grid;place-items:center;flex:none;width:1.875rem;height:1.875rem;border-radius:50%;font-size:var(--t-nota);font-weight:var(--p-fuerte);line-height:1;font-variant-numeric:tabular-nums;transition:transform var(--d-ui) var(--curva-salida),background-color var(--d-ui) ease,color var(--d-ui) ease}
+.puntos-indice .n{background:var(--c-marca-suave);color:var(--c-marca)}
+.puntos-indice button.activo{color:var(--c-texto);padding-left:var(--e-2)}
+.puntos-indice button.activo .n{background:var(--c-accion);color:var(--c-sobre-accion)}
+/* El botón mide lo que un dedo necesita; lo que se ve es el círculo de adentro */
+.punto button{position:absolute;left:var(--x);top:var(--y);z-index:2;display:grid;place-items:center;width:var(--toque);height:var(--toque);margin:calc(var(--toque) / -2) 0 0 calc(var(--toque) / -2);padding:0;border:0;border-radius:50%;background:none;color:inherit;font:inherit;cursor:pointer}
+.punto button::before{content:"";position:absolute;inset:.4375rem;border-radius:50%;border:var(--linea-fuerte) solid var(--c-blanco);opacity:0;pointer-events:none}
+.punto .n{position:relative;background:var(--c-blanco);color:var(--c-texto);box-shadow:0 0 0 1px rgb(var(--c-noche) / .08),0 .375rem 1rem -.25rem rgb(var(--c-noche) / .55)}
+.punto.abierto .n{background:var(--c-accion);color:var(--c-sobre-accion);transform:scale(1.14)}
+.punto button:focus-visible{outline:2px solid var(--c-blanco);outline-offset:1px}
+.punto button:active .n{transform:scale(.94)}
+/* La nota: una tarjeta junto a su punto, hacia el lado donde hay más foto */
+.nota{position:absolute;left:var(--x);top:var(--y);z-index:3;display:grid;gap:var(--e-1);width:max-content;max-width:min(16.5rem,44vw);padding:var(--e-35) var(--e-4);border-radius:var(--r-tarjeta);background:var(--c-superficie);color:var(--c-texto);box-shadow:var(--s-3);font-size:var(--t-chico);line-height:1.45;opacity:0;visibility:hidden;pointer-events:none;transform:translate(1.25rem,-50%);transition:opacity var(--d-ui) ease,transform var(--d-medio) var(--curva-salida),visibility 0s linear var(--d-ui)}
+.punto.a-izq .nota{transform:translate(calc(-100% - 1.25rem),-50%)}
+.nota b{font-size:var(--t-ui);font-weight:var(--p-fuerte)}
+.nota .num{display:none}
+.nota span{color:var(--c-texto-2)}
+.punto.abierto .nota{opacity:1;visibility:visible;pointer-events:auto;transform:translate(1.75rem,-50%);transition:opacity var(--d-ui) ease,transform var(--d-medio) var(--curva-salida),visibility 0s}
+.punto.a-izq.abierto .nota{transform:translate(calc(-100% - 1.75rem),-50%)}
+@media (hover:hover) and (pointer:fine){.puntos-indice button:hover{color:var(--c-texto)}}
+/* Tablets y celulares: la foto a todo el ancho y sin índice (la nota ya dice el nombre) */
+@media (max-width:1024px){
+  .puntos-cab,.puntos{grid-column:1 / -1}
+  .puntos-indice{display:none}
+}
+/* En pantallas angostas la nota no cabe junto al punto: va debajo de la foto, en un lugar fijo que ya tiene su espacio */
+@media (max-width:760px){
+  .puntos{margin-bottom:6.75rem}
+  .nota,.punto.a-izq .nota{left:0;right:0;top:calc(100% + var(--e-3));width:auto;max-width:none;min-height:5.25rem;align-content:start;transform:translateY(.375rem);box-shadow:var(--s-1)}
+  .punto.abierto .nota,.punto.a-izq.abierto .nota{transform:none}
+  .nota b{display:flex;align-items:center;gap:var(--e-2)}
+  .nota .num{display:grid;place-items:center;width:1.375rem;height:1.375rem;border-radius:50%;background:var(--c-accion);color:var(--c-sobre-accion);font-size:var(--t-micro);font-variant-numeric:tabular-nums}
+}
+@media screen and (prefers-reduced-motion:no-preference){
+  /* Los puntos brotan uno tras otro cuando la foto entra y laten unas cuantas veces para invitar a tocarlos */
+  .js:not(.sin-mov) .puntos:not(.visto) .punto button{opacity:0}
+  .puntos.visto .punto button{animation:punto-entra var(--d-entrada) var(--curva-expo) calc(var(--d-lento) + var(--i,0) * 90ms) backwards}
+  .puntos.visto .punto:not(.abierto) button::before{animation:punto-late 1.8s var(--curva-suave) calc(1.4s + var(--i,0) * .3s) 4}
+  @media (hover:hover) and (pointer:fine){.puntos:hover .punto:not(.abierto) button::before{animation:punto-late 1.8s var(--curva-suave) calc(var(--i,0) * .18s) infinite}}
+}
+
+/* ───────── 3 · Línea de tiempo al bajar (n.º 145): los pasos de «Cómo llegar», en Ubicación ───────── */
+.pasos{position:relative}
+.pasos::before,.pasos::after{content:"";position:absolute;left:calc(1.375rem - 1px);top:1.375rem;bottom:1.375rem;width:2px;border-radius:1px}
+.pasos::before{background:var(--c-marca-suave)}
+.pasos::after{display:none;background:var(--c-accion);transform-origin:top}
+.pasos li{position:relative}
+.pasos li::before{position:relative;z-index:1}
+/* si el último paso ocupa más de un renglón, la línea no debe asomar por debajo de su número */
+.pasos li:last-child::after{content:"";position:absolute;left:0;top:2.75rem;bottom:0;width:2.75rem;background:var(--pasos-fondo,var(--c-fondo));z-index:1}
+@media screen and (prefers-reduced-motion:no-preference){
+  /* la línea espera al primer paso para no verse sola */
+  .js:not(.sin-mov) .pasos:not(:has(li.visto))::before{opacity:0}
+  .pasos::before{transition:opacity var(--d-medio) ease}
+  @supports (animation-timeline:view()){
+    :root{--lt-pasos:--pasos;--lt-avance:scroll(root block)}
+    /* la línea se dibuja mientras la lista cruza la pantalla y cada número se enciende cuando la línea llega a él */
+    .pasos{view-timeline:--pasos block;view-timeline-inset:0px}
+    .pasos::after{display:block;animation:linea-crece linear both;animation-timeline:var(--lt-pasos);animation-range:cover 14% cover 54%}
+    .pasos li::before{animation:paso-llega linear both;animation-timeline:var(--lt-pasos);animation-range:cover calc(14% + 40% * var(--k,0) / var(--n,3)) cover calc(17% + 40% * var(--k,0) / var(--n,3))}
+  }
+}
+
+/* (El efecto 155, otra foto de la habitación al pasar el ratón, se quitó el 13 de noviembre de 2026: al dueño no le
+   gustó ni le pareció práctico. No volver a proponerlo.) */
+
+/* ───────── 5 · La foto viaja a la página que abre (n.º 161): del índice de planes a la guía ─────────
+   Al hacer clic en una fila, la vista previa lleva el mismo nombre que la foto de la guía y el navegador convierte
+   una en la otra durante el cambio de página. Donde no se puede (Firefox, celular sin vista previa) queda el fundido. */
+.va-destino{view-transition-name:foto-plan}
+::view-transition-group(foto-plan){animation-duration:var(--d-lento);animation-timing-function:var(--curva-vaiven)}
+::view-transition-old(foto-plan),::view-transition-new(foto-plan){width:100%;height:100%;object-fit:cover}
+/* si la página llega con ese cambio animado, la foto de la guía ya está puesta: no vuelve a entrar con cortina */
+.js.con-vt .articulo-foto.foto-caja[data-revela]{opacity:1;animation:none}
+
+/* ───────── 6 · Barra de avance de lectura (n.º 079): las guías de «Planes cerca» ───────── */
+.avance{display:none}
+@supports (animation-timeline:scroll()){
+  .avance{display:block;position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:calc(var(--z-cabecera) + 1);height:3px;background:var(--c-accion);pointer-events:none;transform-origin:left;animation:avance linear both;animation-timeline:var(--lt-avance,scroll(root block))}
+}

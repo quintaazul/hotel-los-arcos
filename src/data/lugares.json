@@ -1,0 +1,130 @@
+{
+  "nota": "Lugares cercanos que se rotulan en el mapa de «Cómo llegar» (scripts/mapa.mjs). Elegidos a mano el 10 de noviembre de 2026 entre los que registran OpenStreetMap («osm») y Overture Maps («overture», con su confianza de 0 a 1): solo lo que le sirve a un huésped (comer, plaza, museos, farmacia, abarrotes). Fuera a propósito: otros hoteles y quintas de eventos (competencia), bares y depósitos, escuelas, oficinas y todo lo que Overture ubica encimado en el centro del pueblo (ubicación inventada). Regla del dueño (11 de noviembre de 2026): lo que no se puede confirmar no se agrega; por eso salieron Museo de la Troka, Soriana Mercado y Hospital Supera. Prioridad 1 = se rotula primero. «corto»: el nombre que lleva en la imagen de celular.",
+  "lugares": [
+    {
+      "n": "Plaza Principal",
+      "cat": "plaza",
+      "ll": [-100.59471, 25.81172],
+      "p": 1,
+      "fuente": "osm + overture 0.95"
+    },
+    {
+      "n": "Parroquia San Juan Bautista",
+      "cat": "iglesia",
+      "ll": [-100.59461, 25.8121],
+      "p": 1,
+      "fuente": "osm + overture 1.00",
+      "corto": "Parroquia"
+    },
+    {
+      "n": "Museo El Ojo",
+      "cat": "museo",
+      "ll": [-100.59563, 25.81174],
+      "p": 1,
+      "fuente": "osm + overture 0.95"
+    },
+    {
+      "n": "Antiguo Palacio Municipal",
+      "cat": "museo",
+      "ll": [-100.5946, 25.81117],
+      "p": 2,
+      "fuente": "osm + overture 0.86",
+      "corto": "Palacio Municipal"
+    },
+    {
+      "n": "Auditorio Municipal",
+      "cat": "cultura",
+      "ll": [-100.59537, 25.8126],
+      "p": 2,
+      "fuente": "osm + overture 0.96",
+      "corto": "Auditorio"
+    },
+    {
+      "n": "La Casona, Arte y Cultura",
+      "cat": "cultura",
+      "ll": [-100.59113, 25.81338],
+      "p": 3,
+      "fuente": "overture 0.86",
+      "corto": "La Casona"
+    },
+    {
+      "n": "Taquería El Primo",
+      "cat": "comer",
+      "ll": [-100.59502, 25.81131],
+      "p": 2,
+      "fuente": "overture 0.92"
+    },
+    {
+      "n": "Restaurant La Mexicana",
+      "cat": "comer",
+      "ll": [-100.59549, 25.8112],
+      "p": 2,
+      "fuente": "overture 0.91",
+      "corto": "La Mexicana"
+    },
+    {
+      "n": "Appetitozza Pizza",
+      "cat": "comer",
+      "ll": [-100.59469, 25.81092],
+      "p": 2,
+      "fuente": "overture 0.98"
+    },
+    {
+      "n": "Los Enchilados",
+      "cat": "comer",
+      "ll": [-100.5932, 25.81181],
+      "p": 3,
+      "fuente": "overture 0.85"
+    },
+    {
+      "n": "Panadería del Pueblo",
+      "cat": "pan",
+      "ll": [-100.59503, 25.81222],
+      "p": 2,
+      "fuente": "overture 0.98",
+      "corto": "Panadería"
+    },
+    {
+      "n": "La Nogalera",
+      "cat": "pan",
+      "ll": [-100.59785, 25.81175],
+      "p": 3,
+      "fuente": "overture 0.88 (dulcería y panadería regional)"
+    },
+    {
+      "n": "Frappes Don José",
+      "cat": "cafe",
+      "ll": [-100.59447, 25.81097],
+      "p": 3,
+      "fuente": "overture 0.92"
+    },
+    {
+      "n": "La Michoacana",
+      "cat": "helado",
+      "ll": [-100.59484, 25.81195],
+      "p": 3,
+      "fuente": "osm + overture 0.74"
+    },
+    {
+      "n": "UniFarmacias",
+      "cat": "farmacia",
+      "ll": [-100.5943, 25.81161],
+      "p": 2,
+      "fuente": "overture 0.82"
+    },
+    {
+      "n": "Abarrotes Gutiérrez",
+      "cat": "tienda",
+      "ll": [-100.5972, 25.81517],
+      "p": 3,
+      "fuente": "overture 0.87 (abarrotes y carnicería)"
+    },
+    {
+      "n": "Abarrotes Yadi",
+      "cat": "tienda",
+      "ll": [-100.59492, 25.814],
+      "p": 3,
+      "fuente": "osm (miscelánea y abarrotes)"
+    }
+  ]
+}

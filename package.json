@@ -1,0 +1,27 @@
+{
+  "name": "hoteles-rediseno",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Prototipo local del rediseño de Hotel Quinta Azul y Hotel Los Arcos Inn. No se despliega.",
+  "scripts": {
+    "dev:qa": "node scripts/dev.mjs qa",
+    "dev:la": "node scripts/dev.mjs la",
+    "build:qa": "node scripts/build.mjs qa",
+    "build:la": "node scripts/build.mjs la",
+    "check": "astro check",
+    "ver:qa": "node scripts/ver.mjs qa",
+    "ver:la": "node scripts/ver.mjs la",
+    "paleta": "node scripts/paleta.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/dm-serif-display": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "astro": "^7.4.8",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "culori": "^4.0.2"
+  }
+}

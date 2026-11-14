@@ -1,0 +1,14 @@
+---
+// Número con botones − y + (sin las flechitas del navegador).
+import Icono from '../Icono.astro';
+interface Props { id: string; nombre: string; etiqueta: string; min?: number; max?: number; valor?: number; class?: string }
+const { id, nombre, etiqueta, min = 1, max = 99, valor = min, class: clase } = Astro.props;
+---
+<div class:list={['campo', clase]}>
+  <label class="campo-et" for={id}>{etiqueta}</label>
+  <div class="ctrl ctrl-num" data-contador>
+    <button type="button" class="icono-btn" aria-label={'Menos: ' + etiqueta.toLowerCase()}><Icono n="menos" /></button>
+    <input id={id} name={nombre} type="text" inputmode="numeric" pattern="[0-9]*" data-min={min} data-max={max} value={valor} autocomplete="off" />
+    <button type="button" class="icono-btn" aria-label={'Más: ' + etiqueta.toLowerCase()}><Icono n="mas" /></button>
+  </div>
+</div>

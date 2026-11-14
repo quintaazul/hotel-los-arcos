@@ -1,0 +1,88 @@
+---
+// Celebraciones: la página de la palapa. Misma plantilla, dos enfoques (documento del rediseño):
+// Quinta Azul, «renta de palapa para fiestas», junto a la alberca; Los Arcos, «palapa techada en el jardín».
+// El bloque de la palapa vive aquí y en el inicio, y en ningún otro lado (así lo pidió el dueño).
+import Fecha from '../components/controles/Fecha.astro';
+import Contador from '../components/controles/Contador.astro';
+import Desplegable from '../components/controles/Desplegable.astro';
+import Base from '../layouts/Base.astro';
+import PortadaCorta from '../components/PortadaCorta.astro';
+import Palapa from '../components/Palapa.astro';
+import Puntos from '../components/Puntos.astro';
+import Titulo from '../components/Titulo.astro';
+import Icono from '../components/Icono.astro';
+import Foto from '../components/Foto.astro';
+import Preguntas from '../components/Preguntas.astro';
+import BlogCorto from '../components/BlogCorto.astro';
+import Enlaces from '../components/Enlaces.astro';
+import { H, waLink, foco, altDe } from '../data/hoteles';
+import { T, SEO } from '../data/textos';
+const t = T.celebraciones, seo = SEO.celebraciones;
+const wa = (que: string) => waLink('Hola, quiero cotizar ' + que + ' ' + t.waBase + H.nombre);
+const schema = [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id': H.sitio + '/celebraciones#palapa', name: (H.id === 'qa' ? 'Palapa para fiestas' : 'Palapa techada') + ' del ' + H.nombre, url: H.sitio + '/celebraciones', maximumAttendeeCapacity: 60, containedInPlace: { '@id': H.sitio + '/#hotel' },
+  address: { '@type': 'PostalAddress', streetAddress: H.calle, addressLocality: 'García', addressRegion: 'Nuevo León', postalCode: '66000', addressCountry: 'MX' }, amenityFeature: H.palapa.incluye.slice(1).map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })) }];
+---
+<Base title={seo.title} description={seo.description} pagina="celebraciones" ogFoto={H.heroes.celebraciones} schema={schema}>
+  <PortadaCorta img={H.heroes.celebraciones} alt={H.palapa.alt} clave={seo.h1} lineas={[t.portada.l]} ovalo={t.portada.o} frase={t.portada.texto}
+    migas={[['/', 'Inicio'], ['/celebraciones', 'Celebraciones']]}
+    botones={[{ t: t.cotizarBtn, href: wa(H.id === 'qa' ? 'una fiesta' : 'una reunión'), ico: 'wa', clase: 'blanco', fuera: true }, { t: t.verBtn, href: '#t-palapa', clase: 'contorno', flecha: true }]}
+    tarjeta={{ rotulo: 'Capacidad', valor: '60', sufijo: 'personas', texto: t.tarjeta }}
+    barra={H.palapa.incluye.slice(1).map(([ico, b]) => ({ ico, b }))} />
+  <Palapa pagina />
+  <Puntos />
+  <section class="seccion f-2 celebra" aria-labelledby="t-celebrar">
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={[t.tiposCab.l]} ovalo={t.tiposCab.o} id="t-celebrar" marca />
+        <div class="lado"><p class="texto" data-aparece>{t.tiposCab.texto}</p></div>
+      </div>
+      <div class="indice" data-indice>
+        <ul class="indice-lista lista">
+          {t.tipos.map(([nombre, p, como], i) => (
+            <li>
+              <a class="fila-plan" href={wa(como)} target="_blank" rel="noopener" data-prev={i} data-aparece>
+                <span class="num-s" aria-hidden="true">0{i + 1}</span>
+                <span class="fila-foto" aria-hidden="true" style={foco(H.celebrar[i])}><Foto src={H.id + '/' + H.celebrar[i]} alt="" sizes="30vw" anchos={[480]} /></span>
+                <span class="tit">{nombre}<small>{p}</small></span>
+                <span class="ir" aria-hidden="true"><Icono n="flecha" /></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="vista-previa" aria-hidden="true" data-vista-previa>
+          {t.tipos.map((_, i) => <div class="capa" data-capa={i} style={foco(H.celebrar[i])}><Foto src={H.id + '/' + H.celebrar[i]} alt={altDe(H.celebrar[i])} sizes="28vw" cubre={4 / 5} anchos={[480, 800]} /></div>)}
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="seccion f-hondo" aria-labelledby="t-cotizar" id="cotizar">
+    <div class="marco cotiza-marco">
+      <div class="cotiza-txt sobre-oscuro">
+        <Titulo lineas={[t.cotiza.l]} ovalo={t.cotiza.o} id="t-cotizar" />
+        <p class="texto" data-aparece>{t.cotiza.texto}</p>
+        <ol class="pasos" style={`--n:${t.apartar.length - 1}`}>{t.apartar.map(([a, b], k) => <li data-aparece style={`--k:${k}`}><p><b>{a}</b> {b}</p></li>)}</ol>
+        <p class="texto cotiza-nota" data-aparece>El precio depende del día, del horario y de cuántas personas van: por eso se cotiza.</p>
+      </div>
+      <form class="formulario tarjeta-form" data-whatsapp={'Hola, quiero cotizar la ' + T.palapa + ' del ' + H.nombre} data-numero={H.wa} data-fiesta data-aparece>
+        <Fecha id="e-fecha" nombre="Fecha" etiqueta="Fecha" requerido falta="Elige la fecha." />
+        <Contador id="e-personas" nombre="Personas" etiqueta="Personas" min={1} max={60} valor={40} />
+        <Desplegable class="completo" id="e-tipo" nombre="Motivo" etiqueta={t.etiquetaOpc} opciones={t.opciones} />
+        <div class="completo"><button class="boton" type="submit"><Icono n="wa" />Cotizar por WhatsApp</button></div>
+      </form>
+    </div>
+  </section>
+  <section class="seccion invitados" aria-labelledby="t-invitados">
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={[t.invitados.l]} ovalo={t.invitados.o} id="t-invitados" marca />
+        <div class="lado">
+          <p class="texto" data-aparece>{t.invitados.texto}</p>
+          <div data-aparece><a class="boton contorno suave" href={t.invitados.href}>{t.invitados.enlace}<span class="flecha"><Icono n="flecha" /></span></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <BlogCorto forma="lista" cuantos={3} deTema={t.blog.tema} lineas={[t.blog.l]} ovalo={t.blog.o} texto={t.blog.texto} clase="sin-arriba" />
+  <Enlaces enlaces={t.enlaces} />
+  <Preguntas de="celebraciones" />
+</Base>

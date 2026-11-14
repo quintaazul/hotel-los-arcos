@@ -1,0 +1,44 @@
+---
+// Preguntas frecuentes: las preguntas del hotel por grupos (reservas y pagos, habitaciones, alberca, la palapa,
+// reglas, ubicación), con un índice arriba y un acordeón por grupo que se abre sin JavaScript. Aquí va el marcado
+// FAQPage para buscadores; las secciones de preguntas de las otras páginas siguen donde estaban, sin marcado.
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import Titulo from '../components/Titulo.astro';
+import Icono from '../components/Icono.astro';
+import Enlaces from '../components/Enlaces.astro';
+import { H, waLink } from '../data/hoteles';
+import { T, SEO, FAQ } from '../data/textos';
+const seo = SEO.faq, total = FAQ.reduce((n, g) => n + g.items.length, 0);
+// a dónde lleva cada grupo: «cada respuesta enlaza a su página» (plan SEO)
+const DESTINO: Record<string, [string, string]> = {
+  reservas: ['Reserva directo', '/contacto'], habitaciones: [T.inicio.verHabs, '/' + H.rutaHabs], alberca: [H.id === 'qa' ? 'Hotel con alberca en García' : 'Alberca, jardín y palapa techada', '/'],
+  palapa: [T.palapaBloque.ver, '/celebraciones'], reglas: ['Políticas de reservación', '/politicas'], ubicacion: ['Cómo llegar al hotel', '/ubicacion'],
+};
+const schema = [{ '@context': 'https://schema.org', '@type': 'FAQPage', '@id': H.sitio + '/preguntas-frecuentes#faq', inLanguage: 'es-MX', about: { '@id': H.sitio + '/#hotel' },
+  mainEntity: FAQ.flatMap((g) => g.items).map((p) => ({ '@type': 'Question', name: p.q, acceptedAnswer: { '@type': 'Answer', text: p.a } })) }];
+---
+<Base title={seo.title} description={seo.description} pagina="preguntas" sinPortada schema={schema}>
+  <div class="tope"></div>
+  <Migas items={[['/', 'Inicio'], ['/preguntas-frecuentes', 'Preguntas frecuentes']]} />
+  <section class="seccion faq-pag">
+    <div class="marco faq-pag-grid">
+      <div class="faq-pag-cab">
+        <p class="faq-pag-hotel">{H.nombre}</p>
+        <h1 class="faq-pag-tit">{seo.h1}</h1>
+        <p class="texto" data-aparece>{total} respuestas cortas sobre el hotel. Si la tuya no está, escríbenos: atendemos de 7 AM a 11 PM.</p>
+        <nav class="temas" aria-label="Grupos de preguntas" data-aparece>{FAQ.map((g) => <a href={'#' + g.id}>{g.nombre}</a>)}</nav>
+        <div data-aparece><a class="boton" href={waLink('Hola, tengo una duda sobre el ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />Preguntar por WhatsApp</a></div>
+      </div>
+      <div class="faq-grupos">
+        {FAQ.map((g) => (
+          <section class="faq-grupo" id={g.id} aria-labelledby={'t-' + g.id}>
+            <div class="faq-grupo-cab"><h2 id={'t-' + g.id}>{g.nombre}</h2>{DESTINO[g.id] && <a class="enlace" href={DESTINO[g.id][1]}>{DESTINO[g.id][0]}<Icono n="flecha" /></a>}</div>
+            <div class="acordeon">{g.items.map((p, i) => <details open={i === 0}><summary>{p.q}</summary><p>{p.a}</p></details>)}</div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+  <Enlaces enlaces={[[T.inicio.verHabs, '/' + H.rutaHabs], [T.palapaBloque.ver, '/celebraciones'], ['Cómo llegar al hotel', '/ubicacion']]} />
+</Base>

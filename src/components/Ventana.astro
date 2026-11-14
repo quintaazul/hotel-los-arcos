@@ -1,0 +1,42 @@
+---
+// El hotel en tres fotos: el texto a un lado y, al otro, tres marcos que llenan la escena. La forma de los marcos
+// sale de cada hotel: en Los Arcos, tres arcos (como su logo); en Quinta Azul, cuadros, como los vanos de su
+// fachada (el dueño pidió no usar arcos ahí: «no tiene sentido»). Las fotos se descubren al entrar y se mueven un
+// poco más lento que la página. Debajo va el resumen del hotel, «De un vistazo», con sus cifras.
+// (Hasta el 10 de noviembre de 2026 era una sola foto en un arco y media pantalla quedaba vacía.)
+// (La versión anterior, la foto que crecía hasta llenar la pantalla, quedó guardada en respaldo/2026-11-10/.)
+import { H, foco } from '../data/hoteles';
+import Foto from './Foto.astro';
+import Titulo from './Titulo.astro';
+import Icono from './Icono.astro';
+import { T } from '../data/textos';
+const v = H.ventana, arcos = H.id === 'la';
+const marcos = arcos ? [v.mas[0], { img: v.img, alt: v.alt }, v.mas[1]] : [{ img: v.img, alt: v.alt }, ...v.mas];
+---
+<section class="ventana" id="ventana" aria-labelledby="t-ventana">
+  <div class="ventana-escena marco">
+    <div class="ventana-txt">
+      <Titulo lineas={[v.s]} ovalo={v.o} id="t-ventana" marca />
+      <p class="texto" data-aparece>{v.texto}</p>
+      <div data-aparece><a class="enlace" href={'/' + H.rutaHabs}>{T.inicio.verHabs}<Icono n="flecha" /></a></div>
+    </div>
+    <div class:list={['ventana-marcos', arcos ? 'arcos' : 'cuadros']}>
+      {marcos.map((m, i) => <div class:list={['vm', 'vm-' + i]} data-revela={arcos ? 'arco' : ''} data-paralaje style={`--i:${i};${foco(m.img) ?? ''}`}><Foto src={H.id + '/' + m.img} alt={m.alt} sizes={arcos ? '(max-width: 1024px) 62vw, (min-width: 1700px) 28vw, 40vw' : i === 0 ? '(max-width: 1024px) 64vw, 38vw' : '(max-width: 1024px) 35vw, (min-width: 1700px) 18.8vw, 19.6vw'} cubre={!arcos && i > 0 ? 1 : undefined} anchos={[480, 800, 1200, 1600]} /></div>)}
+    </div>
+  </div>
+  <div class="ventana-fin marco">
+    <div class="vf-txt">
+      <p class="vf-clave" data-aparece>De un vistazo</p>
+      <p class="vf-frase" data-aparece>{v.pie}</p>
+      <ul class="vf-ficha lista" data-aparece>{H.ficha.map(([i, t]) => <li><Icono n={i} />{t}</li>)}</ul>
+    </div>
+    <dl class="vf-cifras">
+      {H.cifras.map((c) => (
+        <div data-aparece>
+          <dt><span data-contar={c.valor}>{c.valor}</span>{c.sufijo && <small>{c.sufijo}</small>}</dt>
+          <dd>{c.texto}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

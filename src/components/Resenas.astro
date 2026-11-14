@@ -1,0 +1,25 @@
+---
+import { H } from '../data/hoteles';
+import Titulo from './Titulo.astro';
+import Estrellas from './Estrellas.astro';
+import Icono from './Icono.astro';
+import { T } from '../data/textos';
+const url = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(H.nombre + ' García Nuevo León');
+---
+<section class="resenas seccion" aria-labelledby="t-resenas">
+  <div class="marco">
+    <div class="resenas-izq">
+      <Titulo lineas={[T.inicio.resenas.l]} ovalo={T.inicio.resenas.o} id="t-resenas" marca />
+      <div class="calif" data-aparece>
+        <span class="grande" data-contar={H.rating} data-decimales="1">{H.rating}</span><span class="sr"> de 5 estrellas · </span>
+        <Estrellas valor={H.rating} decorativa />
+        <p>{H.resenas} reseñas en Google</p>
+      </div>
+    </div>
+    <div class="resenas-der">
+      <blockquote class="cita" data-palabras>“{H.resena}”</blockquote>
+      <p class="cita-autor" data-aparece>Reseña de un huésped en Google</p>
+      <div data-aparece><a class="enlace" href={url} target="_blank" rel="noopener">Leer todas las reseñas<Icono n="diag" /></a></div>
+    </div>
+  </div>
+</section>

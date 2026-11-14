@@ -1,0 +1,148 @@
+---
+// Páginas que solo tiene Los Arcos Inn: /departamentos y /empresas (documento del rediseño; en Quinta Azul no existen).
+// Solo llevan datos confirmados: el departamento cuesta desde $2,000 la noche (lo publica el hotel en sus redes);
+// las tarifas por semana y por mes no están publicadas, así que se mandan a cotizar por WhatsApp.
+import Base from '../layouts/Base.astro';
+import PortadaCorta from '../components/PortadaCorta.astro';
+import FotoVisor from '../components/FotoVisor.astro';
+import Foto from '../components/Foto.astro';
+import Titulo from '../components/Titulo.astro';
+import Icono from '../components/Icono.astro';
+import Preguntas from '../components/Preguntas.astro';
+import BlogCorto from '../components/BlogCorto.astro';
+import Enlaces from '../components/Enlaces.astro';
+import { H, waLink, dinero, foco, altDe } from '../data/hoteles';
+import { SEO } from '../data/textos';
+export function getStaticPaths() { return __HOTEL__ === 'la' ? [{ params: { solo: 'departamentos' } }, { params: { solo: 'empresas' } }] : []; }
+const { solo } = Astro.params;
+const esDepa = solo === 'departamentos', seo = SEO[solo as string];
+const depa = H.habs.find((x) => x.id === 'depa')!, fotos = depa?.fotos ?? [];
+const noche = depa?.precio ?? 0, desdeHab = Math.min(...H.habs.filter((x) => x.precio && x.id !== 'depa').map((x) => x.precio as number));
+const waDepa = waLink('Hola, quiero cotizar un departamento en el ' + H.nombre), waEmp = waLink('Hola, quiero cotizar hospedaje para mi empresa en el ' + H.nombre);
+const tiene: [string, string][] = [['cama', '2 recámaras'], ['sillon', 'Sala con pantalla'], ['olla', 'Cocina equipada'], ['gente', 'De 4 a 8 personas'], ['frio', 'Aire acondicionado'], ['wifi', 'WiFi'], ['auto', 'Estacionamiento privado'], ['alberca', 'Alberca y jardín']];
+const paraQuien: [string, string, string, string][] = [
+  ['Equipos de trabajo', 'Vienen a un proyecto de semanas y necesitan cocinar y descansar como en casa.', 'Hospedaje para empresas con factura', '/empresas'],
+  ['Familias de cuatro o más', 'Quieren estar juntos, no repartidos en dos cuartos, y cocinar a sus horas.', '¿Departamento o cuarto de hotel?', '/blog/departamento-o-cuarto-de-hotel'],
+  ['Mudanza o remodelación', 'Un lugar amueblado mientras tu casa queda lista, sin contratar luz ni internet.', 'Tarifas por semana o mes', '#tarifas'],
+];
+const apartar: [string, string][] = [['Escríbenos', 'con la fecha de llegada, la de salida y cuántas personas son.'], ['Recibe tu cotización:', 'por noche, por semana o por mes, según tu estancia.'], ['Aparta', 'con el anticipo. Pagas en efectivo o con tarjeta y te damos factura.']];
+const porQue: [string, string][] = [['ruta', 'En el centro de García, cerca de su corredor industrial'], ['auto', 'Estacionamiento privado dentro del hotel, sin costo'], ['wifi', 'WiFi en habitaciones y departamentos'], ['factura', 'Factura para tu empresa'], ['tarjeta', 'Pago en efectivo o con tarjeta'], ['alberca', 'Alberca y jardín para después del turno']];
+const datosCotizar: [string, string][] = [['Fechas:', 'de llegada y de salida, aunque sean aproximadas.'], ['Personas:', 'cuántas son y cuántas habitaciones o departamentos necesitan.'], ['Factura:', 'razón social y datos fiscales, para mandarte la cotización correcta.']];
+const schema = esDepa ? [{ '@context': 'https://schema.org', '@type': 'Apartment', '@id': H.sitio + '/departamentos#departamento', name: 'Departamento con cocina del ' + H.nombre, url: H.sitio + '/departamentos', numberOfBedrooms: 2, occupancy: { '@type': 'QuantitativeValue', minValue: 4, maxValue: 8 }, containedInPlace: { '@id': H.sitio + '/#hotel' },
+  address: { '@type': 'PostalAddress', streetAddress: H.calle, addressLocality: 'García', addressRegion: 'Nuevo León', postalCode: '66000', addressCountry: 'MX' }, amenityFeature: tiene.map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })) }] : [];
+---
+{esDepa ? (
+<Base title={seo.title} description={seo.description} pagina="departamentos" ogFoto={fotos[0]?.[0]} schema={schema}>
+  <PortadaCorta img={fotos[0][0]} alt={fotos[0][1] + ', ' + H.nombre} clave={seo.h1} lineas={['Departamentos']} ovalo="con cocina" frase="Dos recámaras, sala y cocina equipada dentro del hotel, para 4 a 8 personas. Por noche, por semana o por mes."
+    migas={[['/', 'Inicio'], ['/departamentos', 'Departamentos']]}
+    botones={[{ t: 'Cotizar un departamento', href: waDepa, ico: 'wa', clase: 'blanco', fuera: true }, { t: 'Ver las tarifas', href: '#tarifas', clase: 'contorno', flecha: true }]}
+    tarjeta={{ rotulo: 'Precio por noche', valor: dinero(noche), sufijo: 'desde', texto: 'Por semana o por mes hay tarifa especial.' }}
+    barra={tiene.slice(0, 4).map(([ico, b]) => ({ ico, b }))} />
+  <section class="seccion" aria-labelledby="t-tiene" id="que-tiene">
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={['Como en casa,']} ovalo="dentro del hotel" id="t-tiene" marca />
+        <div class="lado"><p class="texto" data-aparece>Llegas con tu maleta y ya está todo: muebles, cocina, internet y estacionamiento. Y al salir de tu puerta, la alberca y el jardín.</p></div>
+      </div>
+      <ul class="tiene-grid lista">{tiene.map(([ic, x], i) => <li data-aparece style={`--orden:${i % 4}`}><Icono n={ic} /><span>{x}</span></li>)}</ul>
+      <div class="mosaico depa-mosaico">
+        {fotos.slice(1, 6).map(([f, a], i) => <figure data-revela style={`--i:${i}`}><FotoVisor src={H.id + '/' + f} alt={a} grupo="depa" sizes={i === 0 ? '(min-width: 761px) 40vw, 100vw' : i === 1 || i === 4 ? '(min-width: 761px) 24vw, 50vw' : '(min-width: 761px) 32vw, 50vw'} anchos={[480, 800, 1200]} /><figcaption>{a}</figcaption></figure>)}
+      </div>
+      <div class="mosaico-resto">{[fotos[0], ...fotos.slice(6)].map(([f, a]) => <FotoVisor src={H.id + '/' + f} alt={a} grupo="depa" sizes="1px" anchos={[480]} />)}</div>
+      <div class="mosaico-pie" data-aparece>
+        <p>{fotos.length} fotos de la cocina, la sala y las recámaras, tomadas en el hotel.</p>
+        <button type="button" class="boton contorno suave" data-visor-abre="depa"><Icono n="fotos" />Ver las {fotos.length} fotos</button>
+      </div>
+    </div>
+  </section>
+  <section class="seccion f-2" aria-labelledby="t-tarifas" id="tarifas">
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={['Tarifas por']} ovalo="noche, semana o mes" id="t-tarifas" marca />
+        <div class="lado"><p class="texto" data-aparece>Entre más tiempo te quedas, mejor sale la noche. La tarifa de semana y de mes depende de las fechas y de cuántos son.</p></div>
+      </div>
+      <p class="tabla-pista" aria-hidden="true">Desliza la tabla para ver todas las tarifas<Icono n="flecha" /></p>
+      <div class="tabla-caja" data-aparece tabindex="0" role="region" aria-label="Tarifas del departamento">
+        <table class="tabla tarifas" style="--cols:3">
+          <caption class="sr">Tarifas del departamento con cocina del {H.nombre}</caption>
+          <thead><tr><th scope="col"><span class="sr">Concepto</span></th><th scope="col">Por noche</th><th scope="col">Por semana</th><th scope="col">Por mes</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Precio</th><td><b class="num">Desde {dinero(noche)}</b></td><td>Tarifa especial</td><td>Tarifa especial</td></tr>
+            <tr><th scope="row">Cómo se cotiza</th><td>Precio publicado</td><td>Por WhatsApp, con tus fechas</td><td>Por WhatsApp, con tus fechas</td></tr>
+            <tr><th scope="row">Para</th><td>4 a 8 personas</td><td>4 a 8 personas</td><td>4 a 8 personas</td></tr>
+            <tr><th scope="row">Factura</th><td><Icono n="ok" /></td><td><Icono n="ok" /></td><td><Icono n="ok" /></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="botones tarifas-pie" data-aparece><a class="boton" href={waDepa} target="_blank" rel="noopener"><Icono n="wa" />Pedir tarifa por semana o mes</a><span class="nota-p">Aceptamos efectivo y tarjeta.</span></div>
+    </div>
+  </section>
+  <section class="seccion" aria-labelledby="t-quien">
+    <div class="marco">
+      <div class="habs-cab"><Titulo lineas={['¿Para']} ovalo="quién es?" id="t-quien" marca /><div class="lado"><p class="texto" data-aparece>Para estancias que no caben en un cuarto de hotel y no justifican rentar una casa.</p></div></div>
+      <ul class="opc-grid lista">
+        {paraQuien.map(([t, p, enlace, href], i) => <li class="opc-caja" data-aparece style={`--orden:${i}`}><span class="opc-num" aria-hidden="true">0{i + 1}</span><h3>{t}</h3><p>{p}</p><a class="enlace" href={href}>{enlace}<Icono n="flecha" /></a></li>)}
+      </ul>
+    </div>
+  </section>
+  <section class="partida" aria-labelledby="t-convivir">
+    <div class="partida-foto" data-revela data-paralaje style={foco(H.palapa.galeria[2][0])}><Foto src={H.id + '/' + H.palapa.galeria[2][0]} alt={H.palapa.galeria[2][1] + ', ' + H.nombre} sizes="(min-width: 1025px) 50vw, 100vw" /></div>
+    <div class="partida-txt">
+      <div class="partida-int">
+        <Titulo lineas={['Jardín, alberca y']} ovalo="palapa techada" id="t-convivir" marca />
+        <p class="texto" data-aparece>El departamento es tu espacio; el hotel pone lo demás: alberca con chapoteadero, jardín con palmas y una palapa techada para juntar a todos el fin de semana.</p>
+        <div class="botones" data-aparece><a class="boton contorno suave" href="/celebraciones">Palapa techada para reuniones<span class="flecha"><Icono n="flecha" /></span></a></div>
+      </div>
+    </div>
+  </section>
+  <section class="seccion f-hondo" aria-labelledby="t-apartar-depa">
+    <div class="marco sobre-oscuro apartar-marco">
+      <div><Titulo lineas={['Cómo']} ovalo="apartarlo" id="t-apartar-depa" /><p class="texto" data-aparece>Te respondemos por WhatsApp de 7 AM a 11 PM.</p></div>
+      <ol class="pasos" style={`--n:${apartar.length - 1}`}>{apartar.map(([a, b], k) => <li data-aparece style={`--k:${k}`}><p><b>{a}</b> {b}</p></li>)}</ol>
+    </div>
+  </section>
+  <BlogCorto forma="lista" cuantos={2} deTema="estancias-largas" lineas={['Antes de']} ovalo="decidir" texto="Dos lecturas cortas para saber si el departamento es lo que necesitas." />
+  <Enlaces enlaces={[['Hospedaje para empresas con factura', '/empresas'], ['Palapa techada para reuniones', '/celebraciones'], ['¿Departamento o cuarto de hotel?', '/blog/departamento-o-cuarto-de-hotel']]} />
+  <Preguntas de="departamentos" />
+</Base>
+) : (
+<Base title={seo.title} description={seo.description} pagina="empresas" ogFoto={H.trabajo.img}>
+  <PortadaCorta img={H.trabajo.img} alt={'Escritorio con WiFi en un departamento del ' + H.nombre} clave={seo.h1} lineas={['Hospeda a']} ovalo="tu equipo" frase="Habitaciones por noche y departamentos por semana o mes, con estacionamiento privado, WiFi y factura."
+    migas={[['/', 'Inicio'], ['/empresas', 'Empresas']]}
+    botones={[{ t: 'Cotizar para mi empresa', href: waEmp, ico: 'wa', clase: 'blanco', fuera: true }, { t: 'Ver las opciones', href: '#opciones', clase: 'contorno', flecha: true }]}
+    barra={[{ ico: 'factura', b: 'Factura' }, { ico: 'auto', b: 'Estacionamiento privado' }, { ico: 'wifi', b: 'WiFi' }, { ico: 'tarjeta', b: 'Efectivo y tarjeta' }]} />
+  <section class="seccion" aria-labelledby="t-porque">
+    <div class="marco">
+      <div class="habs-cab"><Titulo lineas={['Por qué']} ovalo="aquí" id="t-porque" marca /><div class="lado"><p class="texto" data-aparece>Tu gente termina el turno y llega a descansar: sin tráfico de ciudad, con dónde estacionar y con cocina si se quedan semanas.</p></div></div>
+      <ul class="tiene-grid tres lista">{porQue.map(([ic, x], i) => <li data-aparece style={`--orden:${i % 3}`}><Icono n={ic} /><span>{x}</span></li>)}</ul>
+    </div>
+  </section>
+  <section class="seccion f-2" aria-labelledby="t-opciones" id="opciones">
+    <div class="marco">
+      <div class="habs-cab"><Titulo lineas={['Dos formas de']} ovalo="hospedarlos" id="t-opciones" marca /><div class="lado"><p class="texto" data-aparece>Según cuántos vienen y cuánto dura el proyecto. Se pueden combinar.</p></div></div>
+      <ul class="opc-grid dos lista">
+        <li class="opc-caja con-foto" data-aparece><span class="opc-foto" style={foco(H.mosaico[2])}><Foto src={H.id + '/' + H.mosaico[2]} alt={altDe(H.mosaico[2])} sizes="(min-width: 761px) 44vw, 100vw" anchos={[480, 800, 1200]} /></span><h3>Habitaciones por noche</h3><p>Sencillas, dobles y triples, con aire acondicionado, pantalla, frigobar, microondas y WiFi. Desde {dinero(desdeHab)} la noche; desde 3 habitaciones hay tarifa de grupo.</p><a class="enlace" href="/habitaciones">Habitaciones sencillas, dobles y triples<Icono n="flecha" /></a></li>
+        <li class="opc-caja con-foto" data-aparece style="--orden:1"><span class="opc-foto" style={foco(fotos[1]?.[0])}><Foto src={H.id + '/' + fotos[1][0]} alt={fotos[1][1] ?? ''} sizes="(min-width: 761px) 44vw, 100vw" anchos={[480, 800, 1200]} /></span><h3>Departamentos por semana o mes</h3><p>Dos recámaras, sala y cocina equipada, para 4 a 8 personas. Desde {dinero(noche)} la noche; la tarifa de semana o mes se cotiza con tus fechas.</p><a class="enlace" href="/departamentos">Departamentos por semana o mes<Icono n="flecha" /></a></li>
+      </ul>
+    </div>
+  </section>
+  <section class="partida" aria-labelledby="t-convivio">
+    <div class="partida-foto" data-revela data-paralaje style={foco(H.palapa.img)}><Foto src={H.id + '/' + H.palapa.img} alt={H.palapa.alt} sizes="(min-width: 1025px) 50vw, 100vw" /></div>
+    <div class="partida-txt">
+      <div class="partida-int">
+        <Titulo lineas={['El cierre del proyecto,']} ovalo="en el jardín" id="t-convivio" marca />
+        <p class="texto" data-aparece>Cuando termina la obra o cierra el año, la palapa techada recibe hasta 60 personas para el convivio del equipo, sin salir del hotel.</p>
+        <div class="botones" data-aparece><a class="boton contorno suave" href="/celebraciones">Convivios en la palapa techada<span class="flecha"><Icono n="flecha" /></span></a></div>
+      </div>
+    </div>
+  </section>
+  <section class="seccion f-hondo" aria-labelledby="t-cotizar-emp">
+    <div class="marco sobre-oscuro apartar-marco">
+      <div><Titulo lineas={['Qué necesitamos']} ovalo="para cotizar" id="t-cotizar-emp" /><p class="texto" data-aparece>Mándanos estos datos por WhatsApp y te regresamos la cotización.</p><div class="botones" data-aparece style="margin-top:var(--e-6)"><a class="boton blanco" href={waEmp} target="_blank" rel="noopener"><Icono n="wa" />Cotizar para mi empresa</a></div></div>
+      <ol class="pasos" style={`--n:${datosCotizar.length - 1}`}>{datosCotizar.map(([a, b], k) => <li data-aparece style={`--k:${k}`}><p><b>{a}</b> {b}</p></li>)}</ol>
+    </div>
+  </section>
+  <Enlaces enlaces={[['Departamentos por semana o mes', '/departamentos'], ['Convivios en la palapa techada', '/celebraciones'], ['Cómo llegar al hotel', '/ubicacion']]} />
+  <Preguntas de="empresas" />
+</Base>
+)}

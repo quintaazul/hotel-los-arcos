@@ -1,0 +1,144 @@
+---
+import { H, dinero, waLink } from '../data/hoteles';
+import Foto from './Foto.astro';
+import FotoVisor from './FotoVisor.astro';
+import Titulo from './Titulo.astro';
+import Icono from './Icono.astro';
+import { T } from '../data/textos';
+interface Props { pagina?: boolean }
+const { pagina = false } = Astro.props;
+const habs = H.habs;
+const ops = H.id === 'qa' ? [1, 2, 3, 4] : [1, 2, 3, 4, 6, 8];
+const pr = (id: string) => habs.find((x) => x.id === id)?.precio ?? 0;
+// Qué conviene según cuántos son: las columnas que se marcan y la frase que lo explica, con la suma por noche.
+const SUG: Record<number, { ids: string[]; texto: string }> = H.id === 'qa' ? {
+  1: { ids: ['sencilla'], texto: `Para una persona: la habitación sencilla, ${dinero(pr('sencilla'))} la noche.` },
+  2: { ids: ['doble'], texto: `Para dos: la habitación doble, ${dinero(pr('doble'))} la noche.` },
+  3: { ids: ['doble', 'sencilla'], texto: `Para tres: una doble y una sencilla, ${dinero(pr('doble') + pr('sencilla'))} la noche entre las dos.` },
+  4: { ids: ['doble'], texto: `Para cuatro o más: dos habitaciones dobles, ${dinero(pr('doble') * 2)} la noche. Desde 3 habitaciones hay tarifa de grupo.` },
+} : {
+  1: { ids: ['sencilla'], texto: `Para una persona: la habitación sencilla, ${dinero(pr('sencilla'))} la noche.` },
+  2: { ids: ['sencilla', 'doble'], texto: `Para dos: la sencilla, con una cama queen, ${dinero(pr('sencilla'))}; o la doble, con dos camas, ${dinero(pr('doble'))} la noche.` },
+  3: { ids: ['triple'], texto: `Para tres: la habitación triple, ${dinero(pr('triple'))} la noche.` },
+  4: { ids: ['depa'], texto: `Para cuatro: el departamento con cocina, ${dinero(pr('depa'))} la noche.` },
+  6: { ids: ['depa'], texto: `Para seis: el departamento con cocina (de 4 a 8 personas), ${dinero(pr('depa'))} la noche.` },
+  8: { ids: ['depa', 'triple'], texto: 'Para ocho o más: un departamento y las habitaciones que falten. Desde 3 habitaciones hay tarifa de grupo.' },
+};
+const INICIAL = 2;
+const filas: [string, (x: (typeof habs)[number]) => string][] = [
+  ['Capacidad', (x) => x.para ?? '<span class="no">Por confirmar</span>'],
+  ['Camas', (x) => x.camas ?? '<span class="no">Por confirmar</span>'],
+  ['Precio por noche', (x) => x.precio ? '<b class="num">' + dinero(x.precio) + '</b>' : '<span class="no">Por confirmar</span>'],
+  ['Aire acondicionado', () => 'ok'], ['Pantalla y WiFi', () => 'ok'], ['Frigobar y microondas', () => 'ok'], ['Baño privado', () => 'ok'],
+  ...(H.id === 'la' ? [['Cocina y sala', (x: (typeof habs)[number]) => (x.id === 'depa' ? 'ok' : '<span class="no">—</span>')] as [string, (x: (typeof habs)[number]) => string]] : [])
+];
+const precio = (p: number | null) => p ? `<span class="precio">${dinero(p)}<small>/ noche</small></span>` : '<span class="pendiente">Precio por confirmar</span>';
+const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(n) ? 'el ' : 'la ') + n.toLowerCase() + ' en el ' + H.nombre;
+---
+<section class="seccion" aria-labelledby="t-habs" id="habitaciones">
+  <div class="marco">
+    <div class="habs-cab">
+      <Titulo lineas={[pagina ? T.habitaciones.lista.l : T.inicio.habs.l]} ovalo={pagina ? T.habitaciones.lista.o : T.inicio.habs.o} id="t-habs" marca />
+      <div class="lado">
+        <p class="texto" data-aparece>{T.inicio.habs.texto}</p>
+        <div data-aparece><a class="enlace" href="#comparar">Compáralas<Icono n="flecha" /></a></div>
+      </div>
+    </div>
+
+    <div class="habs" data-habs>
+      <div class="habs-media">
+        {habs.map((x, i) => (
+          <div class:list={['capa', { activa: i === 0 }]} data-capa={i}>
+            {x.fotos[0] ? <Foto src={H.id + '/' + x.fotos[0][0]} alt={x.fotos[0][1]} sizes="(min-width: 1025px) 58vw, 100vw" /> : <div class="vacio">Fotos en camino</div>}
+            {x.fotos.length > 1 && <button type="button" class="ver-fotos" data-visor-abre={'hab-' + x.id} aria-label={'Ver ' + x.fotos.length + ' fotos de la ' + x.nombre.toLowerCase()}><Icono n="fotos" />Ver {x.fotos.length} fotos</button>}
+          </div>
+        ))}
+        <span class="cuenta" data-cuenta aria-hidden="true">1 de {habs.length}</span>
+      </div>
+      <div class="habs-lista">
+        {habs.map((x, i) => (
+          <article class="hab" data-hab={i} aria-labelledby={'t-hab-' + x.id}>
+            <span class="num-hab">{i + 1} de {habs.length}</span>
+            <h3 id={'t-hab-' + x.id}>{x.nombre}</h3>
+            <p class="meta"><span><Icono n="persona" />{x.para ?? 'Capacidad por confirmar'}</span>{x.camas && <span><Icono n="cama" />{x.camas}</span>}</p>
+            <p class="texto">{x.texto}</p>
+            <div class="precio-l" set:html={precio(x.precio)} />
+            <ul class="chips lista">{H.incluye.slice(0, 5).map(([ic, t]) => <li><Icono n={ic} />{t}</li>)}</ul>
+            <div class="botones">
+              <a class="boton" href={waLink(msgHab(x.nombre))} target="_blank" rel="noopener"><Icono n="wa" />Reservar esta</a>
+              <button type="button" class="boton contorno" data-detalle={x.id}><span class="solo-pc">Ver fotos y detalles</span><span class="solo-cel">Detalles</span></button>
+            </div>
+            {/* Una sola ficha para todas las pantallas. En celular y tableta sus fotos van aquí, en carrusel, y se
+                muestran arriba del texto (order:-1); en computadora las enseña el panel fijo de la izquierda y el
+                visor las toma de aquí. */}
+            <div class="hab-fotos">
+              {x.fotos.length ? x.fotos.map(([f, a]) => <div class="foto-caja"><FotoVisor src={H.id + '/' + f} alt={a} grupo={'hab-' + x.id} sizes="86vw" /></div>) : <div class="foto-caja f-hondo"><div class="vacio">Fotos en camino</div></div>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="comparar" id="comparar">
+      <div class="comparar-cab">
+        <Titulo lineas={[T.inicio.comparar.l]} ovalo={T.inicio.comparar.o} marca />
+        <div class="lado" data-aparece>
+          <p class="texto">{T.inicio.comparar.texto}</p>
+          <div class="segmento" role="group" aria-label="Número de personas" data-sugerencias={JSON.stringify(SUG)}>
+            {ops.map((n, i) => <button type="button" data-personas={n} aria-pressed={n === INICIAL ? 'true' : 'false'} aria-label={n + (i === ops.length - 1 ? ' o más' : '') + (n === 1 ? ' persona' : ' personas')}>{n}{i === ops.length - 1 ? '+' : ''}</button>)}
+          </div>
+          <p class="sugerencia" data-sugerencia aria-live="polite">{SUG[INICIAL].texto}</p>
+        </div>
+      </div>
+      {habs.length > 2 && <p class="tabla-pista" aria-hidden="true">Desliza la tabla para ver las {habs.length} opciones<Icono n="flecha" /></p>}
+      <div class="tabla-caja" data-aparece tabindex="0" role="region" aria-label="Comparación de habitaciones">
+        <table class="tabla" style={`--cols:${habs.length}`}>
+          <caption class="sr">Comparación de habitaciones del {H.nombre}</caption>
+          <thead><tr><th scope="col"><span class="sr">Característica</span></th>{habs.map((x) => <th scope="col" data-col={x.id} class={SUG[INICIAL].ids.includes(x.id) ? 'sugerida' : undefined}>{x.corto}</th>)}</tr></thead>
+          <tbody>
+            {filas.map(([nombre, f]) => (
+              <tr><th scope="row">{nombre}</th>{habs.map((x) => { const v = f(x); return <td data-col={x.id} class={SUG[INICIAL].ids.includes(x.id) ? 'sugerida' : undefined}>{v === 'ok' ? <Icono n="ok" /> : <Fragment set:html={v} />}</td>; })}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ul class="ofertas lista" aria-label="Descuentos">
+        {H.ofertas.map(([a, b]) => <li data-aparece><Icono n="etiqueta" /><span><b>{a}</b>: {b}</span></li>)}
+      </ul>
+      <p class="nota-p" style="margin-top:18px">{H.notaPrecio} Anticipo del 50% para apartar.</p>
+      {!pagina && (
+        <div class="directo" data-aparece>
+          <h3 class="directo-tit">{T.inicio.directo.t}</h3>
+          <ul class="directo-lista lista">
+            {T.inicio.directo.razones.map(([ic, a, b]) => <li><span class="directo-ico"><Icono n={ic} /></span><p><b>{a}</b>{b}</p></li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {habs.map((x) => (
+    <template id={'detalle-' + x.id}>
+      <div class="cajon-cab"><p>{H.nombre}</p><button type="button" class="icono-btn" data-cerrar-cajon aria-label="Cerrar"><Icono n="cerrar" /></button></div>
+      <div class="cajon-cuerpo">
+        <div class="carrusel">
+          {x.fotos.length ? <>
+            <div class="carrusel-pista" tabindex="0" aria-label={'Fotos de la ' + x.nombre.toLowerCase()}>
+              {x.fotos.map(([f, a]) => <figure><Foto src={H.id + '/' + f} alt={a} sizes="(min-width: 600px) 600px, 100vw" /></figure>)}
+            </div>
+            {x.fotos.length > 1 && <div class="carrusel-ctrl"><button type="button" class="icono-btn" data-car="-1" aria-label="Foto anterior"><Icono n="izq" /></button><span class="cuenta" data-car-cuenta>1 de {x.fotos.length}</span><button type="button" class="icono-btn" data-car="1" aria-label="Foto siguiente"><Icono n="der" /></button></div>}
+          </> : <div style="aspect-ratio:4/3;background:var(--c-marca-hondo)"><div class="vacio">Fotos en camino</div></div>}
+        </div>
+        <p class="cajon-tit" role="heading" aria-level="2">{x.nombre}</p>
+        <p class="meta" style="display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--c-texto-2)"><span style="display:inline-flex;gap:8px;align-items:center"><Icono n="persona" />{x.para ?? 'Capacidad por confirmar'}</span>{x.camas && <span style="display:inline-flex;gap:8px;align-items:center"><Icono n="cama" />{x.camas}</span>}<span style="display:inline-flex;gap:8px;align-items:center"><Icono n="ducha" />Baño privado</span></p>
+        <p class="texto">{x.texto}</p>
+        <p class="cajon-sub" role="heading" aria-level="3">Incluye</p>
+        <ul class="incluye lista">{H.incluye.map(([ic, t]) => <li><Icono n={ic} />{t}</li>)}</ul>
+        <p class="cajon-sub" role="heading" aria-level="3">Antes de reservar</p>
+        <dl class="reglas-mini"><div><dt>Entrada</dt><dd>2:00 PM</dd></div><div><dt>Salida</dt><dd>11:00 AM</dd></div><div><dt>Anticipo</dt><dd>50%</dd></div><div><dt>Mascotas</dt><dd>No</dd></div></dl>
+      </div>
+      <div class="cajon-pie"><div set:html={precio(x.precio)} /><a class="boton" href={waLink(msgHab(x.nombre))} target="_blank" rel="noopener"><Icono n="wa" />Reservar</a></div>
+    </template>
+  ))}
+</section>
+<div class="cajon" id="cajon" role="dialog" aria-modal="true" aria-label="Detalle de la habitación"></div>

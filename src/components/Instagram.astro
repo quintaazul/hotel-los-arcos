@@ -1,0 +1,26 @@
+---
+// Tira de Instagram: publicaciones reales del hotel que llevan a su perfil.
+import { H } from '../data/hoteles';
+import Titulo from './Titulo.astro';
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+---
+<section class="seccion" aria-labelledby="t-insta">
+  <div class="marco">
+    <div class="insta-cab">
+      <Titulo lineas={['Lo de esta semana,']} ovalo="en Instagram" id="t-insta" marca />
+      <div class="lado">
+        <p class="texto" data-aparece>Tarifas, fechas y planes cerca del hotel. Síguenos para enterarte antes.</p>
+        <div data-aparece><a class="boton contorno" href={H.igUrl} target="_blank" rel="noopener"><Icono n="instagram" />{H.ig}</a></div>
+      </div>
+    </div>
+    <ul class="insta-fila lista">
+      {H.instagram.map(([f, a]) => (
+        <li data-aparece><a href={H.igUrl} target="_blank" rel="noopener" aria-label={a + ' (abre Instagram)'}>
+          <Foto src={H.id + '/' + f} alt={a} sizes="(min-width: 1025px) 16vw, (min-width: 761px) 31vw, 58vw" anchos={[320, 480, 720]} />
+          <span class="marca-ig" aria-hidden="true"><Icono n="instagram" /></span>
+        </a></li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+// Foto que se amplía: al tocarla se abre en el visor a pantalla completa junto con las demás de su grupo.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+const todas = import.meta.glob<{ default: ImageMetadata }>('@fotos/*.{webp,png,jpg}', { eager: true });
+interface Props { src: string; alt: string; grupo: string; pie?: string; sizes?: string; class?: string; anchos?: number[]; cubre?: number }
+const { src, alt, grupo, pie, sizes, class: clase, anchos, cubre } = Astro.props;
+const clave = Object.keys(todas).find((k) => k.endsWith('/' + src));
+if (!clave) throw new Error('Foto no encontrada: ' + src);
+const img = todas[clave].default;
+// Tamaños para el visor: los mismos que ya genera <Foto>, así no se crea ningún archivo de más.
+const tams = [...new Set([1200, 2000].filter((a) => a < img.width).concat(Math.min(img.width, 2000)))];
+const grandes = await Promise.all(tams.map((w) => getImage({ src: img, width: w, format: 'webp' })));
+---
+<button type="button" class:list={['foto-btn', clase]} data-visor={grupo} data-grande={grandes[grandes.length - 1].src} data-grande-set={grandes.map((g, i) => g.src + ' ' + tams[i] + 'w').join(', ')} data-w={img.width} data-h={img.height} data-pie={pie ?? alt} aria-label={'Ampliar la foto: ' + alt}>
+  <Foto src={src} alt={alt} sizes={sizes} anchos={anchos} cubre={cubre} />
+  <span class="foto-lupa" aria-hidden="true"><Icono n="ampliar" /></span>
+</button>

@@ -1,0 +1,52 @@
+---
+// Video con reproductor propio. El archivo no se pide hasta que la persona toca Reproducir.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import urls from '@videos';
+import { H } from '../data/hoteles';
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+interface Props { id: string; class?: string; sizes?: string; sinPie?: boolean; esquema?: boolean; cubre?: number }
+const { id, class: clase, sizes = '(min-width: 761px) 40vw, 86vw', sinPie = false, esquema = false, cubre } = Astro.props;
+const v = H.videos.find((x) => x.id === id);
+if (!v) throw new Error('Video no encontrado: ' + id);
+const url = urls[v.id];
+if (!url) throw new Error('Falta el archivo del video: ' + id);
+// Datos para buscadores: solo en la página donde el video es el contenido principal
+let datos: Record<string, unknown> | null = null;
+if (esquema) {
+  const todas = import.meta.glob<{ default: ImageMetadata }>('@fotos/*.{webp,png,jpg}', { eager: true });
+  const cartel = await getImage({ src: todas[Object.keys(todas).find((k) => k.endsWith('/' + H.id + '/' + v.cartel))!].default, width: 1200, format: 'jpg' });
+  const [m, s] = v.dur.split(':').map(Number);
+  datos = { '@context': 'https://schema.org', '@type': 'VideoObject', name: v.titulo + ' | ' + H.nombre, description: v.texto, thumbnailUrl: new URL(cartel.src, Astro.site).href, contentUrl: new URL(url, Astro.site).href, uploadDate: v.fecha, duration: `PT${m}M${s}S`, inLanguage: 'es-MX', publisher: { '@id': H.sitio + '/#hotel' } };
+}
+---
+<figure class:list={['video', v.forma, clase, { ambiente: v.ambiente }]} data-video data-ambiente={v.ambiente ? '' : undefined}>
+  <div class="video-caja">
+    <video src={url} preload="none" playsinline controls={!v.ambiente} muted={v.ambiente} loop={v.ambiente} aria-label={v.titulo}></video>
+    <div class="video-cartel"><Foto src={H.id + '/' + v.cartel} alt={v.cartelAlt} sizes={sizes} anchos={[480, 800, 1200]} cubre={cubre} /></div>
+    {!v.ambiente && <button type="button" class="video-play" data-v="iniciar" aria-label={'Reproducir el video: ' + v.titulo + ' (' + v.dur + ')'}><span class="disco"><Icono n="play" class="i-play" /><Icono n="repetir" class="i-repetir" /></span></button>}
+    {!v.ambiente && <span class="video-dur" aria-hidden="true"><Icono n="play" />{v.dur}</span>}
+    {!v.ambiente && <span class="video-espera" aria-hidden="true"></span>}
+    {!v.ambiente && <span class="video-pulso" aria-hidden="true"><Icono n="play" class="i-play" /><Icono n="pausa" class="i-pausa" /></span>}
+    {v.ambiente ? (
+      <div class="video-ctrl"><button type="button" class="icono-btn" data-v="pausa" aria-label="Pausar"><Icono n="pausa" class="i-pausa" /><Icono n="play" class="i-play" /></button></div>
+    ) : (
+      <div class="video-ctrl">
+        <div class="video-barra" data-v="barra" role="slider" tabindex="0" aria-label="Avance del video" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="video-pista"><span class="video-cargado"></span><span class="video-avance"></span></span><span class="video-mov"><span class="video-perilla"></span></span></div>
+        <div class="video-fila">
+          <button type="button" class="icono-btn" data-v="pausa" aria-label="Pausar"><Icono n="pausa" class="i-pausa" /><Icono n="play" class="i-play" /></button>
+          <span class="video-tiempo" data-v-tiempo>0:00 / {v.dur}</span>
+          <span class="video-hueco"></span>
+          <div class="video-vol">
+            <div class="video-vol-caja"><div class="video-vol-barra" data-v="volumen" role="slider" tabindex="0" aria-label="Volumen" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span class="video-vol-nivel"></span><span class="video-vol-mov"></span></div></div>
+            <button type="button" class="icono-btn" data-v="sonido" aria-label="Quitar el sonido"><Icono n="sonido" class="i-sonido" /><Icono n="mudo" class="i-mudo" /></button>
+          </div>
+          <button type="button" class="icono-btn" data-v="ampliar" aria-label="Pantalla completa"><Icono n="ampliar" /></button>
+        </div>
+      </div>
+    )}
+  </div>
+  {!sinPie && <figcaption><b>{v.titulo}</b><span>{v.texto}</span></figcaption>}
+</figure>
+{datos && <script type="application/ld+json" set:html={JSON.stringify(datos)} />}

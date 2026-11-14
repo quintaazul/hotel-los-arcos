@@ -1,0 +1,57 @@
+---
+// Foto responsive: AVIF y WebP en varios anchos. Las fotos viven en src/assets/<hotel>/ y solo se importan las del
+// hotel que se está compilando (alias @fotos de astro.config.mjs).
+// Con «ancha» se da una segunda versión, horizontal, de la misma foto: las pantallas apaisadas reciben esa y los
+// celulares y tablets de pie reciben la vertical. Así nadie descarga la parte de la foto que su pantalla recorta
+// (las fotos del diseñador son verticales; en una portada de computadora se vería menos de la mitad).
+import { Picture, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+const todas = import.meta.glob<{ default: ImageMetadata }>('@fotos/*.{webp,png,jpg}', { eager: true });
+interface Props { src: string; alt: string; sizes?: string; class?: string; prioridad?: boolean; anchos?: number[]; ancha?: string; cubre?: number; portada?: boolean }
+const { src, alt, sizes = '100vw', class: clase, prioridad = false, anchos = [480, 800, 1200, 1600, 2000], ancha, cubre, portada = false } = Astro.props;
+const buscar = (n: string) => {
+  const clave = Object.keys(todas).find((k) => k.endsWith('/' + n));
+  if (!clave) throw new Error('Foto no encontrada: ' + n + '. Disponibles: ' + Object.keys(todas).join(', '));
+  return todas[clave].default;
+};
+const img = buscar(src);
+// Nunca se sirve nada más ancho que el mayor de la lista: los originales de 2400 px son solo la fuente.
+const tope = Math.max(...anchos);
+const lista = (i: ImageMetadata) => { const l = anchos.filter((a) => a < i.width); l.push(Math.min(i.width, tope)); return [...new Set(l)]; };
+const w = lista(img);
+// «cubre» es la proporción (ancho/alto) de la caja que la foto llena con object-fit:cover. Si la foto es más
+// apaisada que su caja, se amplía hasta cubrir el alto y necesita más ancho del que mide la caja: el tamaño
+// declarado crece en esa proporción, para que el navegador no elija un archivo chico y la foto salga borrosa.
+const factor = cubre && img.width / img.height > cubre * 1.05 ? img.width / img.height / cubre : 1;
+const tam = factor > 1 ? sizes.split(',').map((e) => e.trim().replace(/([\d.]+)(vw|px|rem)$/, (_, n, u) => +(+n * factor).toFixed(u === 'px' ? 0 : 1) + u)).join(', ') : sizes;
+// Pantallas de 3 puntos por píxel (casi todos los iPhone y los Android de gama alta): el navegador pediría la foto
+// al triple de su tamaño. De 2× en adelante el ojo ya no distingue más detalle en una foto, así que ahí cada tamaño
+// se declara al 68 % (queda a 2×): el archivo pesa cerca de la mitad y se ve igual. Un navegador que no entienda
+// la condición la salta y usa los tamaños de siempre.
+const partes = tam.split(/,(?![^(]*\))/).map((e) => e.trim());
+const tam3 = partes.map((e) => { const m = e.match(/^(\(.*\))\s+(\S.*)$/); return m ? `(min-resolution: 2.5dppx) and ${m[1]} calc(${m[2]} * 0.68)` : `(min-resolution: 2.5dppx) calc(${e} * 0.68)`; }).concat(partes).join(', ');
+const juego = async (i: ImageMetadata, formato: 'avif' | 'webp') => (await Promise.all(lista(i).map(async (a) => (await getImage({ src: i, width: a, format: formato })).src + ' ' + a + 'w'))).join(', ');
+const imgA = ancha ? buscar(ancha) : null;
+const f = imgA ? { aAvif: await juego(imgA, 'avif'), aWebp: await juego(imgA, 'webp'), vAvif: await juego(img, 'avif'), vWebp: await juego(img, 'webp'), base: await getImage({ src: img, width: Math.min(img.width, 1200), format: 'webp' }) } : null;
+const APAISADA = '(min-width: 761px) and (min-aspect-ratio: 1/1)';
+// «portada»: la foto llena toda la pantalla (object-fit:cover). Se pinta al ancho de la pantalla o, si la pantalla
+// es más alta que la foto, al alto de la pantalla por la proporción de la foto: lo que sea mayor. Eso es justo lo
+// que se declara, para que el navegador baje el archivo que hace falta (con «100vw» a secas, en un celular de pie
+// bajaba uno chico y la portada se veía suave; en una ventana casi cuadrada de computadora pasaba lo mismo).
+// En celulares se pone un tope de dos anchos de pantalla (una foto apaisada necesitaría tres) y se pide un poco
+// menos que la densidad completa: de 2 puntos por píxel en adelante el ojo ya no distingue más detalle en una foto.
+const llena = (i: ImageMetadata) => `max(100vw, ${Math.round(100 * i.width / i.height)}vh)`;
+const tamP = portada ? `(max-width: 760px) and (min-resolution: 2.5dppx) calc(min(200vw, ${llena(img)}) * 0.68), (max-width: 760px) calc(min(200vw, ${llena(img)}) * 0.9), ${llena(img)}` : tam3;
+const tamA = portada && imgA ? llena(imgA) : tamP;
+---
+{f ? (
+  <picture>
+    <source media={APAISADA} type="image/avif" srcset={f.aAvif} sizes={tamA} />
+    <source media={APAISADA} type="image/webp" srcset={f.aWebp} sizes={tamA} />
+    <source type="image/avif" srcset={f.vAvif} sizes={tamP} />
+    <source type="image/webp" srcset={f.vWebp} sizes={tamP} />
+    <img src={f.base.src} alt={alt} width={img.width} height={img.height} class={clase} loading={prioridad ? 'eager' : 'lazy'} fetchpriority={prioridad ? 'high' : 'auto'} decoding="async" />
+  </picture>
+) : (
+  <Picture src={img} alt={alt} formats={['avif', 'webp']} widths={w} sizes={tamP} class={clase} loading={prioridad ? 'eager' : 'lazy'} fetchpriority={prioridad ? 'high' : 'auto'} decoding="async" />
+)}

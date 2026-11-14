@@ -1,0 +1,226 @@
+---
+// Estándar visual en vivo: la paleta, la letra, los espacios, el movimiento y los controles de ESTE hotel,
+// dibujados con las mismas variables y componentes que usa el sitio. No aparece en buscadores ni en el mapa del sitio.
+import Base from '../layouts/Base.astro';
+import Titulo from '../components/Titulo.astro';
+import Icono from '../components/Icono.astro';
+import Campo from '../components/controles/Campo.astro';
+import Fecha from '../components/controles/Fecha.astro';
+import Contador from '../components/controles/Contador.astro';
+import Desplegable from '../components/controles/Desplegable.astro';
+import Opciones from '../components/controles/Opciones.astro';
+import Casilla from '../components/controles/Casilla.astro';
+import Galeria from '../components/Galeria.astro';
+import Video from '../components/Video.astro';
+import { H } from '../data/hoteles';
+import paleta from '../data/paleta.json';
+import E from '../data/estandar.json';
+import css from '../styles/sistema.css?raw';
+
+const p = paleta[H.id], I = E.identidad[H.id];
+const V: Record<string, string> = Object.fromEntries([...css.matchAll(/(--[\w-]+):([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+const val = (t: string) => (V[t] || '').replace(/var\((--[\w-]+)\)/g, (m, n) => V[n] || m);
+const PASOS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+const claro = (paso: number) => paso <= 400;
+const indice = [['color', 'Color'], ['letra', 'Letra'], ['espacios', 'Espacios y formas'], ['movimiento', 'Movimiento'], ['controles', 'Controles'], ['medios', 'Fotos y video'], ['rendimiento', 'Pantallas y rendimiento']];
+---
+<Base title={'Estándar visual | ' + H.nombre} description={'Paleta, letra, espacios, movimiento y controles del sitio de ' + H.nombre + '.'} pagina="estandar" sinPortada sinIndice>
+  <div class="tope"></div>
+  <section class="seccion est">
+    <div class="marco">
+      <header class="est-cab">
+        <Titulo lineas={['Estándar visual']} ovalo={H.corto} tag="h1" marca />
+        <p class="texto" data-aparece>{I.caracter} Todo lo de esta página sale de las mismas variables que usa el sitio: si aquí cambia, cambia en todos lados.</p>
+        <nav class="est-indice" aria-label="Partes del estándar" data-aparece>{indice.map(([id, t], i) => <a href={'#' + id}><span>{String(i + 1).padStart(2, '0')}</span>{t}</a>)}</nav>
+      </header>
+
+      <section class="est-parte" id="color" aria-labelledby="e-color">
+        <h2 id="e-color"><span>01</span>Color</h2>
+        <p class="texto">Ocho familias de once tonos y, encima, los papeles: nombres por función. Los componentes solo usan papeles.</p>
+        <div class="est-familias">
+          {Object.entries(p.familias).map(([nombre, f]) => (
+            <div class="est-familia">
+              <div class="est-fam-cab"><h3>{nombre}</h3><p>{f.papel}. {f.nota}</p></div>
+              <ol class="est-rampa lista">{PASOS.map((s) => <li style={`background:${f.pasos[s]}`} class:list={{ oscuro: !claro(s) }}><b>{s}</b><code>{f.pasos[s]}</code></li>)}</ol>
+            </div>
+          ))}
+        </div>
+        <h3 class="est-sub">Papeles</h3>
+        <ul class="est-roles lista">{Object.entries(p.roles).map(([k, r]) => <li><i style={`background:${r.hex}`}></i><div><code>--c-{k}</code><span>{r.de} · {r.hex}</span></div></li>)}</ul>
+        <h3 class="est-sub">Parejas comprobadas</h3>
+        <ul class="est-parejas lista">{p.parejas.map((x) => <li style={`background:${p.roles[x.fondo].hex};color:${p.roles[x.texto].hex}`}><b>{x.razon}</b><span>{x.texto} sobre {x.fondo}</span></li>)}</ul>
+      </section>
+
+      <section class="est-parte" id="letra" aria-labelledby="e-letra">
+        <h2 id="e-letra"><span>02</span>Letra</h2>
+        <p class="texto">Poppins para títulos y texto. DM Serif Display para la frase del óvalo, las cifras y los nombres.</p>
+        <ul class="est-letra lista">{E.letra.map(([t, uso, muestra]) => <li><div class="est-meta"><code>{t}</code><span>{uso}</span></div><p style={`font-size:var(${t})`} class:list={{ titulo: ['--t-display', '--t-h1'].includes(t), serif: t === '--t-h2' }}>{muestra}</p></li>)}</ul>
+      </section>
+
+      <section class="est-parte" id="espacios" aria-labelledby="e-espacios">
+        <h2 id="e-espacios"><span>03</span>Espacios y formas</h2>
+        <p class="texto">Una sola escala de 4 px para todo. Los espacios de página crecen con la pantalla.</p>
+        <ul class="est-espacios lista">{E.espacios.map(([t, uso]) => <li><code>{t}</code><span class="num">{val(t)}</span><i style={`width:var(${t})`}></i><span>{uso}</span></li>)}</ul>
+        <div class="est-dos">
+          <div><h3 class="est-sub">Espacios de página</h3><ul class="est-lista lista">{E.pagina.map(([t, uso]) => <li><code>{t}</code><span>{uso}</span></li>)}</ul></div>
+          <div><h3 class="est-sub">Tamaños de pantalla</h3><ul class="est-lista lista">{E.cortes.map(([a, uso]) => <li><code>{a}</code><span>{uso}</span></li>)}</ul></div>
+        </div>
+        <h3 class="est-sub">Esquinas y sombras</h3>
+        <ul class="est-formas lista">
+          {E.radios.map(([t, uso]) => <li><i style={`border-radius:var(${t})`}></i><code>{t}</code><span>{uso}</span></li>)}
+          {E.sombras.map(([t, uso]) => <li><i class="sombra" style={`box-shadow:var(${t})`}></i><code>{t}</code><span>{uso}</span></li>)}
+        </ul>
+      </section>
+
+      <section class="est-parte" id="movimiento" aria-labelledby="e-mov">
+        <h2 id="e-mov"><span>04</span>Movimiento</h2>
+        <ul class="est-reglas lista">{E.movimiento.map((m) => <li><Icono n="ok" />{m}</li>)}</ul>
+        <p class="nota-p">Pasa el ratón o toca cada fila para ver su tiempo y su curva.</p>
+        <div class="est-dos">
+          <ul class="est-mov lista">{E.tiempos.map(([t, uso]) => <li tabindex="0" style={`--dur:var(${t})`}><div class="est-meta"><code>{t}</code><span>{val(t)} · {uso}</span></div><div class="pista"><i></i></div></li>)}</ul>
+          <ul class="est-mov lista">{E.curvas.map(([t, uso]) => <li tabindex="0" style={`--cur:var(${t})`}><div class="est-meta"><code>{t}</code><span>{uso}</span></div><div class="pista"><i></i></div></li>)}</ul>
+        </div>
+      </section>
+
+      <section class="est-parte" id="controles" aria-labelledby="e-ctl">
+        <h2 id="e-ctl"><span>05</span>Controles</h2>
+        <p class="texto">Todos son propios: ninguno abre el menú ni el calendario del navegador. Pruébalos aquí.</p>
+        <div class="est-dos">
+          <form class="formulario" data-whatsapp="Prueba del estándar" data-numero={H.wa}>
+            <Campo id="s-nombre" nombre="Nombre" etiqueta="Campo de texto" requerido marcador="Escribe aquí" falta="Este dato hace falta." />
+            <Desplegable id="s-hab" nombre="Habitación" etiqueta="Desplegable" opciones={[...H.habs.map((x) => x.nombre), 'No sé todavía']} />
+            <Fecha id="s-llegada" nombre="Llegada" etiqueta="Fecha" />
+            <Fecha id="s-salida" nombre="Salida" etiqueta="Fecha enlazada" despuesDe="s-llegada" />
+            <Contador id="s-personas" nombre="Personas" etiqueta="Número" min={1} max={12} valor={2} />
+            <Opciones nombre="Motivo" etiqueta="Una entre pocas" opciones={['Descanso', 'Trabajo', 'Fiesta']} />
+            <Campo class="completo" id="s-mensaje" nombre="Mensaje" etiqueta="Área de texto" area marcador="Crece con lo que escribes." />
+            <Casilla class="completo" id="s-ok" requerido>Casilla obligatoria (deja todo vacío y envía para ver los errores)</Casilla>
+            <div class="completo botones"><button class="boton" type="submit">Botón principal<span class="flecha"><Icono n="flecha" /></span></button><button class="boton contorno" type="button">Contorno</button><button class="boton chico" type="button">Chico</button></div>
+          </form>
+          <div>
+            <h3 class="est-sub">Estados de un campo</h3>
+            <ul class="est-lista lista">{E.estados.map(([a, b]) => <li><code>{a}</code><span>{b}</span></li>)}</ul>
+            <h3 class="est-sub">Piezas</h3>
+            <ul class="est-lista lista">{E.controles.map(([pieza, comp, regla]) => <li><code>{pieza}</code><span>{regla}</span></li>)}</ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="est-parte" id="medios" aria-labelledby="e-medios">
+        <h2 id="e-medios"><span>06</span>Fotos y video</h2>
+        <p class="texto">Las fotos se abren en un visor propio y los videos tienen su propio reproductor. Ningún video se descarga hasta que tocas Reproducir.</p>
+        <div class="est-dos">
+          <div>
+            <h3 class="est-sub">Galería y visor</h3>
+            <Galeria fotos={H.galeria.slice(0, 5)} grupo="estandar" class="dos-col" />
+          </div>
+          <div>
+            <h3 class="est-sub">Reproductor</h3>
+            <div style="max-width:300px"><Video id="como-llegar" sizes="300px" /></div>
+          </div>
+        </div>
+        <div class="est-dos">
+          <div>
+            <h3 class="est-sub">Fotos</h3>
+            <ul class="est-lista lista">{E.medios.fotos.map(([a, b]) => <li><code>{a}</code><span>{b.replaceAll('`', '')}</span></li>)}</ul>
+          </div>
+          <div>
+            <h3 class="est-sub">Video</h3>
+            <ul class="est-lista lista">{E.medios.video.map(([a, b]) => <li><code>{a}</code><span>{b}</span></li>)}</ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="est-parte" id="rendimiento" aria-labelledby="e-rend">
+        <h2 id="e-rend"><span>07</span>Pantallas y rendimiento</h2>
+        <p class="texto">Todo cambio se prueba en estas ocho pantallas y contra estas metas. Las mide el banco de rendimiento del proyecto.</p>
+        <div class="est-dos">
+          <div>
+            <h3 class="est-sub">Pantallas de prueba</h3>
+            <ul class="est-lista lista">{E.pantallas.map(([a, b, c]) => <li><code>{a} · {b}</code><span>{c}</span></li>)}</ul>
+          </div>
+          <div>
+            <h3 class="est-sub">Metas</h3>
+            <ul class="est-lista lista">{E.rendimiento.metas.map(([a, b]) => <li><code>{a}</code><span>{b}</span></li>)}</ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="est-parte" aria-labelledby="e-reglas">
+        <h2 id="e-reglas"><span>✓</span>Reglas que no se rompen</h2>
+        <ol class="est-reglas num lista">{E.reglas.map((r, i) => <li><b>{i + 1}</b>{r}</li>)}</ol>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .est-cab{display:flex;flex-direction:column;gap:var(--pila-m);margin-bottom:var(--bloque)}
+  .est-indice{display:flex;flex-wrap:wrap;gap:var(--e-2)}
+  .est-indice a{display:inline-flex;align-items:center;gap:var(--e-2);min-height:var(--toque);padding:0 var(--e-5);border-radius:var(--r-full);background:var(--c-fondo-2);font:var(--p-medio) var(--t-ui)/1 var(--f-sans);text-decoration:none;transition:background-color var(--d-rapido) ease}
+  .est-indice a span{color:var(--c-texto-marca);font-variant-numeric:tabular-nums}
+  .est-parte{display:flex;flex-direction:column;gap:var(--pila-m);padding-block:var(--seccion-s);border-top:var(--linea) solid var(--c-borde);scroll-margin-top:var(--alto-cab)}
+  .est-parte > h2{display:flex;align-items:baseline;gap:var(--e-4);font:var(--p-medio) var(--t-h1)/var(--i-apretado) var(--f-sans);letter-spacing:var(--tr-titulo)}
+  .est-parte > h2 span{font:400 var(--t-h3)/1 var(--f-serif);letter-spacing:0;color:var(--c-texto-marca)}
+  .est-sub{margin-top:var(--pila-l);font:var(--p-medio) var(--t-h4)/var(--i-titulo) var(--f-sans)}
+  code{font:var(--p-medio) var(--t-nota)/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .est-dos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--pila-l) var(--hueco);align-items:start}
+  /* Color */
+  .est-familias{display:grid;gap:var(--pila-m)}
+  .est-familia{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:var(--hueco);align-items:center}
+  .est-fam-cab h3{font:400 var(--t-h3)/1.1 var(--f-serif);text-transform:capitalize}
+  .est-fam-cab p{font-size:var(--t-chico);color:var(--c-texto-2);margin-top:var(--e-1)}
+  .est-rampa{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));border-radius:var(--r-control);overflow:hidden;box-shadow:var(--s-1)}
+  .est-rampa li{display:flex;flex-direction:column;justify-content:flex-end;gap:var(--e-05);min-height:88px;padding:var(--e-2);color:var(--c-texto)}
+  .est-rampa li.oscuro{color:var(--c-blanco)}
+  .est-rampa b{font:var(--p-fuerte) var(--t-nota)/1 var(--f-sans)}
+  .est-rampa code{font-size:.625rem;font-weight:var(--p-normal);opacity:.86}
+  .est-roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:var(--e-3) var(--hueco)}
+  .est-roles li{display:flex;align-items:center;gap:var(--e-3)}
+  .est-roles i{flex:none;width:var(--ctrl-s);height:var(--ctrl-s);border-radius:var(--r-2);box-shadow:var(--s-1)}
+  .est-roles div{display:flex;flex-direction:column;min-width:0}
+  .est-roles span{font-size:var(--t-micro);color:var(--c-texto-2)}
+  .est-parejas{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--e-2)}
+  .est-parejas li{display:flex;flex-direction:column;gap:var(--e-1);padding:var(--e-4);border-radius:var(--r-control);box-shadow:var(--s-1)}
+  .est-parejas b{font:400 var(--t-h3)/1 var(--f-serif)}
+  .est-parejas span{font-size:var(--t-micro);font-weight:var(--p-medio)}
+  /* Letra */
+  .est-letra li{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:var(--hueco);align-items:baseline;padding-block:var(--e-5);border-top:var(--linea) solid var(--c-borde)}
+  .est-meta{display:flex;flex-direction:column;gap:var(--e-1)}
+  .est-meta span{font-size:var(--t-nota);color:var(--c-texto-2)}
+  .est-letra p{line-height:var(--i-titulo);overflow-wrap:anywhere}
+  .est-letra p.titulo{display:block;font-weight:var(--p-medio);letter-spacing:var(--tr-titulo);line-height:var(--i-apretado)}
+  .est-letra p.serif{font-family:var(--f-serif)}
+  /* Espacios */
+  .est-espacios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 var(--hueco)}
+  .est-espacios li{display:grid;grid-template-columns:64px 48px 168px minmax(0,1fr);align-items:center;gap:var(--e-3);min-height:var(--ctrl-s);border-top:var(--linea) solid var(--c-borde);font-size:var(--t-nota);color:var(--c-texto-2)}
+  .est-espacios i{height:var(--e-3);border-radius:var(--r-1);background:var(--c-accion)}
+  .est-lista{display:grid}
+  .est-lista li{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--e-4);padding-block:var(--e-3);border-top:var(--linea) solid var(--c-borde);font-size:var(--t-chico);color:var(--c-texto-2)}
+  .est-lista code{color:var(--c-texto)}
+  .est-formas{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--hueco)}
+  .est-formas li{display:flex;flex-direction:column;gap:var(--e-2);font-size:var(--t-nota);color:var(--c-texto-2)}
+  .est-formas i{display:block;height:96px;background:var(--c-marca-suave);border:var(--linea) solid var(--c-borde-fuerte)}
+  .est-formas i.sombra{background:var(--c-superficie);border:0;border-radius:var(--r-control)}
+  /* Movimiento */
+  .est-reglas{display:grid;gap:var(--e-3)}
+  .est-reglas li{display:flex;align-items:flex-start;gap:var(--e-3);max-width:var(--medida)}
+  .est-reglas .ico{margin-top:.2em;color:var(--c-exito)}
+  .est-reglas.num b{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:var(--c-accion);color:var(--c-sobre-accion);font:var(--p-fuerte) var(--t-nota)/1 var(--f-sans)}
+  .est-mov li{display:grid;gap:var(--e-2);padding-block:var(--e-3);border-top:var(--linea) solid var(--c-borde);cursor:pointer}
+  .est-mov .pista{height:var(--e-3);border-radius:var(--r-full);background:var(--c-fondo-2)}
+  .est-mov .pista i{display:block;width:var(--e-3);height:var(--e-3);border-radius:50%;background:var(--c-accion);transition:margin-left var(--dur,var(--d-entrada)) var(--cur,var(--curva-salida))}
+  .est-mov li:hover .pista i,.est-mov li:focus .pista i{margin-left:calc(100% - var(--e-3))}
+  @media (max-width:1024px){
+    .est-dos,.est-espacios{grid-template-columns:minmax(0,1fr)}
+    .est-familia,.est-letra li{grid-template-columns:minmax(0,1fr);gap:var(--e-3)}
+  }
+  @media (max-width:760px){
+    .est-rampa{grid-template-columns:repeat(6,minmax(0,1fr))}
+    .est-rampa li{min-height:64px}
+    .est-espacios li{grid-template-columns:56px 40px minmax(0,1fr)}
+    .est-espacios li span:last-child{display:none}
+    .est-lista li{grid-template-columns:minmax(0,1fr);gap:var(--e-1)}
+  }
+  @media (prefers-reduced-motion:reduce){.est-mov .pista i{transition:none}}
+</style>

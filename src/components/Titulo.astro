@@ -1,0 +1,12 @@
+---
+import { trazoOvalo } from '../lib/ovalo';
+// Titular de la marca: líneas en sans + una frase en serif dentro de un óvalo que se dibuja.
+interface Props { lineas: string[]; ovalo?: string; tag?: 'h1' | 'h2' | 'h3' | 'p'; class?: string; id?: string; marca?: boolean; clave?: string }
+const { lineas, ovalo, tag = 'h2', class: clase, id, marca = false, clave } = Astro.props;
+const Tag = tag;
+---
+<Tag class:list={['titulo', clase, { 'o-marca': marca }]} id={id} data-titulo>
+  {clave && <span class="clave">{clave} </span>}
+  {lineas.map((l, i) => <><span class="l"><span style={`--i:${i}`}>{l}</span></span>{' '}</>)}
+  {ovalo && <span class="l o"><span style={`--i:${lineas.length}`}><span class="ovalo">{ovalo}<svg viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d={trazoOvalo(ovalo)} /></svg></span></span></span>}
+</Tag>

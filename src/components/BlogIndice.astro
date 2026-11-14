@@ -1,0 +1,107 @@
+---
+// La página del blog en sus tres usos: la principal (/blog), las siguientes de la lista (/blog/pagina/2…) y la de
+// cada tema (/blog/tema/…). Orden que pide el documento del rediseño: migas y título, artículo destacado, temas
+// (enlaces de verdad, no filtros), guías esenciales, lo más reciente con paginación y el cierre para reservar.
+// La de un tema y las páginas siguientes usan la misma plantilla sin el destacado.
+import Base from '../layouts/Base.astro';
+import PortadaCorta from './PortadaCorta.astro';
+import TarjetaArticulo from './TarjetaArticulo.astro';
+import Titulo from './Titulo.astro';
+import Icono from './Icono.astro';
+import Foto from './Foto.astro';
+import { H, waLink, foco } from '../data/hoteles';
+import { BLOG, POR_PAGINA, TEMA_MINIMO, articulos, tema, urlArt, urlTema, iso } from '../data/blog';
+interface Props { pagina?: number; temaId?: string }
+const { pagina = 1, temaId } = Astro.props;
+const todos = await articulos(), t = temaId ? tema(temaId) : undefined;
+const principal = !t && pagina === 1;
+const dest = principal ? (todos.find((a) => a.data.destacado) ?? todos[0]) : undefined;
+// Las guías esenciales se enseñan cuando el blog ya no cabe en una página: con pocos artículos repetían los mismos
+// que «Lo más reciente», una pantalla más abajo.
+const esenciales = principal && todos.length > POR_PAGINA + 1 ? todos.filter((a) => a.data.esencial && a.id !== dest?.id).slice(0, 3) : [];
+const base = t ? todos.filter((a) => a.data.tema === t.id) : todos.filter((a) => a.id !== (todos.find((x) => x.data.destacado) ?? todos[0])?.id);
+const paginas = t ? 1 : Math.max(1, Math.ceil(base.length / POR_PAGINA));
+const lista = t ? base : base.slice((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA);
+const urlPag = (n: number) => (n === 1 ? '/blog' : '/blog/pagina/' + n);
+const ruta = t ? urlTema(t.id) : urlPag(pagina);
+const title = t ? `${t.nombre}: guías y consejos | ${H.corto}` : pagina > 1 ? `Blog, página ${pagina} | ${H.nombre}` : BLOG.seo;
+const description = t ? t.meta : BLOG.descripcion;
+const delgado = !!t && base.length < TEMA_MINIMO;   // tema con pocos artículos: fuera de los buscadores por ahora
+const schema = principal ? [{ '@context': 'https://schema.org', '@type': 'Blog', '@id': H.sitio + '/blog#blog', name: BLOG.titulo, description: BLOG.descripcion, url: H.sitio + '/blog', inLanguage: 'es-MX', publisher: { '@id': H.sitio + '/#hotel' },
+  blogPost: todos.map((a) => ({ '@type': 'BlogPosting', headline: a.data.titulo, url: H.sitio + urlArt(a), datePublished: iso(a.data.publicado), dateModified: iso(a.data.actualizado) })) }]
+  : [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: t ? t.nombre : BLOG.titulo, url: H.sitio + ruta, isPartOf: { '@id': H.sitio + '/blog#blog' }, inLanguage: 'es-MX' }];
+const migas: [string, string][] = t ? [['/', 'Inicio'], ['/blog', 'Blog'], [ruta, t.nombre]] : pagina > 1 ? [['/', 'Inicio'], ['/blog', 'Blog'], [ruta, 'Página ' + pagina]] : [['/', 'Inicio'], ['/blog', 'Blog']];
+const c = BLOG.cierre;
+const DOS = '(min-width: 1025px) 44vw, (min-width: 641px) 46vw, 100vw';   // tarjetas de dos en dos: la foto mide casi media pantalla
+const fotoTema = t && lista[0] ? lista[0].data.foto : undefined;   // cada tema abre con la foto de su artículo más reciente
+---
+<Base title={title} description={description} pagina="blog" ogFoto={fotoTema ?? H.heroes.planes} schema={schema} sinIndice={delgado}>
+  <PortadaCorta img={fotoTema ?? H.heroes.planes} alt={fotoTema ? lista[0].data.fotoAlt : 'El camino entre las paredes de la sierra de García, Nuevo León'} clave={t ? 'Blog del ' + H.nombre : 'Blog del ' + H.nombre + (pagina > 1 ? ' · página ' + pagina : '')} titulo={t ? t.nombre : BLOG.titulo} frase={t ? t.texto : BLOG.entrada} migas={migas}
+    botones={[{ t: t ? 'Ver los artículos' : 'Leer lo más reciente', href: '#recientes', clase: 'blanco', flecha: true }, ...(t ? [{ t: 'Todo el blog', href: '/blog', clase: 'contorno' }] : [])]}>
+    <nav class="temas en-portada" aria-label="Temas del blog" data-carga style="--d:280ms">
+      {BLOG.temas.map((x) => <a href={urlTema(x.id)} aria-current={t?.id === x.id ? 'page' : undefined}>{x.nombre}</a>)}
+    </nav>
+  </PortadaCorta>
+
+  {dest && (
+    <section class="seccion blog-arriba" aria-label="Artículo destacado y guías esenciales">
+      <div class="marco blog-arriba-grid">
+        <TarjetaArticulo art={dest} tamano="destacada" nivel="h2" rotulo="Destacado" />
+        {esenciales.length > 1 && (
+          <div class="esenciales" role="group" aria-labelledby="t-esenciales">
+            <h2 class="rotulo-sec" id="t-esenciales" data-aparece>Guías esenciales</h2>
+            <p class="esenciales-nota" data-aparece>Las mantenemos al día: las revisamos cada mes.</p>
+            <ul class="lista">
+              {esenciales.map((a, i) => (
+                <li data-aparece style={`--orden:${i}`}>
+                  <a class="esencial" href={urlArt(a)}>
+                    <span class="esencial-foto" style={foco(a.data.foto)}><Foto src={H.id + '/' + a.data.foto} alt="" sizes="160px" anchos={[240, 480]} /></span>
+                    <span class="esencial-txt"><small>{tema(a.data.tema).nombre}</small><b>{a.data.titulo}</b></span>
+                    <Icono n="flecha" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <section class:list={['seccion', { 'sin-arriba': !!dest }]} id="recientes" aria-labelledby="t-recientes">
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={[t ? 'Artículos de' : 'Lo más']} ovalo={t ? 'este tema' : 'reciente'} id="t-recientes" marca />
+        <div class="lado">
+          <p class="texto" data-aparece>{t ? 'Otros temas del blog:' : 'Elige un tema o baja por la lista.'}</p>
+          <nav class="temas" aria-label="Temas" data-aparece>
+            {BLOG.temas.filter((x) => x.id !== t?.id).map((x) => <a href={urlTema(x.id)}>{x.nombre}</a>)}
+            {t && <a href="/blog">Todo el blog</a>}
+          </nav>
+        </div>
+      </div>
+      {lista.length > 0
+        ? (lista.length === 1 ? <TarjetaArticulo art={lista[0]} tamano="destacada" nivel="h3" /> : <div class:list={['art-grid', 'de-' + (lista.length === 4 ? 2 : Math.min(lista.length, 3))]}>{lista.map((a, i) => <TarjetaArticulo art={a} nivel="h3" orden={i % 3} sizes={lista.length === 2 || lista.length === 4 ? DOS : undefined} />)}</div>)
+        : <p class="texto">Todavía no hay artículos en este tema. <a class="enlace" href="/blog">Ver todo el blog</a></p>}
+      {paginas > 1 && (
+        <nav class="paginacion" aria-label="Páginas del blog">
+          {pagina > 1 ? <a class="pag-lado" href={urlPag(pagina - 1)} rel="prev"><Icono n="izq" />Más recientes</a> : <span class="pag-lado" aria-hidden="true"></span>}
+          <ol class="lista">{Array.from({ length: paginas }, (_, i) => i + 1).map((n) => <li><a href={urlPag(n)} aria-current={n === pagina ? 'page' : undefined} aria-label={'Página ' + n}>{n}</a></li>)}</ol>
+          {pagina < paginas ? <a class="pag-lado" href={urlPag(pagina + 1)} rel="next">Anteriores<Icono n="der" /></a> : <span class="pag-lado" aria-hidden="true"></span>}
+        </nav>
+      )}
+    </div>
+  </section>
+
+  <section class="blog-cierre" aria-labelledby="t-blog-cierre">
+    <div class="marco">
+      <div class="blog-cierre-caja" data-aparece>
+        <div><h2 id="t-blog-cierre">{c.titulo}</h2><p>{c.texto}</p></div>
+        <div class="botones">
+          <a class="boton" href={waLink('Hola, vengo del blog y quiero reservar en el ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />Reservar por WhatsApp</a>
+          <a class="boton contorno suave" href={c.href}>{c.enlace}<span class="flecha"><Icono n="flecha" /></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

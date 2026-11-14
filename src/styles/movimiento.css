@@ -1,0 +1,115 @@
+/* Movimiento: todo lo que entra, se revela o va atado al scroll.
+   Lo anima el navegador. El código (src/scripts/movimiento.ts) solo marca con «visto» lo que entra a la pantalla.
+   No hay librerías de animación ni scroll con inercia, y al bajar casi no se escribe nada en la página: lo atado al
+   scroll (también el arco) lo mueve el navegador desde aquí.
+   Sin JavaScript (.js ausente), si el código falla (.sin-mov) o con «reducir movimiento», la página se ve completa. */
+
+@keyframes sube-l{from{opacity:0;transform:translateY(var(--mov-l))}to{opacity:1;transform:none}}
+@keyframes linea-entra{from{transform:translateY(112%)}to{transform:none}}
+@keyframes traza-entra{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes revela{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes revela-arco{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes serie-entra{from{opacity:0;transform:translateY(30%)}to{opacity:1;transform:none}}
+/* el pin es una gota girada 45°: la caída conserva ese giro (sin él aparecía volteado y se acomodaba de golpe) */
+@keyframes pin-cae{from{opacity:0;transform:translateY(-3.75rem) rotate(-45deg)}to{opacity:1;transform:rotate(-45deg)}}
+@keyframes etq-entra{from{opacity:0;transform:translateX(-.75rem)}to{opacity:1;transform:none}}
+@keyframes pie-sube{from{transform:translateY(70%)}to{transform:none}}
+@keyframes foto-entra{from{transform:scale(1.14)}to{transform:none}}
+/* Atadas al scroll: el avance lo da la posición de la sección en la pantalla */
+@keyframes paralaje{from{transform:translateY(-5%) scale(1.14)}to{transform:translateY(5%) scale(1.14)}}
+@keyframes portada-hunde{to{transform:translateY(16%) scale(1.05)}}
+@keyframes portada-aleja{to{transform:translateY(-5.625rem);opacity:0}}
+@keyframes mapa-acerca{from{transform:scale(1.05)}to{transform:scale(1)}}
+@keyframes palabra-pasa{from{transform:translateX(5%)}to{transform:translateX(-5%)}}
+@keyframes arco-plx{from{transform:translateY(-2.5%) scale(var(--arco-zoom,1.1))}to{transform:translateY(2.5%) scale(var(--arco-zoom,1.1))}}
+@keyframes galeria-pasa{to{transform:translateX(calc(var(--recorrido,0px) * -1))}}
+
+/* Solo en pantalla: en papel no hay nada que esperar, se imprime todo */
+@media screen and (prefers-reduced-motion:no-preference){
+  /* ── En espera: lo que todavía no entra a la pantalla ──
+     Se oculta con opacidad, nunca con recorte: una pieza recortada del todo no cuenta como visible y nunca entraría. */
+  .js:not(.sin-mov) [data-aparece]:not(.visto),
+  .js:not(.sin-mov) [data-nombre-serie]:not(.visto),
+  .js:not(.sin-mov) .habs-lista .hab:not(.visto) > *,
+  .js:not(.sin-mov) .mapa:not(.visto) [data-pin],
+  .js:not(.sin-mov) .mapa:not(.visto) [data-pin-etq],
+  .js:not(.sin-mov) [data-revela]:not(.visto),
+  .js:not(.sin-mov) [data-indice]:not(.visto) .vista-previa{opacity:0}
+  .js:not(.sin-mov) [data-titulo]:not(.visto) .l > span{transform:translateY(112%)}
+  .js:not(.sin-mov) [data-titulo]:not(.visto) .ovalo path,
+  .js:not(.sin-mov) [data-nombre-serie]:not(.visto) path{stroke-dasharray:1;stroke-dashoffset:1}
+  .js:not(.sin-mov) .pie:not(.visto) .pie-nombre{transform:translateY(70%)}
+
+  /* ── Entradas ── */
+  /* Bloques: suben y aparecen; los que entran juntos se escalonan con --orden */
+  [data-aparece].visto{animation:sube-l var(--d-entrada) var(--curva-salida) calc(var(--orden,0) * var(--paso)) backwards}
+  /* Titulares: cada línea sube desde su máscara y después se dibuja el óvalo */
+  [data-titulo].visto .l > span{animation:linea-entra var(--d-escena) var(--curva-expo) calc(var(--i,0) * var(--paso)) backwards}
+  [data-titulo].visto .ovalo path{stroke-dasharray:1;animation:traza-entra var(--d-escena) var(--curva-vaiven) var(--d-ui) backwards}
+  /* Fotos: se descubren con una cortina */
+  [data-revela].visto{animation:revela var(--d-revela) var(--curva-expo) backwards}
+  [data-revela="arco"].visto{animation-name:revela-arco}
+  [data-nombre-serie].visto{animation:serie-entra var(--d-escena) var(--curva-expo) backwards}
+  [data-nombre-serie].visto path{stroke-dasharray:1;animation:traza-entra var(--d-revela) var(--curva-vaiven) var(--d-ui) backwards}
+  [data-indice].visto .vista-previa{animation:revela-arco var(--d-revela) var(--curva-expo) backwards}
+  .mapa.visto [data-pin]{animation:pin-cae var(--d-escena) var(--curva-expo) var(--d-ui) backwards}
+  .mapa.visto [data-pin-etq]{animation:etq-entra var(--d-entrada) var(--curva-salida) calc(var(--d-ui) + var(--d-lento)) backwards}
+  .pie.visto .pie-nombre{animation:pie-sube var(--d-revela) var(--curva-expo) backwards}
+  /* Ficha de habitación: sus renglones entran uno tras otro */
+  .habs-lista .hab.visto > *{animation:sube-l var(--d-entrada) var(--curva-salida) backwards}
+  .habs-lista .hab.visto > :nth-child(2){animation-delay:calc(var(--paso) * .75)}
+  .habs-lista .hab.visto > :nth-child(3){animation-delay:calc(var(--paso) * 1.5)}
+  .habs-lista .hab.visto > :nth-child(4){animation-delay:calc(var(--paso) * 2.25)}
+  .habs-lista .hab.visto > :nth-child(5){animation-delay:calc(var(--paso) * 3)}
+  .habs-lista .hab.visto > :nth-child(6){animation-delay:calc(var(--paso) * 3.75)}
+  .habs-lista .hab.visto > :nth-child(n+7){animation-delay:calc(var(--paso) * 4.5)}
+
+  /* ── Habitaciones: cortina entre fotos ── */
+  .habs-media .capa.entra-abajo,.habs-media .capa.entra-arriba{z-index:2}
+  .habs-media .capa.entra-abajo{animation:revela-arco var(--d-escena) var(--curva-vaiven) both}
+  .habs-media .capa.entra-arriba{animation:revela var(--d-escena) var(--curva-vaiven) both}
+  .habs-media .capa.entra-abajo img,.habs-media .capa.entra-arriba img{animation:foto-entra var(--d-ambiente) var(--curva-expo) both}
+
+  /* ── Reseña: las palabras se entintan conforme pasa por la pantalla ── */
+  .pal{opacity:.16;transition:opacity var(--d-medio) ease}
+  .pal.tinta{opacity:1}
+
+  /* ── Lo que corre solo: se detiene cuando no se ve ──
+     La marca es «fuera» (no «a la vista»): si el código dejara de correr, la cinta se queda andando, nunca detenida. */
+  .cinta.fuera .cinta-pista{animation-play-state:paused}
+
+  /* ── Atado al scroll, sin código: lo mueve el propio navegador ── */
+  @supports (animation-timeline:view()){
+    /* El nombre de cada línea de tiempo va en una variable: así el compactador de CSS no lo mete dentro del atajo
+       «animation» (los navegadores no lo aceptan ahí y la animación entera dejaría de funcionar). */
+    :root{--lt-plx:--plx;--lt-portada:--portada;--lt-mapa:--mapa;--lt-banda:--banda;--lt-galeria:--galeria}
+    /* Toda línea de tiempo lleva «view-timeline-inset:0px», escrito DESPUÉS del atajo «view-timeline» (el atajo lo
+       devuelve a «auto»). Con «auto» el navegador descuenta el margen de anclas de la página (scroll-padding: el alto
+       de la cabecera fija) y da por empezada la salida de lo que está pegado arriba: las cabeceras interiores, más
+       bajas que la pantalla, abrían con la foto ya corrida 12 px hacia abajo y dejaban ver una franja del fondo.
+       La del inicio no, porque llena la pantalla. scripts/revisar.mjs lo vigila. */
+    [data-paralaje]{view-timeline:--plx block;view-timeline-inset:0px}
+    [data-paralaje] img{animation:paralaje linear both;animation-timeline:var(--lt-plx);animation-range:cover 0% cover 100%}
+    /* la foto del arco conserva su encuadre mientras se desplaza */
+    .ventana-foto[data-paralaje] img{animation-name:arco-plx}
+    .portada{view-timeline:--portada block;view-timeline-inset:0px}
+    .portada-foto{animation:portada-hunde linear both;animation-timeline:var(--lt-portada);animation-range:exit 0% exit 100%}
+    [data-portada-txt]{animation:portada-aleja linear both;animation-timeline:var(--lt-portada);animation-range:exit 8% exit 80%}
+    .mapa{view-timeline:--mapa block;view-timeline-inset:0px}
+    .lienzo-mov{animation:mapa-acerca linear both;animation-timeline:var(--lt-mapa);animation-range:cover 0% cover 100%}
+    .banda-cta{view-timeline:--banda block;view-timeline-inset:0px}
+    .banda-cta .palabra{animation:palabra-pasa linear both;animation-timeline:var(--lt-banda);animation-range:cover 0% cover 100%}
+    .galeria-desliza{view-timeline:--galeria block;view-timeline-inset:0px}
+    .galeria-pista{animation:galeria-pasa linear both;animation-timeline:var(--lt-galeria);animation-range:cover 0% cover 100%}
+  }
+}
+/* Donde el navegador no puede atar animaciones al scroll, la galería se desliza con el dedo */
+@supports not (animation-timeline:view()){
+  .galeria-desliza{overflow-x:auto;scrollbar-width:none}
+  .galeria-desliza::-webkit-scrollbar{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .galeria-desliza{overflow-x:auto}
+}
+/* La foto que sale espera debajo mientras la nueva la cubre */
+.habs-media .capa.sale{opacity:1;visibility:visible;z-index:1}

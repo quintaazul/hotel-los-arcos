@@ -1,0 +1,9 @@
+---
+import Icono from './Icono.astro';
+// «decorativa»: las estrellas van junto a un texto que ya dice la calificación, así que no se anuncian otra vez.
+interface Props { valor: number; decorativa?: boolean }
+const { valor, decorativa = false } = Astro.props;
+---
+<span class="estrellas" role={decorativa ? undefined : 'img'} aria-label={decorativa ? undefined : valor + ' de 5 estrellas'} aria-hidden={decorativa ? 'true' : undefined}>
+  {[1, 2, 3, 4, 5].map((i) => <Icono n="estrella" class={valor < i - 0.25 ? 'media' : undefined} />)}
+</span>

@@ -1,0 +1,16 @@
+---
+import { T } from '../data/textos';
+import Icono from './Icono.astro';
+import { H } from '../data/hoteles';
+const items = T.inicio.cinta;
+---
+<section class="cinta" aria-label="Lo más importante del hotel">
+  <div class="cinta-pista">
+    {[0, 1].map((g) => (
+      <div class="cinta-grupo" aria-hidden={g === 1 ? 'true' : undefined}>
+        {items.map((t) => <><span>{t}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">{H.id === 'qa' ? <ellipse cx="12" cy="12" rx="9.5" ry="5.5" transform="rotate(-8 12 12)" /> : <><path d="M5 21V11a7 7 0 0 1 14 0v10" /><path d="M9 21v-9a3 3 0 0 1 6 0v9" /></>}</svg></>)}
+      </div>
+    ))}
+  </div>
+  <button type="button" class="cinta-pausa" aria-pressed="false" aria-label="Pausar la cinta"><Icono n="pausa" /></button>
+</section>

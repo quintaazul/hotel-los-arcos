@@ -1,0 +1,19 @@
+---
+// Sección de videos del inicio: los videos del hotel, cada uno con su forma, en una sola fila.
+import { H } from '../data/hoteles';
+import Titulo from './Titulo.astro';
+import Video from './Video.astro';
+const vs = H.videos;
+const suma = vs.reduce((t, v) => t + (v.forma === 'vertical' ? 9 / 16 : 4 / 3), 0);
+---
+<section class="cine seccion sobre-oscuro" aria-labelledby="t-cine">
+  <div class="marco">
+    <div class="cine-cab">
+      <Titulo lineas={[H.cine.s]} ovalo={H.cine.o} id="t-cine" />
+      <p class="texto" data-aparece>{H.cine.texto}</p>
+    </div>
+    <div class="cine-fila" style={`--n:${vs.length};--suma:${suma.toFixed(4)}`}>
+      {vs.map((v) => <Video id={v.id} sizes={v.forma === 'vertical' ? '(min-width: 761px) 24vw, 68vw' : '(min-width: 761px) 54vw, 86vw'} />)}
+    </div>
+  </div>
+</section>

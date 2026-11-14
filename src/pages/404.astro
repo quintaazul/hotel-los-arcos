@@ -1,0 +1,17 @@
+---
+// Página no encontrada: mensaje corto y enlaces a Inicio, Habitaciones y la palapa (documento del rediseño).
+import Base from '../layouts/Base.astro';
+import PortadaCorta from '../components/PortadaCorta.astro';
+import Icono from '../components/Icono.astro';
+import { H, waLink } from '../data/hoteles';
+import { T, SEO } from '../data/textos';
+const t = T.noEncontrada, seo = SEO.noEncontrada;
+---
+<Base title={seo.title} description={seo.description} sinIndice>
+  <PortadaCorta img={H.ventana.img} alt={H.ventana.alt} clave={seo.h1} lineas={[t.l]} ovalo={t.o} frase="La dirección cambió o tiene un error. Por aquí encuentras lo que buscabas:">
+    <div class="botones siempre iguales" data-carga style="--d:600ms">
+      {t.enlaces.map(([x, href], i) => <a class:list={['boton', i === 0 ? 'blanco' : 'contorno']} href={href}>{x}</a>)}
+      <a class="boton contorno" href={waLink()} target="_blank" rel="noopener"><Icono n="wa" />Escribir por WhatsApp</a>
+    </div>
+  </PortadaCorta>
+</Base>

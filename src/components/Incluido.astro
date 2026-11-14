@@ -1,0 +1,23 @@
+---
+import { H } from '../data/hoteles';
+import Foto from './Foto.astro';
+import Titulo from './Titulo.astro';
+import { T } from '../data/textos';
+---
+<section class="incluido seccion sobre-oscuro" aria-labelledby="t-incluido">
+  <div class="marco">
+    <div class="incluido-cab">
+      <Titulo lineas={[T.inicio.incluido.l]} ovalo={T.inicio.incluido.o} id="t-incluido" />
+      <p class="texto" data-aparece>{T.inicio.incluido.texto}</p>
+    </div>
+    <div class="tejas">
+      {H.incluido.map((c, i) => (
+        <article class="teja" data-aparece>
+          <div class="foto-caja" data-paralaje><Foto src={H.id + '/' + c.img} alt={c.alt} sizes={i === 0 ? '(min-width: 1700px) 52vw, (min-width: 1025px) 64vw, 100vw' : i === 1 ? '(min-width: 1025px) 48vw, (min-width: 761px) 62vw, 100vw' : i === 2 ? '(min-width: 1025px) 25vw, (min-width: 761px) 48vw, 100vw' : '(min-width: 1025px) 25vw, 100vw'} /></div>
+          <h3>{c.t}</h3>
+          <p>{c.p}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,71 @@
+---
+// Portada de las páginas interiores. Es una pantalla completa, igual que la del inicio: foto a sangre, título,
+// botones, una tarjeta con el dato clave de la página y, abajo, una barra útil (datos de la página o lo que se
+// pase en el hueco «barra», como la barra de reservas). Las migas van dentro, arriba, no en una franja aparte.
+// (Hasta el 10 de noviembre de 2026 era una franja corta y debajo quedaba media pantalla vacía.)
+import { H, focoCel } from '../data/hoteles';
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+import Migas from './Migas.astro';
+import { velo, claveVelo } from '../lib/velo';
+import { trazoOvalo } from '../lib/ovalo';
+interface Boton { t: string; href: string; ico?: string; clase?: string; fuera?: boolean; flecha?: boolean }
+interface Dato { ico?: string; cifra?: string; unidad?: string; b: string; t?: string }
+interface Props {
+  img: string; alt: string; clave: string; lineas?: string[]; ovalo?: string; frase?: string;
+  botonesSiempre?: boolean;   // los botones se quedan en celular (ahí se ocultan porque ya está el botón flotante)
+  titulo?: string;    // título largo de una guía: va en serif y sin óvalo, en lugar de «lineas» + «ovalo»
+  destino?: boolean;  // la foto es el destino de la foto que viaja desde el índice de planes (efectos.css)
+  migas?: [string, string][]; botones?: Boton[];
+  tarjeta?: { rotulo: string; valor: string; sufijo?: string; texto: string };
+  barra?: Dato[];
+  quieta?: boolean;   // el contenido no se aleja al bajar (cuando lleva un formulario que se está llenando)
+}
+const { img, alt, clave, lineas = [], ovalo, frase, titulo, destino = false, migas, botones, botonesSiempre = false, tarjeta, barra, quieta = false } = Astro.props;
+// Si la foto tiene su recorte ancho (mismo nombre con «-cabecera», lo prepara scripts/material.mjs), las pantallas
+// apaisadas reciben ese y los celulares la foto completa.
+const disponibles = Object.keys(import.meta.glob('@fotos/*-cabecera-*.jpg'));
+const candidata = img.replace(/-(hotel-[a-z-]+)\.(jpg|webp|png)$/, '-cabecera-$1.jpg');
+const ancha = candidata !== img && disponibles.some((k) => k.endsWith('/' + H.id + '/' + candidata)) ? H.id + '/' + candidata : undefined;
+const fotoAncha = ancha ? candidata : undefined, sombra = await velo(H.id, img, fotoAncha);
+---
+<section class:list={['portada interior sombreada', { guia: titulo }]} style={sombra} data-velo={claveVelo(H.id, img, fotoAncha)}>
+  <div class:list={['portada-foto', { 'va-destino': destino }]} data-portada-foto style={focoCel(img)}><Foto src={H.id + '/' + img} ancha={ancha} alt={alt} prioridad portada sizes="100vw" anchos={[480, 800, 1200, 1600, 2000, 2560]} /></div>
+  {migas && <Migas items={migas} class="en-portada" />}
+  <div class="marco portada-marco" data-portada-txt={quieta ? undefined : ''}>
+    <div class="portada-int">
+      <div class="portada-txt">
+        <div class="titulo titulo-portada">
+          {titulo ? <p class="clave">{clave}</p> : <h1 class="clave">{clave}</h1>}
+          {titulo && <h1 class="l"><span style="--i:0">{titulo}</span></h1>}
+          {!titulo && <p class="lema">
+          {lineas.map((l, i) => <><span class="l"><span style={`--i:${i}`}>{l}</span></span>{' '}</>)}
+          {ovalo && <span class="l o"><span style={`--i:${lineas.length}`}><span class="ovalo">{ovalo}<svg viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d={trazoOvalo(ovalo)} /></svg></span></span></span>}
+          </p>}
+        </div>
+        {frase && <p class="bajada" data-carga style="--d:160ms">{frase}</p>}
+        {botones && (
+          <div class:list={['botones', { siempre: botonesSiempre }]} data-carga style="--d:220ms">
+            {botones.map((b) => <a class:list={['boton', b.clase]} href={b.href} target={b.fuera ? '_blank' : undefined} rel={b.fuera ? 'noopener' : undefined}>{b.ico && <Icono n={b.ico} />}{b.t}{b.flecha && <span class="flecha"><Icono n="flecha" /></span>}</a>)}
+          </div>
+        )}
+        <slot />
+      </div>
+      <slot name="lado" />
+    </div>
+    {(barra || tarjeta || Astro.slots.has('barra')) && <div class="portada-pie">
+    {barra && (
+      <ul class="portada-barra lista" data-carga style="--d:300ms">
+        {barra.map((x) => <li>{x.ico && <Icono n={x.ico} />}{x.cifra && <span class="cifra">{x.cifra}{x.unidad && <small>{x.unidad}</small>}</span>}<span><b>{x.b}</b>{x.t && <small>{x.t}</small>}</span></li>)}
+      </ul>
+    )}
+    <slot name="barra" />
+    {tarjeta && (
+      <div class="tarjeta-google tarjeta-dato" data-carga style="--d:320ms">
+        <span class="valor">{tarjeta.valor}{tarjeta.sufijo && <small>{tarjeta.sufijo}</small>}</span>
+        <div class="tg-txt"><span class="fila">{tarjeta.rotulo}</span><p>{tarjeta.texto}</p></div>
+      </div>
+    )}
+    </div>}
+  </div>
+</section>

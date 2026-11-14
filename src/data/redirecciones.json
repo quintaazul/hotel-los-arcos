@@ -1,0 +1,14 @@
+{
+  "_": "Direcciones que cambiaron: scripts/cabeceras.mjs las escribe en dist-<hotel>/_redirects (301) y scripts/seo.mjs comprueba que nada enlace a ellas.",
+  "qa": [],
+  "la": [
+    [
+      "/blog/departamento-por-semana-o-mes",
+      "/departamentos"
+    ],
+    [
+      "/blog/reunion-familiar-en-palapa-techada",
+      "/blog/bautizo-en-jardin"
+    ]
+  ]
+}

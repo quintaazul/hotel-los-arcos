@@ -1,0 +1,12 @@
+---
+// Galería en mosaico: cada foto conserva su forma y se abre en el visor.
+import { H } from '../data/hoteles';
+import FotoVisor from './FotoVisor.astro';
+interface Props { fotos: [string, string][]; grupo: string; class?: string }
+const { fotos, grupo, class: clase } = Astro.props;
+// En la galería de dos columnas (artículos) las cajas son fijas: 4:3, y la última, si queda sola, 16:9 a todo lo ancho
+const dos = (clase ?? '').includes('dos-col');
+---
+<div class:list={['galeria', clase]}>
+  {fotos.map(([f, a], i) => { const sola = dos && fotos.length % 2 === 1 && i === fotos.length - 1; return <figure data-aparece><FotoVisor src={H.id + '/' + f} alt={a} grupo={grupo} sizes={sola ? '(min-width: 1025px) 52vw, 92vw' : dos ? '(min-width: 1025px) 25vw, 46vw' : '(min-width: 1025px) 31vw, 48vw'} cubre={sola ? 16 / 9 : dos ? 4 / 3 : undefined} anchos={[480, 800, 1200]} /></figure>; })}
+</div>

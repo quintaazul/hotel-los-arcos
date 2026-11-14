@@ -1,0 +1,8 @@
+---
+// Página de cada tema del blog: /blog/tema/<tema>. Los temas son páginas, no filtros: cada una tiene su dirección.
+import BlogIndice from '../../../components/BlogIndice.astro';
+import { BLOG } from '../../../data/blog';
+export function getStaticPaths() { return BLOG.temas.map((t) => ({ params: { tema: t.id } })); }
+const { tema } = Astro.params;
+---
+<BlogIndice temaId={tema} />

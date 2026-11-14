@@ -1,0 +1,36 @@
+---
+// Puntos sobre la foto (catálogo motion-prompt, n.º 163 «hotspots»): la palapa explicada sobre su propia foto.
+// Cada punto es un botón con su nota; se abre con el ratón, con el teclado o al tocarlo (scripts/interfaz.ts).
+// A un lado va el índice con los mismos nombres: pasar por una fila enciende su punto en la foto.
+// El texto de las notas está en la página aunque nadie toque nada: lo leen buscadores y lectores de pantalla.
+// La posición de cada punto (x, y) va en porcentaje del marco de la foto, que es fijo: 16 a 10, centrado.
+import { H } from '../data/hoteles';
+import Foto from './Foto.astro';
+import Titulo from './Titulo.astro';
+import { T } from '../data/textos';
+const p = H.palapa.puntos;
+---
+{p && (
+  <section class="seccion sin-arriba" aria-labelledby="t-puntos">
+    <div class="marco puntos-marco" data-puntos>
+      <div class="puntos-cab">
+        <Titulo lineas={[T.celebraciones.puntos.l]} ovalo={T.celebraciones.puntos.o} id="t-puntos" marca />
+        <p class="texto" data-aparece>Toca cada punto de la foto para ver qué incluye el espacio.</p>
+        <ul class="puntos-indice lista" aria-hidden="true">
+          {p.lista.map((x, i) => <li data-aparece style={`--orden:${i}`}><button type="button" tabindex="-1" data-ir-punto={i} class:list={{ activo: i === 0 }}><span class="n">{i + 1}</span>{x.t}</button></li>)}
+        </ul>
+      </div>
+      <div class="puntos" data-aparece>
+        <div class="puntos-foto"><Foto src={H.id + '/' + p.img} alt={p.alt} sizes="(min-width: 1025px) 56vw, 100vw" anchos={[480, 800, 1200, 1600]} /></div>
+        <ol class="lista">
+          {p.lista.map((x, i) => (
+            <li class:list={['punto', x.x > 58 ? 'a-izq' : 'a-der', { abierto: i === 0 }]} style={`--x:${x.x}%;--y:${x.y}%;--i:${i}`}>
+              <button type="button" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={'nota-' + i} aria-labelledby={'nota-t-' + i}><span class="n" aria-hidden="true">{i + 1}</span></button>
+              <div class="nota" id={'nota-' + i}><b><span class="num" aria-hidden="true">{i + 1}</span><span id={'nota-t-' + i}>{x.t}</span></b><span>{x.p}</span></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+)}

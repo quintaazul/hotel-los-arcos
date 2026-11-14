@@ -1,0 +1,25 @@
+---
+// Caja «Hospédate cerca» de los artículos: enlaza a la página que vende lo que el artículo cuenta (habitaciones,
+// palapa, departamentos, empresas o cómo llegar) y trae el botón de WhatsApp con un mensaje que dice de qué artículo
+// viene la persona. Va a mitad del artículo y al final; la del final es la versión «fuerte», con color.
+import Icono from './Icono.astro';
+import { type Art, CAJAS, waArt } from '../data/blog';
+interface Props { art: Art; fuerte?: boolean }
+const { art, fuerte = false } = Astro.props;
+const c = CAJAS[art.data.vende];
+---
+<aside class:list={['hospedate', { fuerte }]} aria-label={fuerte ? 'Para cerrar: ' + c.titulo : c.titulo}>
+  <div class="hospedate-txt">
+    <p class="hospedate-tit">{c.titulo}</p>
+    <p>{fuerte ? 'Escríbenos por WhatsApp: te respondemos de 7 AM a 11 PM.' : c.texto}</p>
+  </div>
+  <div class="hospedate-acc">
+    {fuerte ? (
+      <a class="boton blanco" href={waArt(art)} target="_blank" rel="noopener"><Icono n="wa" />Escribir por WhatsApp</a>
+      <a class="enlace" href={c.href}>{c.enlace}<Icono n="flecha" /></a>
+    ) : (
+      <a class="boton contorno suave" href={c.href}>{c.enlace}<span class="flecha"><Icono n="flecha" /></span></a>
+      <a class="enlace" href={waArt(art)} target="_blank" rel="noopener"><Icono n="wa" />Escribir por WhatsApp</a>
+    )}
+  </div>
+</aside>

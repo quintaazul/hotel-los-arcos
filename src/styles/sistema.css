@@ -1,0 +1,85 @@
+/* Letras de respaldo: Arial y Georgia ajustadas a las medidas de Poppins y DM Serif Display (ancho medido con los
+   textos reales del sitio; alturas tomadas de los archivos de letra). Solo se ven el instante en que la letra del
+   sitio aún no llega; con ellas el texto ocupa lo mismo antes y después, y la página no brinca. */
+@font-face{font-family:"Poppins respaldo";src:local("Arial");size-adjust:111%;ascent-override:94.6%;descent-override:31.5%;line-gap-override:9%}
+@font-face{font-family:"DM Serif respaldo";src:local("Georgia");size-adjust:99.5%;ascent-override:104.1%;descent-override:33.7%;line-gap-override:0%}
+/* Sistema de medidas de los dos hoteles: espacios, letra, formas, capas y movimiento.
+   Los colores viven aparte, uno por hotel: marca-qa.css y marca-la.css.
+   Regla: los componentes solo usan estas variables. Si hace falta un valor nuevo, se agrega aquí. */
+:root{
+  /* ── Espacios: escala de 4 px. El número es «cuántos cuartos de 16»: --e-4 = 16 px ── */
+  --e-05:2px; --e-1:.25rem; --e-15:.375rem; --e-2:.5rem; --e-25:.625rem; --e-3:.75rem; --e-35:.875rem; --e-4:1rem; --e-5:1.25rem; --e-6:1.5rem; --e-7:1.75rem;
+  --e-8:2rem; --e-10:2.5rem; --e-12:3rem; --e-14:3.5rem; --e-16:4rem; --e-18:4.5rem; --e-20:5rem; --e-24:6rem; --e-32:8rem; --e-40:10rem;
+  /* Espacios de página (crecen con la pantalla) */
+  --margen:clamp(1.25rem, 3.4vw, 3.5rem);          /* borde lateral de la página */
+  --hueco:clamp(1rem, 2vw, 2rem);             /* separación entre columnas y tarjetas */
+  --seccion:clamp(5.5rem, 10vw, 10.5rem);         /* aire arriba y abajo de cada sección */
+  --seccion-s:clamp(3.5rem, 6vw, 6rem);         /* sección compacta o segunda parte de una sección */
+  --bloque:clamp(2.5rem, 5vw, 5rem);            /* del título de la sección a su contenido */
+  --pila-s:var(--e-3); --pila-m:var(--e-6); --pila-l:var(--e-10);   /* separación entre piezas apiladas */
+  --ancho:105rem; --medida:60ch; --alto-cab:4.75rem;
+
+  /* ── Letra ── */
+  --f-sans:"Poppins","Poppins respaldo","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-serif:"DM Serif Display","DM Serif respaldo",Georgia,"Times New Roman",serif;
+  --t-micro:.75rem;       /* 12: etiquetas mínimas, créditos */
+  --t-nota:.8125rem;      /* 13: etiquetas de campo, pies de foto */
+  --t-chico:.875rem;      /* 14: texto secundario */
+  --t-ui:.9375rem;        /* 15: botones chicos, menús, tablas */
+  --t-base:1rem;          /* 16: controles y botones */
+  --t-cuerpo:clamp(1rem, .96rem + .18vw, 1.125rem);        /* párrafos */
+  --t-cuerpo-l:clamp(1.0625rem, 1rem + .3vw, 1.25rem);     /* entradillas */
+  --t-h4:1.25rem;
+  --t-h3:clamp(1.375rem, 1.2rem + .7vw, 1.75rem);
+  --t-h2:clamp(1.375rem, 1rem + 1.5vw, 2.25rem);           /* frases destacadas */
+  --t-h1:clamp(2.125rem, 1.15rem + 3.5vw, 4.5rem);         /* títulos de sección */
+  --t-display:clamp(2.75rem, .55rem + 6.1vw, 6.5rem);      /* portada */
+  --p-normal:400; --p-medio:500; --p-fuerte:600;
+  --i-apretado:1.02; --i-titulo:1.15; --i-ui:1.3; --i-cuerpo:1.6;   /* interlineado */
+  --tr-titulo:-.028em; --tr-display:-.035em; --tr-etiqueta:.01em; --tr-mayus:.3em;   /* espaciado entre letras */
+
+  /* ── Formas ── */
+  --r-1:.25rem; --r-2:.5rem; --r-3:.75rem; --r-4:1rem; --r-5:1.25rem; --r-6:1.75rem; --r-full:62.4375rem;
+  --r-media:var(--r-2);      /* fotos y tarjetas con foto */
+  --r-control:var(--r-3);    /* campos, botones cuadrados, celdas */
+  --r-tarjeta:var(--r-4);    /* tarjetas y paneles */
+  --r-flota:var(--r-5);      /* ventanas flotantes, barra de reservas, hojas */
+  --ctrl-s:2.5rem; --ctrl-m:3rem; --ctrl-l:3.5rem;   /* alto de botones y campos */
+  --toque:2.75rem;                                    /* mínimo para tocar con el dedo */
+  --linea:1px; --linea-fuerte:1.5px;
+
+  /* ── Sombras (altura sobre la página) ── */
+  --s-1:0 0 0 1px rgb(var(--c-noche) / .06);
+  --s-2:0 1px 2px rgb(var(--c-noche) / .06), 0 .5rem 1.5rem -.75rem rgb(var(--c-noche) / .18);
+  --s-3:0 0 0 1px rgb(var(--c-noche) / .06), 0 1.125rem 3rem -1.125rem rgb(var(--c-noche) / .30);
+  --s-4:0 0 0 1px rgb(var(--c-noche) / .06), 0 1.875rem 5rem -1.5rem rgb(var(--c-noche) / .40);
+
+  /* ── Capas ── */
+  --z-contenido:1; --z-pegado:6; --z-flota:30; --z-cabecera:40; --z-menu:55; --z-velo:58; --z-hoja:62; --z-sobre-velo:70; --z-salto:90;
+
+  /* ── Movimiento ── */
+  --d-instante:100ms;   /* respuesta al presionar */
+  --d-rapido:160ms;     /* hover, cambios de color */
+  --d-ui:240ms;         /* menús, ventanas flotantes, estados */
+  --d-medio:360ms;      /* cabecera, velos, fundidos */
+  --d-lento:520ms;      /* hojas, cajones, menú a pantalla completa */
+  --d-entrada:600ms;    /* contenido que aparece */
+  --d-escena:800ms;     /* títulos, óvalos y cortinas entre fotos */
+  --d-revela:1000ms;    /* fotos que se descubren */
+  --d-ambiente:1300ms;  /* foto que se asienta, cifras que cuentan */
+  --curva-salida:cubic-bezier(.22,1,.36,1);     /* lo que entra o responde: rápido al inicio, frena suave */
+  --curva-expo:cubic-bezier(.16,1,.3,1);        /* entradas grandes: títulos, máscaras */
+  --curva-vaiven:cubic-bezier(.76,0,.24,1);     /* lo que se mueve de un lugar a otro */
+  --curva-suave:cubic-bezier(.33,1,.68,1);      /* fotos que se asientan */
+  --curva-cajon:cubic-bezier(.32,.72,0,1);      /* hojas y cajones */
+  --curva-entrada:cubic-bezier(.55,.055,.675,.19);   /* lo que se va */
+  --mov-s:.5rem; --mov-m:1.125rem; --mov-l:1.75rem;  /* cuánto se desplaza lo que aparece */
+  --paso:60ms;                              /* retraso entre piezas hermanas */
+
+  color-scheme:light;
+}
+@media (max-width:1024px){ :root{ --alto-cab:4.25rem } }
+
+/* Pantallas muy grandes (2K y 4K sin ampliar): como las medidas van en rem, todo el sitio crece en proporción.
+   Hasta 1920 px de ancho no cambia nada; a 2560 px todo es 10 % más grande y a 3840 px, 50 % más grande. */
+html{font-size:clamp(100%,max(calc(100% + (100vw - 1920px) * .0025),calc(110% + (100vw - 2560px) * .005)),150%)}

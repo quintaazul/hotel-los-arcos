@@ -1,0 +1,9 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "hotel-quinta-azul", "runtimeExecutable": "node", "runtimeArgs": ["scripts/ver.mjs", "qa"], "port": 4321 },
+    { "name": "hotel-los-arcos", "runtimeExecutable": "node", "runtimeArgs": ["scripts/ver.mjs", "la"], "port": 4322 },
+    { "name": "hotel-quinta-azul-taller", "runtimeExecutable": "node", "runtimeArgs": ["scripts/dev.mjs", "qa"], "port": 4311 },
+    { "name": "hotel-los-arcos-taller", "runtimeExecutable": "node", "runtimeArgs": ["scripts/dev.mjs", "la"], "port": 4312 }
+  ]
+}

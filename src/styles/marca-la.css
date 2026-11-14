@@ -1,0 +1,76 @@
+/* Paleta de Hotel Los Arcos Inn. Generada por scripts/paleta.mjs: no se edita a mano.
+   Capa 1 = colores (rampas 50–950). Capa 2 = papeles (--c-*), que es lo único que usan los componentes. */
+:root[data-hotel="la"]{
+  /* terracota: Primario */
+  --terracota-50:#FFF4EF; --terracota-100:#FFE7DB; --terracota-200:#FFD1B9; --terracota-300:#FFAE83; --terracota-400:#F58541; --terracota-500:#EA6C00; --terracota-600:#AE4F00; --terracota-700:#8A3D00; --terracota-800:#692D00; --terracota-900:#4C1E00; --terracota-950:#311100;
+  /* jardin: Secundario */
+  --jardin-50:#F0FAF1; --jardin-100:#E1F3E2; --jardin-200:#C7E6CA; --jardin-300:#A3D2A8; --jardin-400:#7CB984; --jardin-500:#599D64; --jardin-600:#3C8048; --jardin-700:#266634; --jardin-800:#174E24; --jardin-900:#0D3717; --jardin-950:#06220C;
+  /* miel: Acento */
+  --miel-50:#FEF6E7; --miel-100:#FAEBD0; --miel-200:#F3D9A9; --miel-300:#E6BE72; --miel-400:#D29E30; --miel-500:#B28100; --miel-600:#8F6700; --miel-700:#705000; --miel-800:#553C00; --miel-900:#3D2A00; --miel-950:#261900;
+  /* adobe: Neutros */
+  --adobe-50:#F9F5F0; --adobe-100:#F1EAE0; --adobe-200:#E5DBCE; --adobe-300:#D1C5B8; --adobe-400:#AEA296; --adobe-500:#8A7E73; --adobe-600:#6E6056; --adobe-700:#56473D; --adobe-800:#403229; --adobe-900:#2D2119; --adobe-950:#20160F;
+  /* exito: Estado: correcto */
+  --exito-50:#EFFAF0; --exito-100:#DEF4E1; --exito-200:#C1E8C8; --exito-300:#9AD5A5; --exito-400:#6EBC80; --exito-500:#47A05F; --exito-600:#258343; --exito-700:#07692F; --exito-800:#004F21; --exito-900:#003915; --exito-950:#00230B;
+  /* aviso: Estado: atención */
+  --aviso-50:#FCF6E8; --aviso-100:#F7ECD2; --aviso-200:#EEDBAC; --aviso-300:#DFC178; --aviso-400:#C9A23C; --aviso-500:#AB8500; --aviso-600:#896A00; --aviso-700:#6C5300; --aviso-800:#523E00; --aviso-900:#3B2B00; --aviso-950:#251A00;
+  /* error: Estado: error */
+  --error-50:#FFF4F3; --error-100:#FFE6E4; --error-200:#FFCFCA; --error-300:#FFABA3; --error-400:#FF7871; --error-500:#E74E4C; --error-600:#C52B30; --error-700:#A30B1B; --error-800:#7F0010; --error-900:#5C0009; --error-950:#3C0004;
+  /* info: Estado: información */
+  --info-50:#EFF8FF; --info-100:#DCF0FF; --info-200:#BFE2FB; --info-300:#96CBF1; --info-400:#6AB0E0; --info-500:#4393C6; --info-600:#2176A8; --info-700:#025D8A; --info-800:#00466A; --info-900:#00314C; --info-950:#001E31;
+  /* Papeles */
+  --c-noche:24 16 10;
+  --c-fondo:var(--adobe-50);
+  --c-fondo-2:var(--adobe-100);
+  --c-fondo-3:var(--adobe-200);
+  --c-superficie:#FFFFFF;
+  --c-fondo-oscuro:var(--adobe-950);
+  --c-fondo-oscuro-2:var(--adobe-900);
+  --c-texto:var(--adobe-950);
+  --c-texto-2:var(--adobe-700);
+  --c-texto-3:var(--adobe-600);
+  --c-texto-apagado:var(--adobe-500);
+  --c-borde:var(--adobe-200);
+  --c-borde-fuerte:var(--adobe-300);
+  --c-borde-control:var(--adobe-500);
+  --c-blanco:#FFFFFF;
+  --c-sobre-accion:#FFFFFF;
+  --c-sobre-oscuro:var(--adobe-50);
+  --c-sobre-oscuro-2:var(--adobe-300);
+  --c-marca:var(--terracota-500);
+  --c-accion:var(--terracota-500);
+  --c-accion-hover:var(--terracota-600);
+  --c-accion-activa:var(--terracota-700);
+  --c-texto-marca:var(--terracota-700);
+  --c-marca-hondo:var(--terracota-900);
+  --c-marca-suave:var(--terracota-100);
+  --c-marca-suave-2:var(--terracota-200);
+  --c-foco:var(--terracota-600);
+  --c-secundario:var(--jardin-600);
+  --c-secundario-suave:var(--jardin-100);
+  --c-acento:var(--miel-500);
+  --c-estrella:var(--miel-400);
+  --c-exito:var(--exito-600);
+  --c-exito-texto:var(--exito-700);
+  --c-exito-fondo:var(--exito-50);
+  --c-exito-borde:var(--exito-300);
+  --c-aviso:var(--aviso-600);
+  --c-aviso-texto:var(--aviso-700);
+  --c-aviso-fondo:var(--aviso-50);
+  --c-aviso-borde:var(--aviso-300);
+  --c-error:var(--error-600);
+  --c-error-texto:var(--error-700);
+  --c-error-fondo:var(--error-50);
+  --c-error-borde:var(--error-300);
+  --c-info:var(--info-600);
+  --c-info-texto:var(--info-700);
+  --c-info-fondo:var(--info-50);
+  --c-info-borde:var(--info-300);
+  --c-velo:rgb(var(--c-noche) / .46); --c-seleccion:var(--c-marca-suave-2);
+  /* Piezas con color propio */
+  --serie-fondo:var(--adobe-50);
+  --serie-tinta:var(--adobe-950);
+  --serie-linea:transparent;
+  --serie-tapa:var(--adobe-200);
+  --serie-pill:var(--terracota-600);
+  --serie-pill-tinta:#FFFFFF;
+}

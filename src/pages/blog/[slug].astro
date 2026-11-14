@@ -1,0 +1,85 @@
+---
+// Artículo del blog. Orden que pide el documento del rediseño: migas (Inicio › Blog › Tema › Título), título y foto,
+// quién lo firma con sus fechas, «En resumen», índice, el texto, la caja «Hospédate cerca» a mitad y al final,
+// las preguntas del artículo y tres artículos relacionados.
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PortadaCorta from '../../components/PortadaCorta.astro';
+import Foto from '../../components/Foto.astro';
+import Video from '../../components/Video.astro';
+import Galeria from '../../components/Galeria.astro';
+import Titulo from '../../components/Titulo.astro';
+import TarjetaArticulo from '../../components/TarjetaArticulo.astro';
+import HospedateCerca from '../../components/HospedateCerca.astro';
+import { H } from '../../data/hoteles';
+import { AUTOR, articulos, relacionados, tema, urlArt, urlTema, fecha, fechaCorta, iso, waArt } from '../../data/blog';
+
+export async function getStaticPaths() {
+  const todos = await getCollection('blog', (e) => e.data.hotel === __HOTEL__);
+  return todos.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const d = entry.data, t = tema(d.tema);
+const { headings } = await render(entry);
+// El texto se parte antes de su tercer subtítulo (o del segundo, si solo trae dos) para meter ahí la caja «Hospédate cerca».
+const html = entry.rendered?.html ?? '';
+const subtitulos = [...html.matchAll(/<h2[ >]/g)].map((m) => m.index ?? 0);
+const corte = subtitulos.length >= 3 ? subtitulos[2] : subtitulos.length === 2 ? subtitulos[1] : -1;
+const antes = corte > 0 ? html.slice(0, corte) : html, despues = corte > 0 ? html.slice(corte) : '';
+const url = H.sitio + urlArt(entry);
+const otros = relacionados(await articulos(), entry, 3);
+const HORA = 'T08:00:00-06:00'; // hora de Monterrey, para que la fecha no dependa del huso de quien la lea
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'BlogPosting', '@id': url + '#articulo', headline: d.titulo, description: d.descripcion, datePublished: iso(d.publicado) + HORA, dateModified: iso(d.actualizado) + HORA, articleSection: t.nombre, inLanguage: 'es-MX',
+    author: { '@type': 'Organization', '@id': H.sitio + '/#hotel', name: H.nombre, url: H.sitio }, publisher: { '@id': H.sitio + '/#hotel' }, mainEntityOfPage: url, isPartOf: { '@id': H.sitio + '/blog#blog' } },
+  ...(d.preguntas.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.preguntas.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] : [])
+];
+const tituloSeo = d.tituloSeo ?? (d.titulo.length + 3 + H.corto.length <= 60 ? d.titulo + ' | ' + H.corto : d.titulo);
+---
+<Base title={tituloSeo} description={d.descripcion} pagina="blog" ogFoto={d.foto} schema={schema} articulo={{ publicado: iso(d.publicado) + HORA, actualizado: iso(d.actualizado) + HORA, tema: t.nombre }} ogAlt={d.fotoAlt}>
+  <div class="avance" aria-hidden="true"></div>
+  <PortadaCorta img={d.foto} alt={d.fotoAlt} clave={t.nombre} titulo={d.titulo} destino
+    migas={[['/', 'Inicio'], ['/blog', 'Blog'], [urlTema(t.id), t.nombre], [urlArt(entry), d.corto]]}
+    botones={[{ t: 'Leer el artículo', href: '#articulo', clase: 'blanco', flecha: true }, { t: 'Reservar por WhatsApp', href: waArt(entry), ico: 'wa', clase: 'contorno', fuera: true }]}
+    barra={d.datos.slice(0, 4).map(([a, b]) => ({ b, t: a }))}>
+    <div class="autor en-portada" data-carga style="--d:240ms">
+      <span class="autor-foto"><Foto src={H.id + '/' + AUTOR.foto} alt="" sizes="48px" anchos={[96, 144]} /></span>
+      <p><b>{AUTOR.nombre}</b><span>{AUTOR.puesto}</span></p>
+      <p class="autor-fechas"><span>Publicado el <time datetime={iso(d.publicado)}>{fechaCorta(d.publicado)}</time></span><span>Actualizado el <time datetime={iso(d.actualizado)}>{fechaCorta(d.actualizado)}</time> · {d.lectura} min de lectura</span></p>
+    </div>
+  </PortadaCorta>
+  <article class="marco" id="articulo">
+    <div class="articulo">
+      <div class="cuerpo">
+        <div class="resumen" data-aparece><p class="resumen-tit">En resumen</p><p>{d.resumen}</p></div>
+        {d.video && <Video id={d.video} esquema class="articulo-video" sizes="(min-width: 1025px) 58vw, 100vw" />}
+        <Fragment set:html={antes} />
+        {despues && <HospedateCerca art={entry} />}
+        <Fragment set:html={despues} />
+        {d.galeria.length > 0 && <><h2 id="en-fotos">En fotos</h2><Galeria fotos={d.galeria} grupo="articulo" class="dos-col" /></>}
+        {d.preguntas.length > 0 && <>
+          <h2 id="preguntas">Preguntas frecuentes</h2>
+          <div class="acordeon">{d.preguntas.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}</div>
+        </>}
+        {d.verificado && (
+          <p class="verificado">Precios y horarios verificados el <time datetime={iso(d.verificado)}>{fecha(d.verificado)}</time>{d.fuentes.length > 0 && <>, en {d.fuentes.map(([n, u], i) => <>{i > 0 && (i === d.fuentes.length - 1 ? ' y ' : ', ')}<a href={u} target="_blank" rel="noopener">{n}</a></>)}</>}. Pueden cambiar: confírmalos antes de ir.</p>
+        )}
+        <HospedateCerca art={entry} fuerte />
+      </div>
+      <aside class="lateral" aria-label="Índice del artículo">
+        <nav class="tarjeta indice-art" aria-label="En este artículo"><h2>En este artículo</h2><ol>
+          {headings.filter((h) => h.depth === 2).map((h) => <li><a href={'#' + h.slug}>{h.text}</a></li>)}
+          {d.preguntas.length > 0 && <li><a href="#preguntas">Preguntas frecuentes</a></li>}
+        </ol></nav>
+      </aside>
+    </div>
+  </article>
+  {otros.length > 0 && (
+    <section class="seccion blog-rel" aria-labelledby="t-rel">
+      <div class="marco">
+        <div class="habs-cab"><Titulo lineas={['También']} ovalo="te puede servir" id="t-rel" marca /><div class="lado"><p class="texto" data-aparece>Otros artículos del blog del {H.nombre}.</p></div></div>
+        <div class:list={['art-grid', 'de-' + otros.length]}>{otros.map((a, i) => <TarjetaArticulo art={a} orden={i} />)}</div>
+      </div>
+    </section>
+  )}
+</Base>

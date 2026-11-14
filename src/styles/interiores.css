@@ -1,0 +1,296 @@
+/* Páginas interiores (10 de noviembre de 2026): cada sección es una escena, como en el inicio.
+   Antes eran bloques sueltos (tablas, cajitas, tarjetas iguales, formularios chicos en mucho espacio) con las mismas
+   fotos repetidas. Aquí viven las piezas que las reemplazan. Todas usan las variables del sistema y las entradas de
+   movimiento.css (data-aparece, data-revela, data-titulo). */
+
+@keyframes raya-crece{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes paso-llega-claro{from{background-color:rgb(255 255 255 / .14);color:var(--c-blanco);transform:scale(1)}55%{transform:scale(1.14)}to{background-color:var(--c-blanco);color:var(--c-marca-hondo);transform:scale(1)}}
+
+/* ───────── Mosaico: «Míralas por dentro» (Habitaciones) ─────────
+   Cinco fotos elegidas en una retícula desigual; las demás siguen en el visor. El pie de cada foto sale al pasar. */
+.mosaico{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:clamp(10rem,min(21.5vw,29svh),25rem);gap:var(--e-3)}
+.mosaico figure{position:relative;margin:0;border-radius:var(--r-media);overflow:hidden;background:var(--c-fondo-2)}
+.mosaico figure:nth-child(1){grid-column:1 / span 5;grid-row:1 / span 2}
+.mosaico figure:nth-child(2){grid-column:6 / span 3}
+.mosaico figure:nth-child(3){grid-column:9 / span 4}
+.mosaico figure:nth-child(4){grid-column:6 / span 4}
+.mosaico figure:nth-child(5){grid-column:10 / span 3}
+.mosaico figcaption{position:absolute;left:0;right:0;bottom:0;padding:var(--e-12) var(--e-4) var(--e-35);background:linear-gradient(rgb(var(--c-noche) / 0),rgb(var(--c-noche) / .66));color:var(--c-blanco);font-size:var(--t-chico);font-weight:var(--p-medio);line-height:1.35;pointer-events:none;opacity:0;transform:translateY(.375rem);transition:opacity var(--d-ui) ease,transform var(--d-medio) var(--curva-salida)}
+.mosaico .foto-lupa{bottom:auto;top:var(--e-3)}
+@media (hover:hover) and (pointer:fine){.mosaico figure:hover figcaption{opacity:1;transform:none}}
+.mosaico-pie{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--e-4) var(--e-6);margin-top:var(--e-6)}
+.mosaico-pie p{color:var(--c-texto-2);font-size:var(--t-ui)}
+.mosaico-resto{display:none}
+@media screen and (prefers-reduced-motion:no-preference){.mosaico [data-revela].visto{animation-delay:calc(var(--i,0) * 90ms)}}
+
+/* ───────── Estancia: «Antes de reservar» (Habitaciones) ─────────
+   Las dos horas que importan, en grande y unidas por una raya que se dibuja; debajo las reglas, en una sola fila. */
+.estancia-cab{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-6);align-items:end;margin-bottom:var(--bloque)}
+.estancia-cab .titulo{grid-column:1 / span 6}
+.estancia-cab .texto{grid-column:8 / span 5}
+.horario{display:grid;grid-template-columns:auto minmax(2.5rem,1fr) auto;align-items:end;column-gap:clamp(1rem,3vw,3.5rem)}
+.horario .mini,.rotulo{display:block;font-size:var(--t-chico);font-weight:var(--p-medio);letter-spacing:var(--tr-mayus);text-transform:uppercase;opacity:.72}
+.horario .mini{margin-bottom:var(--e-4)}
+.horario b{display:block;font:400 clamp(3.25rem,.6rem + 8.6vw,10rem)/.86 var(--f-serif);font-variant-numeric:tabular-nums;white-space:nowrap}
+.horario b small{font-size:.3em;margin-left:.22em}
+.horario > div:last-child{text-align:right}
+.horario-raya{position:relative;height:var(--linea);margin-bottom:clamp(1.3rem,3.6vw,4.2rem);background:rgb(255 255 255 / .26)}
+.horario-raya::before{content:"";position:absolute;inset:0;background:var(--c-blanco);transform-origin:left}
+.horario-raya span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:.45em 1.1em;border:var(--linea) solid rgb(255 255 255 / .34);border-radius:var(--r-full);background:var(--c-marca-hondo);font-size:var(--t-chico);font-weight:var(--p-medio);white-space:nowrap}
+.reglas-fila{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:var(--bloque) 0 0;border-top:var(--linea) solid rgb(255 255 255 / .22)}
+.reglas-fila > div{display:flex;flex-direction:column;gap:var(--e-2);padding:var(--e-6) var(--e-6) 0;border-left:var(--linea) solid rgb(255 255 255 / .22)}
+.reglas-fila > div:first-child{padding-left:0;border-left:0}
+.reglas-fila dt{font-size:var(--t-chico);font-weight:var(--p-medio);opacity:.72}
+.reglas-fila dd{font:400 clamp(1.75rem,1.1rem + 1.8vw,3rem)/1.05 var(--f-serif)}
+.reglas-fila dd small{display:block;margin-top:var(--e-2);font:400 var(--t-chico)/1.5 var(--f-sans);opacity:.72}
+.incluye-bloque{display:flex;align-items:center;flex-wrap:wrap;gap:var(--e-4) var(--e-6);margin-top:var(--bloque)}
+.incluye-fila{display:flex;flex-wrap:wrap;gap:var(--e-25)}
+.incluye-fila li{display:inline-flex;align-items:center;gap:var(--e-2);padding:.6em 1.1em;border:var(--linea) solid rgb(255 255 255 / .24);border-radius:var(--r-full);font-size:var(--t-ui)}
+.incluye-fila .ico{width:1.125rem;height:1.125rem}
+@media screen and (prefers-reduced-motion:no-preference){
+  .js:not(.sin-mov) .horario:not(.visto) .horario-raya::before{transform:scaleX(0)}
+  .horario.visto .horario-raya::before{animation:raya-crece var(--d-ambiente) var(--curva-vaiven) var(--d-ui) backwards}
+}
+
+/* ───────── Escena partida: foto a sangre de un lado, texto del otro (grupos, viajes de trabajo) ─────────
+   Un sello redondo se monta sobre la unión para que las dos mitades no queden pegadas una junto a otra. */
+.partida{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:clamp(32rem,84svh,54rem);background:var(--c-fondo-2);overflow:clip}
+.partida-foto{position:relative;min-height:20rem;overflow:hidden;background:var(--c-fondo-3)}
+.partida-foto picture,.partida-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.partida-txt{display:flex;align-items:center;padding:var(--seccion-s) max(var(--margen),env(safe-area-inset-right,0px)) var(--seccion-s) clamp(2.5rem,7vw,8rem)}
+.partida-int{display:flex;flex-direction:column;gap:var(--e-6);max-width:33rem}
+.partida.invertida .partida-foto{order:2}
+.partida.invertida .partida-txt{justify-content:flex-end;padding:var(--seccion-s) clamp(2.5rem,7vw,8rem) var(--seccion-s) max(var(--margen),env(safe-area-inset-left,0px))}
+.datos{display:grid;border-top:var(--linea) solid var(--c-borde)}
+.datos li{display:flex;align-items:center;gap:var(--e-3);padding:var(--e-35) 0;border-bottom:var(--linea) solid var(--c-borde);font-size:var(--t-ui)}
+.datos .ico{flex:none;width:1.25rem;height:1.25rem;color:var(--c-marca)}
+.sello{position:absolute;left:50%;bottom:clamp(1.75rem,5vw,4.5rem);z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--e-1);width:clamp(8rem,10.5vw,10.5rem);aspect-ratio:1;margin-left:calc(clamp(8rem,10.5vw,10.5rem) / -2);border-radius:50%;background:var(--c-accion);color:var(--c-sobre-accion);text-align:center;box-shadow:var(--s-3)}
+.sello b{font:400 clamp(2.5rem,1.6rem + 2vw,3.75rem)/.9 var(--f-serif);font-variant-numeric:tabular-nums}
+.sello span{max-width:8em;font-size:var(--t-nota);font-weight:var(--p-medio);line-height:1.25}
+
+/* ───────── Lista con foto: «Qué puedes celebrar aquí» (Celebraciones) ─────────
+   La misma mecánica del índice de planes (scripts/movimiento.ts): al pasar por una fila cambia la foto del arco. */
+.celebra .indice-lista{border-bottom:var(--linea) solid var(--c-borde)}
+.celebra .fila-plan{grid-template-columns:clamp(2.5rem,4vw,4rem) minmax(0,1fr) auto;align-items:center;border-top:var(--linea) solid var(--c-borde)}
+.celebra .num-s{font:400 var(--t-h3)/1 var(--f-serif);font-variant-numeric:tabular-nums;color:var(--c-marca)}
+.celebra .tit small{display:block;max-width:46ch;margin-top:var(--e-2);font:400 var(--t-ui)/1.5 var(--f-sans);color:var(--c-texto-2)}
+.celebra .ir{display:grid;place-items:center;width:var(--ctrl-m);height:var(--ctrl-m);border:var(--linea) solid var(--c-borde-fuerte);border-radius:50%;transition:background-color var(--d-ui) ease,color var(--d-ui) ease,transform var(--d-medio) var(--curva-salida)}
+.celebra .ir .ico{width:1.125rem;height:1.125rem}
+.fila-foto{display:none}
+@media (hover:hover) and (pointer:fine){.celebra .fila-plan:hover .ir{background:var(--c-accion);border-color:var(--c-accion);color:var(--c-sobre-accion);transform:translateX(.25rem)}}
+/* sin ratón no hay foto que cambie: cada fila lleva la suya */
+@media (hover:none),(pointer:coarse){
+  .celebra .fila-plan{grid-template-columns:clamp(4.5rem,22vw,7rem) minmax(0,1fr)}
+  .celebra .num-s,.celebra .ir{display:none}
+  .fila-foto{display:block;aspect-ratio:1;border-radius:var(--r-full) var(--r-full) var(--r-2) var(--r-2);overflow:hidden;background:var(--c-fondo-3)}
+  .fila-foto picture,.fila-foto img{display:block;width:100%;height:100%;object-fit:cover}
+}
+
+/* ───────── Formulario en tarjeta (Celebraciones y Contacto) ───────── */
+.tarjeta-form{padding:clamp(1.5rem,3.2vw,3rem);border-radius:var(--r-flota);background:var(--c-superficie);color:var(--c-texto);box-shadow:var(--s-4)}
+.cotiza-marco{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-12);align-items:center}
+.cotiza-txt{grid-column:1 / span 5;display:flex;flex-direction:column;gap:var(--e-7)}
+.cotiza-marco .tarjeta-form{grid-column:7 / span 6}
+.pasos b{font-weight:var(--p-fuerte)}
+/* los pasos sobre fondo oscuro */
+.sobre-oscuro .pasos{--pasos-fondo:var(--c-marca-hondo)}
+.sobre-oscuro .pasos::before{background:rgb(255 255 255 / .24)}
+.sobre-oscuro .pasos::after{background:var(--c-blanco)}
+.sobre-oscuro .pasos li::before{background:rgb(255 255 255 / .14);color:var(--c-blanco)}
+.sobre-oscuro .pasos li p{color:rgb(255 255 255 / .86)}
+.sobre-oscuro .pasos li::before{animation-name:paso-llega-claro}
+
+/* ───────── Destacados: «Empieza por aquí» (Planes cerca) ───────── */
+.dest-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--hueco)}
+.dest{position:relative;display:flex;align-items:flex-end;min-height:clamp(20rem,37vw,36rem);border-radius:var(--r-media);overflow:hidden;color:var(--c-blanco);text-decoration:none;isolation:isolate;background:var(--c-marca-hondo)}
+.dest.grande{grid-column:1 / span 7}
+.dest.alta{grid-column:8 / span 5}
+.dest-foto{position:absolute;inset:0;z-index:-2}
+.dest-foto picture,.dest-foto img{display:block;width:100%;height:100%;object-fit:cover;transition:transform var(--d-revela) var(--curva-suave)}
+.dest::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgb(var(--c-noche) / .08) 30%,rgb(var(--c-noche) / .8) 100%)}
+.dest-txt{display:flex;flex-direction:column;align-items:flex-start;gap:var(--e-3);max-width:34rem;padding:clamp(1.25rem,2.6vw,2.5rem)}
+.dest-txt .tit{font:400 var(--t-h2)/1.12 var(--f-serif);text-wrap:balance}
+.dest-txt .ir{display:inline-flex;align-items:center;gap:var(--e-2);font-size:var(--t-ui);font-weight:var(--p-medio)}
+.dest-txt .ir .ico{width:1.1em;height:1.1em;transition:transform var(--d-ui) var(--curva-salida)}
+.dest:focus-visible{outline-color:var(--c-blanco);outline-offset:-4px}
+@media (hover:hover) and (pointer:fine){.dest:hover .dest-foto img{transform:scale(1.04)}.dest:hover .ir .ico{transform:translateX(.25rem)}}
+.va{view-transition-name:foto-plan}
+
+/* ───────── Velo de las portadas: que el texto se lea siempre ─────────
+   Cada foto trae calculado el sombreado mínimo que necesita su texto (src/lib/velo.ts): --velo-t para el bloque del
+   título y --velo-a para la franja de arriba (menú y migas), y sus pares «m» para pantallas de pie. Va fuerte donde
+   hay texto y se desvanece hacia el lado libre de la foto. scripts/legibilidad.mjs mide el resultado. */
+.portada.sombreada::after{background:
+  linear-gradient(90deg,rgb(var(--c-noche) / var(--velo-t)) 0%,rgb(var(--c-noche) / calc(var(--velo-t) * .92)) 42%,rgb(var(--c-noche) / calc(var(--velo-t) * .5)) 64%,rgb(var(--c-noche) / 0) 88%),
+  linear-gradient(180deg,rgb(var(--c-noche) / var(--velo-a)) 0%,rgb(var(--c-noche) / var(--velo-a)) 9%,rgb(var(--c-noche) / calc(var(--velo-a) * .55)) 17%,rgb(var(--c-noche) / 0) 30%),
+  linear-gradient(0deg,rgb(var(--c-noche) / .5) 0%,rgb(var(--c-noche) / 0) 30%)}
+@media (max-width:1100px),(max-aspect-ratio:1/1){
+  .portada.sombreada::after{background:
+    linear-gradient(180deg,rgb(var(--c-noche) / var(--velo-am)) 0%,rgb(var(--c-noche) / var(--velo-am)) 14%,rgb(var(--c-noche) / calc(var(--velo-tm) * .8)) 27%,rgb(var(--c-noche) / var(--velo-tm)) 46%,rgb(var(--c-noche) / var(--velo-tm)) 100%),
+    linear-gradient(0deg,rgb(var(--c-noche) / .42) 0%,rgb(var(--c-noche) / 0) 40%)}
+}
+/* las letras chicas van en blanco pleno (translúcidas perdían contraste justo donde menos sobra) y con una sombra
+   mínima, por si detrás queda un punto de luz que el velo no alcanza */
+.portada .bajada,.portada .migas.en-portada,.portada .guia-meta,.portada .vias-portada,.portada .nota-google,.portada .reserva-nota{color:rgb(255 255 255 / .97)}
+.portada .clave{opacity:1}
+.portada .clave,.portada .bajada,.portada .migas,.portada .guia-meta,.portada .vias-portada,.portada .nota-google,.portada .reserva-nota,.cabecera:not(.solida) .nav a{text-shadow:0 1px 2px rgb(var(--c-noche) / .4)}
+
+/* ───────── Vidrio: los recuadros que van sobre una foto ─────────
+   La barra de reservas, la tarjeta del dato clave, la barra de datos y el formulario de Contacto dejan pasar un poco
+   de la foto, desenfocada, en vez de ser un bloque blanco pegado encima. El texto de adentro se sigue midiendo con
+   scripts/legibilidad.mjs. Donde el navegador no sabe desenfocar, quedan casi opacos como antes. */
+.portada :is(.barra,.tarjeta-google,.portada-barra,.tarjeta-form){background:rgb(255 255 255 / .95)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .portada :is(.barra,.tarjeta-google,.portada-barra,.tarjeta-form){background:rgb(255 255 255 / .85);-webkit-backdrop-filter:blur(1rem) saturate(1.8) brightness(1.25);backdrop-filter:blur(1rem) saturate(1.8) brightness(1.25);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .5),inset 0 1px 0 rgb(255 255 255 / .9),0 1.5rem 3.5rem -1.5rem rgb(var(--c-noche) / .6)}
+}
+
+/* ───────── Portada de las páginas interiores: una pantalla completa, como la del inicio ─────────
+   Título, botones, tarjeta con el dato clave y una barra útil abajo. Las migas van dentro, bajo la cabecera. */
+.portada.interior{min-height:max(38rem,100svh)}
+.portada.interior .titulo-portada{font-size:clamp(2.5rem,1rem + 4.6vw,5.5rem)}
+.migas.en-portada{position:absolute;top:calc(var(--alto-cab) + env(safe-area-inset-top,0px));left:0;right:0;z-index:1;padding-top:var(--e-3);color:rgb(255 255 255 / .8)}
+.migas.en-portada a{color:inherit}
+.tarjeta-dato .valor{flex-wrap:wrap;font-size:clamp(2.5rem,2rem + 1.4vw,3.5rem)}
+.portada-barra{display:flex;flex-wrap:wrap;align-items:stretch;width:fit-content;max-width:100%;padding:var(--e-2) var(--e-3);border-radius:var(--r-flota);background:rgb(255 255 255 / .96);color:var(--c-texto);box-shadow:inset 0 1px 0 rgb(255 255 255 / .8),0 1.25rem 3.125rem -1.25rem rgb(10 10 30 / .45)}
+.portada-barra li{display:flex;align-items:center;gap:var(--e-3);padding:var(--e-3) var(--e-5);border-left:var(--linea) solid var(--c-borde)}
+.portada-barra li:first-child{border-left:0}
+.portada-barra .ico{flex:none;width:1.375rem;height:1.375rem;color:var(--c-marca)}
+.portada-barra b{display:block;font-size:var(--t-ui);font-weight:var(--p-medio);line-height:1.25}
+.portada-barra small{display:block;font-size:var(--t-nota);line-height:1.3;color:var(--c-texto-2)}
+.portada-barra .cifra{display:flex;align-items:baseline;gap:.18em;font:400 2.125rem/1 var(--f-serif);font-variant-numeric:tabular-nums;color:var(--c-texto-marca)}
+.portada-barra .cifra small{display:inline;font:var(--p-medio) var(--t-nota)/1 var(--f-sans)}
+/* Contacto: datos de contacto bajo los botones y el formulario dentro de la portada */
+.vias-portada{display:grid;gap:var(--e-2);font-size:var(--t-ui);color:rgb(255 255 255 / .9)}
+.vias-portada li{display:flex;align-items:center;gap:var(--e-25)}
+.vias-portada .ico{flex:none;width:1.125rem;height:1.125rem;opacity:.86}
+.vias-portada a{color:inherit;text-underline-offset:.2em}
+.tarjeta-form.compacta{width:36rem;max-width:100%;justify-self:end;gap:var(--e-4);padding:clamp(1.25rem,1.9vw,2rem)}
+.tarjeta-form.compacta textarea{min-height:4.25rem}
+.form-tit{font:var(--p-medio) var(--t-h4)/1.2 var(--f-sans)}
+.form-pie{display:flex;align-items:center;gap:var(--e-4)}
+.form-pie .nota-p{font-size:var(--t-nota);line-height:1.4}
+
+/* Guías de «Planes cerca»: el título es largo, va en serif y sin óvalo */
+.portada.interior.guia .titulo-portada{max-width:24ch;font:400 clamp(2rem,.9rem + 2.6vw,3.75rem)/1.06 var(--f-serif);letter-spacing:-.012em;text-wrap:balance}
+.portada.interior.guia .titulo-portada .clave{font-family:var(--f-sans)}
+.guia-meta{display:flex;flex-wrap:wrap;gap:var(--e-1) var(--e-5);font-size:var(--t-chico);color:rgb(255 255 255 / .82)}
+.guia-meta b{font-weight:var(--p-medio);color:var(--c-blanco)}
+.portada.interior.guia + .marco > .articulo{margin-top:var(--seccion-s)}
+
+/* ───────── «Cómo llegar» (Ubicación): texto y video en proporción ─────────
+   El video vertical nunca mide más que la pantalla y los pasos van en letra grande, con la dirección debajo. */
+.dos.llegar{align-items:center}
+.dos.llegar > .dos-txt{grid-column:1 / span 6}
+.dos.llegar .pasos li p{font-size:var(--t-cuerpo-l)}
+.dos.llegar > .video{grid-column:8 / span 4;justify-self:center;width:min(100%,calc(min(68svh,38rem) * 9 / 16))}
+.llegar-pie{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--e-5);padding-top:var(--e-6);border-top:var(--linea) solid var(--c-borde)}
+.llegar-pie p{font-size:var(--t-ui);color:var(--c-texto-2)}
+.llegar-pie p b{color:var(--c-texto);font-weight:var(--p-medio)}
+
+/* ───────── Planes cerca: la cabecera de la serie deja ver la lista en la primera pantalla ───────── */
+.serie.tope{padding-top:calc(var(--alto-cab) + env(safe-area-inset-top,0px) + clamp(1.5rem,4svh,3.5rem))}
+.serie.tope .serie-cab{margin-bottom:clamp(1.5rem,3.6svh,2.75rem)}
+.serie.tope .nombre-serie{font-size:min(clamp(2.5rem,.6rem + 5.2vw,6rem),calc((100vw - 2 * var(--margen)) / (var(--largo,17) * .47 + 2.1)))}
+.serie.tope .filtros{margin-bottom:var(--e-5)}
+
+/* ───────── Tablets ───────── */
+@media (max-width:1024px){
+  .tarjeta-dato{display:none}
+  .tarjeta-form.compacta{width:100%}
+  .dos.llegar > .dos-txt,.dos.llegar > .video{grid-column:1 / -1}
+  .dos.llegar > .video{justify-self:start;width:min(100%,22rem)}
+  .estancia-cab .titulo,.estancia-cab .texto,.cotiza-txt,.cotiza-marco .tarjeta-form{grid-column:1 / -1}
+  .partida{grid-template-columns:minmax(0,1fr);min-height:0;--foto-alto:min(78vw,30rem)}
+  .partida-foto{height:var(--foto-alto);min-height:0}
+  .partida.invertida .partida-foto{order:0}
+  .partida-txt,.partida.invertida .partida-txt{justify-content:flex-start;padding:calc(var(--seccion-s) + 1rem) max(var(--margen),env(safe-area-inset-right,0px)) var(--seccion-s) max(var(--margen),env(safe-area-inset-left,0px))}
+  .sello{left:auto;right:max(var(--margen),env(safe-area-inset-right,0px));bottom:auto;top:calc(var(--foto-alto) - 4rem);width:8rem;margin-left:0}
+  .reglas-fila{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--e-6)}
+  .reglas-fila > div:nth-child(odd){padding-left:0;border-left:0}
+  .dest.grande,.dest.alta{grid-column:1 / -1}
+  .dest{min-height:clamp(18rem,56vw,28rem)}
+}
+/* ───────── Celulares ───────── */
+@media (max-width:760px){
+  .portada-barra{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;padding:var(--e-15)}
+  .portada-barra li{padding:var(--e-25) var(--e-3);border-left:0;gap:var(--e-25)}
+  .portada-barra li:nth-child(n+5){display:none}
+  .portada-barra .cifra{font-size:1.625rem}
+  .form-pie{flex-direction:column;align-items:flex-start}
+  .llegar-pie{flex-direction:column;align-items:flex-start}
+  .mosaico{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:44vw;gap:var(--e-2)}
+  .mosaico figure:nth-child(n){grid-column:auto;grid-row:auto}
+  .mosaico figure:nth-child(1){grid-column:1 / -1;grid-row:span 2}
+  .horario{grid-template-columns:minmax(0,1fr) minmax(0,1fr);row-gap:var(--e-6)}
+  .horario-raya{grid-column:1 / -1;grid-row:2;margin:0}
+  .horario b{font-size:clamp(3rem,17vw,5rem)}
+  .tarjeta-form{padding:var(--e-5);border-radius:var(--r-tarjeta)}
+}
+
+/* ───────── Que cada escena quepa en una pantalla ─────────
+   Una foto vertical dentro de una columna ancha crece hasta medir más que la pantalla y deja el texto de al lado
+   chico y perdido. En computadora su alto se limita al de la pantalla (medido con el área visible real, ~910 px en
+   un monitor 1080p), así la escena completa se ve de una vez. */
+@media (min-width:1025px){
+  .palapa-foto{justify-self:end;width:min(100%,calc(min(80svh,48rem) * 4 / 5))}
+}
+
+/* Laptops de poca altura: todo se aprieta un punto para que la primera pantalla siga completa */
+@media (min-width:1025px) and (max-height:800px){
+  .portada.interior .titulo-portada{font-size:clamp(2.25rem,1rem + 3.4vw,4rem)}
+  .portada.interior.guia .titulo-portada{font-size:clamp(1.75rem,.8rem + 2.1vw,2.75rem)}
+  .portada.interior .portada-marco{gap:clamp(1rem,2.6svh,1.75rem);padding-bottom:clamp(1rem,2.6svh,1.75rem)}
+  .portada.interior .portada-txt{gap:var(--e-4)}
+  .portada.interior .bajada{font-size:var(--t-cuerpo)}
+  .tarjeta-form.compacta{--ctrl-l:2.8125rem;gap:var(--e-2) var(--e-4);padding:var(--e-4) var(--e-5)}
+  .tarjeta-form.compacta textarea{min-height:3rem}
+  .tarjeta-form.compacta .form-pie .nota-p{display:none}
+}
+
+/* ───────── Pie de la portada: la barra a la izquierda y el dato clave a la derecha, en una misma fila ─────────
+   Antes la tarjeta flotaba a media altura, sin relación con la barra. Ahora mide lo mismo de alto que la barra y
+   comparte su vidrio: se leen como un solo renglón que cierra la portada. */
+.portada-pie{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--e-5)}
+.portada-pie:has(> .portada-barra){align-items:stretch}
+.portada-pie > .reserva{flex:1 1 auto;min-width:0}
+.portada .tarjeta-google{flex:none;flex-direction:row;align-items:center;gap:var(--e-4);width:auto;max-width:25rem;min-height:calc(var(--ctrl-l) + 2 * var(--e-2));margin-left:auto;padding:var(--e-2) var(--e-6)}
+.portada .tarjeta-google .valor{flex-wrap:nowrap;font:400 2.5rem/1 var(--f-serif);white-space:nowrap}
+.portada .tarjeta-google .valor small{font:500 var(--t-chico)/1 var(--f-sans);color:var(--c-texto-2)}
+.portada .tarjeta-google .tg-txt{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.portada .tarjeta-google .fila{gap:.4rem;font-size:var(--t-chico);white-space:nowrap}
+.portada .tarjeta-google .fila .ico{width:1rem;height:1rem}
+.portada .tarjeta-google p{max-width:17rem;font-size:var(--t-nota);line-height:1.35}
+
+/* ───────── Título del inicio ─────────
+   En pantallas grandes iba un punto pasado de tamaño. Los Arcos lo lleva en dos renglones largos («Descanso,
+   familia y» + la frase del óvalo), así que va más chico para no cruzar media foto. En celular los renglones
+   largos se parten parejos. */
+/* (en laptops bajas manda la regla de pantallas bajas de global.css, que lo achica según el alto) */
+@media (min-height:821px),(max-width:1024px){
+  .portada:not(.interior) .titulo-portada{font-size:clamp(2.75rem,.55rem + 5.4vw,5.75rem)}
+  :root[data-hotel="la"] .portada:not(.interior) .titulo-portada{font-size:clamp(2.5rem,.6rem + 4.3vw,5rem)}
+}
+.titulo-portada .l > span{text-wrap:balance}
+
+/* ───────── Logo de la cabecera: símbolo y, al lado, «Hotel» sobre el nombre ───────── */
+.logo.con-nombre{gap:.75rem;color:inherit;text-decoration:none}
+.logo.con-nombre > picture img{height:2.875rem}
+.logo.con-nombre.la > picture img{height:2.5rem}
+.logo-nombre img{height:1.8rem;width:auto;margin-left:-.1rem}
+.logo.la .logo-nombre{gap:.3rem}.logo.la .logo-nombre small{padding-left:.25rem}
+.logo-nombre{display:flex;flex-direction:column;gap:.22rem;font:400 1.375rem/1 var(--f-serif);letter-spacing:.005em;white-space:nowrap}
+.logo-nombre small{font:500 .6875rem/1 var(--f-sans);letter-spacing:.22em;text-transform:uppercase;opacity:.92}
+.cabecera.solida .logo-nombre{color:var(--c-marca)}
+@media (max-width:760px){.logo.con-nombre{gap:.6rem}.logo.con-nombre > picture img{height:2.5rem}.logo.con-nombre.la > picture img{height:1.9rem}.logo-nombre{font-size:1.2rem}.logo-nombre small{font-size:.625rem}.logo-nombre img{height:1.3rem}}
+/* en los celulares más angostos no caben los arcos junto al nombre y el menú: queda «Hotel» y el nombre */
+@media (max-width:480px){.cabecera .logo.con-nombre.la > picture{display:none}}
+@media (max-width:400px){.logo.con-nombre{gap:.5rem}.logo.con-nombre > picture img{height:2.25rem}.logo-nombre{font-size:1.1rem}}
+
+/* Laptops muy bajas (720p con la barra del navegador: unos 620 px de alto): un punto más compacto para que la
+   primera pantalla siga entrando entera. */
+@media (min-width:1025px) and (max-height:640px){
+  .portada:not(.interior){min-height:max(36rem,100svh)}
+  .portada:not(.interior) .titulo-portada{font-size:clamp(2.5rem,1rem + 2.9vw,3.25rem)}
+  .tarjeta-form.compacta{--ctrl-l:2.5rem;gap:var(--e-15) var(--e-4)}
+  .tarjeta-form.compacta textarea{min-height:2.5rem}
+}

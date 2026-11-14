@@ -1,0 +1,10 @@
+---
+// Casilla de verificación dibujada por nosotros. El texto va en el contenido del componente.
+interface Props { id: string; nombre?: string; valor?: string; requerido?: boolean; falta?: string; class?: string }
+const { id, nombre, valor = 'si', requerido = false, falta = 'Marca la casilla para continuar.', class: clase } = Astro.props;
+---
+<div class:list={['casilla', clase]} data-falta={falta}>
+  <input type="checkbox" id={id} name={nombre} value={valor} required={requerido} />
+  <label for={id}><slot /></label>
+  <p class="campo-error" role="alert"><span></span></p>
+</div>

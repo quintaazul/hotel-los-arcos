@@ -1,0 +1,113 @@
+/* Ajustes del 10 de noviembre de 2026 (noche): la sección «ventana» sin huecos, los planes del inicio en versión
+   corta y el pie con las redes. Se carga después de las demás hojas. */
+
+/* ───────── Ventana: el hotel en tres marcos ─────────
+   Antes era una sola foto en un arco, con el título abajo a la izquierda y el texto abajo a la derecha: media
+   pantalla quedaba vacía. Ahora el texto va a un lado y, al otro, tres fotos que llenan la escena. La forma de los
+   marcos sale de cada hotel: en Los Arcos, tres arcos iguales (como su logo); en Quinta Azul, cuadros, como los vanos
+   de su fachada (ahí un arco no tiene sentido). Sin líneas de contorno alrededor: el dueño pidió quitarlas. */
+.ventana-escena{align-items:center;row-gap:var(--e-8)}
+.ventana-txt{grid-column:1 / span 5;display:flex;flex-direction:column;align-items:flex-start;gap:var(--e-6);min-width:0;padding-right:clamp(0rem,2vw,2rem)}
+.ventana-txt .titulo{font-size:clamp(2rem,1.1rem + 2.5vw,3.5rem)}
+.ventana-marcos{grid-column:6 / span 7;position:relative;display:grid;gap:clamp(.75rem,1.2vw,1.25rem);isolation:isolate}
+.vm{position:relative;overflow:hidden;min-height:0;background:var(--c-fondo-2)}
+.vm picture,.vm img{display:block;width:100%;height:100%;object-fit:cover}
+.vm[data-revela].visto{animation-delay:calc(var(--i,0) * 130ms)}
+/* Los Arcos: tres arcos iguales, como los de su logo */
+.ventana-marcos.arcos{grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;height:min(72svh,40rem)}
+.ventana-marcos.arcos .vm{height:100%;border-radius:999rem 999rem 0 0}
+/* Quinta Azul: un cuadro grande y dos chicos */
+.ventana-marcos.cuadros{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;justify-self:end;width:min(100%,calc(min(72svh,40rem) * 1.5));aspect-ratio:3 / 2}
+.ventana-marcos.cuadros .vm{border-radius:var(--r-2,.375rem)}
+.ventana-marcos.cuadros .vm-0{grid-row:1 / span 2}
+@media (max-width:1024px){
+  .ventana-txt,.ventana-marcos{grid-column:1 / -1;padding-right:0}
+  .ventana-txt{max-width:38rem}
+  .ventana-marcos.arcos{height:auto;aspect-ratio:5 / 4}
+  .ventana-marcos.cuadros{width:100%}
+}
+
+/* ───────── Planes cerca, versión corta (inicio) ───────── */
+.planes-corto{background:var(--c-fondo)}
+.pc-escena{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-10);align-items:center}
+.pc-txt{grid-column:1 / span 4;display:flex;flex-direction:column;align-items:flex-start;gap:var(--e-5);min-width:0}
+.pc-txt .mini{color:var(--c-marca);opacity:1}
+.pc-txt .titulo{font-size:clamp(2rem,1.1rem + 2.5vw,3.5rem)}
+.pc-abanico{grid-column:6 / span 7;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.625rem,1vw,1rem);align-items:start}
+.pc-carta{--d:calc(var(--i) - (var(--n) - 1) / 2);min-width:0}
+.pc-carta:nth-child(even){margin-top:clamp(1rem,2.6vw,2.75rem)}
+.pc-in{position:relative;display:block;aspect-ratio:3 / 4.3;border-radius:var(--r-media);overflow:hidden;background:var(--c-fondo-3);color:var(--c-blanco);text-decoration:none;isolation:isolate;transition:transform var(--d-ui) var(--curva-salida),box-shadow var(--d-ui) ease}
+.pc-in picture,.pc-in img{display:block;width:100%;height:100%;object-fit:cover;transition:transform var(--d-lento) var(--curva-salida)}
+.pc-in::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgb(var(--c-noche) / .82) 0%,rgb(var(--c-noche) / .3) 40%,rgb(var(--c-noche) / 0) 62%);pointer-events:none}
+.pc-pie{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;flex-direction:column;gap:.25rem;padding:var(--e-4)}
+.pc-pie b{font:400 clamp(1.05rem,.8rem + .6vw,1.375rem)/1.1 var(--f-serif)}
+.pc-pie small{font-size:var(--t-nota);color:rgb(255 255 255 / .92)}
+.pc-ir{position:absolute;top:var(--e-3);right:var(--e-3);z-index:1;display:grid;place-items:center;width:2.25rem;height:2.25rem;border-radius:50%;background:var(--c-blanco);color:var(--c-texto);opacity:0;transform:translate(-.375rem,.375rem);transition:opacity var(--d-rapido) ease,transform var(--d-ui) var(--curva-salida)}
+.pc-ir .ico{width:1rem;height:1rem}
+@media (hover:hover) and (pointer:fine){
+  .pc-in:hover{transform:translateY(-.5rem);box-shadow:0 1.5rem 2.5rem -1.25rem rgb(var(--c-noche) / .55)}
+  .pc-in:hover img{transform:scale(1.05)}
+  .pc-in:hover .pc-ir{opacity:1;transform:none}
+}
+@media (max-width:1024px){
+  .pc-txt,.pc-abanico{grid-column:1 / -1}
+}
+@media (max-width:760px){
+  .pc-abanico{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pc-carta:nth-child(even){margin-top:var(--e-6)}
+  .pc-in{aspect-ratio:3 / 3.8}
+}
+/* Las cuatro portadas llegan apiladas y se abren en abanico conforme la sección entra en pantalla */
+@keyframes abanico{from{transform:translateX(calc(var(--d) * -84%)) rotate(calc(var(--d) * 7deg)) scale(.9)}to{transform:none}}
+@media (prefers-reduced-motion:no-preference) and (min-width:761px){
+  @supports (animation-timeline:view()){
+    :root{--lt-abanico:--abanico}
+    .pc-abanico{view-timeline:--abanico block;view-timeline-inset:0px}
+    .pc-carta{animation:abanico linear both;animation-timeline:var(--lt-abanico);animation-range:entry 0% cover 40%}
+  }
+}
+
+/* ───────── Pie: redes con sus iconos en lugar del nombre gigante ───────── */
+.pie{padding-bottom:clamp(1.5rem,3vw,2.5rem)}
+.pie-base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--e-6) var(--e-8);margin-top:clamp(3rem,6vw,5rem);padding-top:var(--e-8);border-top:var(--linea) solid rgb(237 232 225 / .16)}
+.pie-logo{height:auto}
+.redes{display:flex;flex-wrap:wrap;gap:var(--e-3)}
+.redes a{display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;box-shadow:inset 0 0 0 1px rgb(237 232 225 / .32);color:inherit;transition:background-color var(--d-rapido) ease,color var(--d-rapido) ease,box-shadow var(--d-rapido) ease,transform var(--d-ui) var(--curva-salida)}
+.redes .ico{width:1.3125rem;height:1.3125rem}
+.redes a:active{transform:scale(.94)}
+@media (hover:hover) and (pointer:fine){.redes a:hover{background:var(--c-blanco);color:var(--c-fondo-oscuro);box-shadow:inset 0 0 0 1px var(--c-blanco);transform:translateY(-3px)}}
+.pie .pie-legal{margin-top:var(--e-7)}
+
+/* ───────── Quinta Azul no lleva arcos en ningún lado ─────────
+   Los marcos que en Los Arcos son un arco (la foto de la palapa, la vista previa de los planes, la de celebrar)
+   van rectos en Quinta Azul, con la esquina de siempre. */
+:root[data-hotel="qa"] :is(.palapa-foto,.vista-previa,.celebrar .foto-caja){border-radius:var(--r-media)}
+
+/* ───────── Página de planes: la lista de guías sobre el fondo de la página ─────────
+   Antes era una plancha de color (azul en Quinta Azul) con una cuadrícula de fondo; al dueño no le gustó ni el fondo
+   ni la textura. La página abre ahora con su portada de foto y la lista va limpia, con filtros a la derecha. */
+.serie{background:var(--c-fondo);background-image:none;color:var(--c-texto)}
+.serie.tope{padding-top:var(--seccion);padding-bottom:clamp(1.5rem,3vw,3rem)}   /* la sección que sigue ya trae su aire arriba: sin esto quedaba un hueco doble */
+.serie-barra{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--e-6) var(--e-8);margin-bottom:clamp(1.5rem,3vw,2.75rem)}
+.serie-barra .titulo{flex:1 1 16rem;font-size:clamp(2rem,1.1rem + 2.5vw,3.5rem)}   /* ancho de sobra: si el título se ciñe a su texto, el óvalo no tiene dónde abrirse y sale apretado */
+.serie-barra .filtros,.serie.tope .filtros{margin-bottom:0}
+.filtros button{background:var(--c-fondo-2)}
+.serie .indice-lista{border-bottom:var(--linea) solid var(--c-borde)}
+.serie .fila-plan{border-top:var(--linea) solid var(--c-borde)}
+.tapa{background-image:none}
+
+/* ───────── Encuadre de las fotos en los paneles ─────────
+   Cuando un marco recorta la foto, se ve la parte que diga su «--foco» (lo pone el marco con foco() de hoteles.ts);
+   sin dato, el centro. Así una foto vertical con medio cuadro de piso enseña lo que importa. */
+:is(.vm,.pc-in,.vista-previa .capa,.fila-foto,.palapa-foto) img{object-position:var(--foco,50% 50%)}
+
+/* Mapa de «Cómo llegar»: el color del piso de la imagen de cada hotel (scripts/mapa.mjs, «campo»). Va de fondo de la
+   sección para que no se note el borde ni el momento en que carga la imagen. */
+:root[data-hotel="qa"]{--c-mapa:#DAE1F4}
+:root[data-hotel="la"]{--c-mapa:#F2E4D6}
+/* En celulares el mapa es otra imagen, vertical (scripts/mapa.mjs, formato «celular»): va casi al ancho de la pantalla y el
+   hotel cae en el punto de esa imagen (--pin-xm, --pin-ym), que también es su lugar en la sección. */
+@media (max-width:700px){
+  .mapa-capa{min-height:28rem;--pin-x:var(--pin-xm);--pin-y:var(--pin-ym);--sx:calc(var(--pin-xm) * 1%)}
+  .lienzo{aspect-ratio:var(--prop-cel);width:max(104%,calc(var(--prop-cel) * 1.03 * max(66svh,28rem)))}
+}

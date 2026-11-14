@@ -1,0 +1,17 @@
+---
+// Desplegable propio: un botón que abre una lista. Debajo hay un <select> real que guarda el valor
+// (y que se muestra tal cual si el JavaScript no carga).
+import Icono from '../Icono.astro';
+import { ICONOS } from '../../data/iconos';
+interface Props { id: string; nombre: string; etiqueta: string; opciones: string[]; valor?: string; class?: string }
+const { id, nombre, etiqueta, opciones, valor = opciones[0], class: clase } = Astro.props;
+const check = `<svg class="ico" viewBox="0 0 256 256" aria-hidden="true">${ICONOS.ok}</svg>`;
+---
+<div class:list={['campo', clase]} data-desplegable>
+  <label class="campo-et" id={id + '-et'} for={id}>{etiqueta}</label>
+  <select class="ctrl nativo" id={id} name={nombre}>{opciones.map((o) => <option selected={o === valor}>{o}</option>)}</select>
+  <button type="button" class="ctrl ctrl-btn" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls={id + '-lista'} aria-labelledby={`${id}-et ${id}-val`}>
+    <span class="ctrl-val" id={id + '-val'}>{valor}</span><Icono n="abajo" class="ctrl-flecha" />
+  </button>
+  <ul class="flota desp-lista" id={id + '-lista'} role="listbox" tabindex="-1" aria-labelledby={id + '-et'} data-check={check}></ul>
+</div>

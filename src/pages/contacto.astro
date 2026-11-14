@@ -1,0 +1,59 @@
+---
+// Contacto: corta y directa, para cerrar. El formulario manda la solicitud al hotel por correo, igual que en los
+// sitios publicados: POST /api/contacto, que la guarda y avisa al correo del hotel (src/scripts/controles.ts).
+// Los nombres de los campos (nombre, contacto, fechas, personas, habitacion, motivo, mensaje, privacidad) son los
+// que espera ese servicio. Si el envío falla, se ofrece mandarla por WhatsApp para no perder la reserva.
+import Campo from '../components/controles/Campo.astro';
+import Fecha from '../components/controles/Fecha.astro';
+import Contador from '../components/controles/Contador.astro';
+import Desplegable from '../components/controles/Desplegable.astro';
+import Opciones from '../components/controles/Opciones.astro';
+import Casilla from '../components/controles/Casilla.astro';
+import Base from '../layouts/Base.astro';
+import PortadaCorta from '../components/PortadaCorta.astro';
+import Icono from '../components/Icono.astro';
+import Preguntas from '../components/Preguntas.astro';
+import Mapa from '../components/Mapa.astro';
+import Enlaces from '../components/Enlaces.astro';
+import { H, waLink } from '../data/hoteles';
+import { T, SEO } from '../data/textos';
+const t = T.contacto, seo = SEO.contacto;
+const schema = [{ '@context': 'https://schema.org', '@type': 'ContactPage', '@id': H.sitio + '/contacto#pagina', url: H.sitio + '/contacto', name: seo.title, inLanguage: 'es-MX', about: { '@id': H.sitio + '/#hotel' } }];
+---
+<Base title={seo.title} description={seo.description} pagina="contacto" ogFoto={H.heroes.contacto} schema={schema}>
+  <PortadaCorta img={H.heroes.contacto} alt={'El ' + H.nombre + ', en García, Nuevo León'} clave={seo.h1} lineas={[t.portada.l]} ovalo={t.portada.o} frase={t.portada.texto} quieta botonesSiempre
+    migas={[['/', 'Inicio'], ['/contacto', 'Contacto']]}
+    botones={[{ t: 'WhatsApp ' + H.tel, href: waLink(), ico: 'wa', clase: 'blanco', fuera: true }, { t: 'Llamar al hotel', href: 'tel:' + H.telLink, clase: 'contorno' }]}>
+    <ul class="vias-portada lista" data-carga style="--d:260ms">
+      <li><Icono n="cal" /><span>Todos los días, de 7 AM a 11 PM</span></li>
+      <li><Icono n="ruta" /><span>{H.dir1}, {H.dir2} · <a href="#mapa">Ver el mapa</a></span></li>
+    </ul>
+    <form slot="lado" class="formulario tarjeta-form compacta" data-enviar="/api/contacto" data-turnstile={H.turnstile} data-whatsapp={'Hola, quiero reservar en el ' + H.nombre} data-numero={H.wa} data-carga style="--d:280ms" aria-labelledby="t-form">
+      <h2 class="completo form-tit" id="t-form">{t.form}</h2>
+      <Campo id="c-nombre" nombre="nombre" etiqueta="Nombre" requerido autocomplete="name" falta="Dinos tu nombre." />
+      <Campo id="c-contacto" nombre="contacto" etiqueta="Teléfono o correo" requerido autocomplete="tel" validar="contacto" falta="Déjanos un teléfono o un correo para responderte." />
+      <Fecha id="c-llegada" nombre="llegada" etiqueta="Llegada" />
+      <Fecha id="c-salida" nombre="salida" etiqueta="Salida" despuesDe="c-llegada" />
+      <Contador id="c-personas" nombre="personas" etiqueta="Personas" min={1} max={60} valor={2} />
+      <Desplegable id="c-hab" nombre="habitacion" etiqueta="Habitación" opciones={[...H.habs.map((x) => x.nombre), 'No sé todavía']} />
+      <Opciones class="completo" nombre="motivo" etiqueta="Motivo del viaje" opciones={t.motivos} />
+      <Campo class="completo" id="c-mensaje" nombre="mensaje" etiqueta="Mensaje" area marcador="Cuéntanos lo que necesites." />
+      <Casilla class="completo" id="c-priv" nombre="privacidad" requerido falta="Necesitamos que aceptes el aviso de privacidad.">Acepto el <a href="/aviso-de-privacidad">aviso de privacidad</a></Casilla>
+      <div class="completo" data-turnstile-caja hidden></div>
+      <div class="completo form-pie"><button class="boton" type="submit"><span class="b-normal">Enviar solicitud</span><span class="b-enviando" aria-hidden="true">Enviando…</span><span class="flecha"><Icono n="flecha" /></span></button><p class="nota-p">Llega al correo del hotel. Te respondemos de 7 AM a 11 PM.</p></div>
+      <div class="completo form-fallo" data-form-fallo role="alert" hidden>
+        <p><b>No pudimos enviar tu solicitud.</b> <span data-form-fallo-txt>Inténtalo otra vez o mándanosla por WhatsApp: ya va escrita.</span></p>
+        <a class="boton contorno suave" data-form-wa href={waLink()} target="_blank" rel="noopener"><Icono n="wa" />Enviarla por WhatsApp</a>
+      </div>
+      <div class="completo form-ok" data-form-ok role="status" tabindex="-1" hidden>
+        <span class="form-ok-ico" aria-hidden="true"><Icono n="ok" /></span>
+        <h3>¡Gracias! Recibimos tu solicitud</h3>
+        <p data-form-ok-txt>Te respondemos por WhatsApp o por correo, de 7 AM a 11 PM.</p>
+        <button type="button" class="enlace" data-form-otra>Enviar otra solicitud</button>
+      </div>
+    </form>
+  </PortadaCorta>
+  <Mapa modo="contacto" />
+  <Enlaces enlaces={t.enlaces} />
+  <Preguntas de="contacto" />
+</Base>

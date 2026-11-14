@@ -1,0 +1,35 @@
+---
+// Plantilla de texto largo para las páginas legales (aviso de privacidad, políticas y términos): un solo título,
+// la fecha de la última actualización, un índice de sus apartados y el texto a un ancho cómodo de leer.
+// Los textos son una versión de trabajo armada con los datos confirmados del hotel: los revisa el responsable
+// del hotel antes de publicarse en el dominio real (falta, por ejemplo, la razón social).
+import Base from '../layouts/Base.astro';
+import Migas from './Migas.astro';
+import { H } from '../data/hoteles';
+import { SEO } from '../data/textos';
+interface Props { pagina: 'aviso' | 'politicas' | 'terminos'; ruta: string; nombre: string; actualizado: string; apartados: [string, string][] }
+const { pagina, ruta, nombre, actualizado, apartados } = Astro.props;
+const seo = SEO[pagina];
+const otras = ([['/aviso-de-privacidad', 'Aviso de privacidad'], ['/politicas', 'Políticas de reservación'], ['/terminos', 'Términos y condiciones']] as [string, string][]).filter(([r]) => r !== ruta);
+---
+<Base title={seo.title} description={seo.description} pagina="" sinPortada>
+  <div class="tope"></div>
+  <Migas items={[['/', 'Inicio'], [ruta, nombre]]} />
+  <section class="seccion legal-sec">
+    <div class="marco legal-marco">
+      <header class="legal-cab">
+        <h1 class="titulo legal-tit">{seo.h1}</h1>
+        <p class="legal-fecha">{H.nombre} · Última actualización: {actualizado}</p>
+      </header>
+      <nav class="tarjeta legal-indice" aria-label="Apartados">
+        <p class="pie-tit">En esta página</p>
+        <ol>{apartados.map(([id, t]) => <li><a href={'#' + id}>{t}</a></li>)}</ol>
+      </nav>
+      <div class="legal">
+        <slot name="entrada" />
+        <slot />
+        <p class="legal-otras">También puedes leer: {otras.map(([r, t], i) => <>{i > 0 && ' · '}<a href={r}>{t}</a></>)}.</p>
+      </div>
+    </div>
+  </section>
+</Base>

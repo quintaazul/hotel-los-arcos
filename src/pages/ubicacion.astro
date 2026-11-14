@@ -1,0 +1,47 @@
+---
+// Ubicación. Orden del documento del rediseño: dirección, mapa y botón de Google Maps; cómo llegar desde Monterrey
+// (en Quinta Azul, también desde el aeropuerto; en Los Arcos, del hotel a las Grutas); lo que encuentras al llegar;
+// qué hay cerca, con sus guías del blog; y los enlaces del plan SEO.
+import Base from '../layouts/Base.astro';
+import PortadaCorta from '../components/PortadaCorta.astro';
+import Mapa from '../components/Mapa.astro';
+import BlogCorto from '../components/BlogCorto.astro';
+import Enlaces from '../components/Enlaces.astro';
+import Titulo from '../components/Titulo.astro';
+import Icono from '../components/Icono.astro';
+import Video from '../components/Video.astro';
+import { H, mapsRuta, wazeRuta } from '../data/hoteles';
+import { T, SEO } from '../data/textos';
+const t = T.ubicacion, seo = SEO.ubicacion;
+---
+<Base title={seo.title} description={seo.description} pagina="ubicacion" ogFoto={H.heroes.ubicacion}>
+  <PortadaCorta img={H.heroes.ubicacion} alt="La sierra de García, Nuevo León, vista desde el camino" clave={seo.h1} lineas={[t.portada.l]} ovalo={t.portada.o} frase={t.portada.texto}
+    migas={[['/', 'Inicio'], ['/ubicacion', 'Ubicación']]}
+    botones={[{ t: 'Cómo llegar en Google Maps', href: mapsRuta(), ico: 'ruta', clase: 'blanco', fuera: true }, { t: 'Ver el mapa', href: '#mapa', clase: 'contorno', flecha: true }]}
+    barra={H.distancias.map(([min, lugar, nota]) => ({ cifra: String(min), unidad: 'min', b: lugar, t: nota }))} />
+  <section class="seccion" aria-labelledby="t-llegar">
+    <div class="marco dos llegar">
+      <div class="dos-txt">
+        <Titulo lineas={[t.llegar.l]} ovalo={t.llegar.o} id="t-llegar" marca />
+        <ol class="pasos" style={`--n:${H.pasos.length - 1}`}>{H.pasos.map((p, k) => <li data-aparece style={`--k:${k}`}><p>{p}</p></li>)}</ol>
+        {t.extras.map((x) => <div class="llegar-extra" data-aparece><h3>{x.titulo}</h3><p>{x.texto}</p></div>)}
+        <div class="llegar-pie" data-aparece>
+          <p><b>{H.dir1}</b><br />{H.dir2}</p>
+          <div class="botones"><a class="boton" href={mapsRuta()} target="_blank" rel="noopener"><Icono n="ruta" />Abrir en Google Maps</a><a class="enlace" href={wazeRuta()} target="_blank" rel="noopener">Abrir en Waze<Icono n="diag" /></a></div>
+        </div>
+      </div>
+      <Video id="como-llegar" esquema sizes="(min-width: 1500px) 19vw, (min-width: 1025px) 25vw, (min-width: 761px) 38vw, 354px" cubre={9 / 16} />
+    </div>
+  </section>
+  <Mapa />
+  <section class="seccion al-llegar" aria-labelledby="t-al-llegar">
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={[t.alLlegar.l]} ovalo={t.alLlegar.o} id="t-al-llegar" marca />
+        <ul class="datos lista lado">{t.alLlegar.items.map(([ic, x], i) => <li data-aparece style={`--orden:${i}`}><Icono n={ic} />{x}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+  <BlogCorto forma="abanico" deTema={t.blog.tema} estricto mini="Del blog" lineas={[t.blog.l]} ovalo={t.blog.o} texto={t.blog.texto} clase="sin-arriba" />
+  <Enlaces enlaces={t.enlaces} />
+</Base>

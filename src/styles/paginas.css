@@ -1,0 +1,313 @@
+/* Páginas y piezas que llegaron con el documento del rediseño (11 de noviembre de 2026): preguntas frecuentes,
+   páginas legales, la fila «Sigue por aquí», Departamentos y Empresas (Los Arcos), los estados del formulario que
+   manda correo y el pie de tres columnas. Solo usa las variables del sistema y los papeles de color. */
+
+/* ── Sección de preguntas (en varias páginas): título con el enlace a la página completa ── */
+.faq-cab{grid-column:1 / span 4;align-self:start;display:flex;flex-direction:column;align-items:flex-start;gap:var(--e-6)}
+.faq .faq-cab .titulo{grid-column:auto}
+
+/* ── Página de preguntas frecuentes ── */
+.faq-pag{padding-top:clamp(2rem,4vw,3.5rem)}
+.faq-pag-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-12);align-items:start}
+.faq-pag-cab{grid-column:1 / span 4;position:sticky;top:calc(var(--alto-cab) + var(--e-8));display:flex;flex-direction:column;align-items:flex-start;gap:var(--e-6)}
+.faq-pag-hotel{color:var(--c-marca);font-size:var(--t-chico);font-weight:var(--p-fuerte);letter-spacing:.07em;text-transform:uppercase}
+.faq-pag-tit{font:400 clamp(2.25rem,1.3rem + 2.9vw,4rem)/1.04 var(--f-serif);letter-spacing:-.01em;text-wrap:balance}
+.faq-pag-cab .temas a{min-height:var(--ctrl-s);padding:0 var(--e-4);font-size:var(--t-chico)}
+.faq-grupos{grid-column:6 / span 7;display:flex;flex-direction:column;gap:clamp(2.75rem,5vw,4.5rem)}
+.faq-grupo{scroll-margin-top:calc(var(--alto-cab) + var(--e-8))}
+.faq-grupo-cab{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--e-2) var(--e-6);margin-bottom:var(--e-4)}
+.faq-grupo-cab h2{font:400 var(--t-h2)/1.15 var(--f-serif)}
+.faq-grupo-cab .enlace{font-size:var(--t-ui)}
+
+/* ── Páginas legales ── */
+.legal-sec{padding-top:clamp(2rem,4vw,3.5rem)}
+.legal-marco{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-10);align-items:start}
+.legal-marco .legal,.legal-cab{grid-column:1 / span 7;max-width:none}
+.legal-marco{row-gap:var(--e-8)}
+.legal > :first-child{margin-top:0}
+.legal-tit{font:400 clamp(2.25rem,1.3rem + 2.9vw,4rem)/1.04 var(--f-serif);letter-spacing:-.01em}
+.legal-fecha{margin-top:var(--e-4);font-size:var(--t-chico);color:var(--c-texto-2)}
+.legal .legal-entrada{margin-top:var(--e-8);font-size:var(--t-cuerpo-l);line-height:1.55;color:var(--c-texto)}
+.legal h2{scroll-margin-top:calc(var(--alto-cab) + var(--e-8))}
+.legal p,.legal li{font-size:var(--t-cuerpo);line-height:1.65}
+.legal ul{margin:0 0 var(--e-35);padding-left:1.25rem;color:var(--c-texto-2)}
+.legal li{margin-bottom:var(--e-15)}
+.legal a{color:var(--c-texto-marca);font-weight:var(--p-medio);text-underline-offset:.2em}
+.legal .legal-otras{margin-top:var(--e-12);padding-top:var(--e-6);border-top:var(--linea) solid var(--c-borde);font-size:var(--t-ui)}
+.legal-indice{grid-column:9 / span 4;grid-row:1 / span 2;position:sticky;top:calc(var(--alto-cab) + var(--e-8));gap:var(--e-3)}
+.legal-indice .pie-tit{font-size:var(--t-chico);font-weight:var(--p-medio);color:var(--c-texto-2)}
+.legal-indice ol{display:grid;gap:var(--e-2);margin:0;padding-left:1.25rem;font-size:var(--t-ui)}
+.legal-indice a{text-decoration:none}
+.legal-indice a:hover{text-decoration:underline;text-underline-offset:.25em}
+
+/* ── «Sigue por aquí»: los enlaces del plan SEO, en una fila discreta ── */
+.enlaces-rel{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-4);align-items:center;padding-block:clamp(1.75rem,3vw,2.75rem);border-top:var(--linea) solid var(--c-borde)}
+.enlaces-rotulo{grid-column:1 / span 3;font:400 var(--t-h3)/1.15 var(--f-serif)}
+.enlaces-rel ul{grid-column:4 / span 9;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--hueco)}
+.enlaces-rel a{display:flex;align-items:center;justify-content:space-between;gap:var(--e-4);height:100%;min-height:var(--ctrl-l);padding:var(--e-4) var(--e-5);border-radius:var(--r-tarjeta);background:var(--c-fondo-2);font-weight:var(--p-medio);line-height:1.3;text-decoration:none;transition:background-color var(--d-rapido) ease,color var(--d-rapido) ease,transform var(--d-ui) var(--curva-salida),box-shadow var(--d-ui) var(--curva-salida)}
+.enlaces-rel a:hover{background:var(--c-accion);color:var(--c-sobre-accion);transform:translateY(-2px);box-shadow:var(--s-2)}
+.enlaces-rel .ico{flex:none;width:1.125rem;height:1.125rem;transition:transform var(--d-ui) var(--curva-salida)}
+.enlaces-rel a:hover .ico{transform:translateX(.25rem)}
+
+/* ── Ubicación: el dato extra de la ruta y lo que hay al llegar ── */
+.llegar-extra{padding:var(--e-5) var(--e-6);border-radius:var(--r-tarjeta);background:var(--c-fondo-2)}
+.llegar-extra h3{font-size:var(--t-base);font-weight:var(--p-fuerte);margin-bottom:var(--e-15)}
+.llegar-extra p{font-size:var(--t-ui);line-height:1.55;color:var(--c-texto-2)}
+.al-llegar{padding-block:var(--seccion-s)}
+.al-llegar .habs-cab{margin-bottom:0;align-items:center}
+.al-llegar .datos.lado{display:grid;gap:0;align-items:stretch}
+.al-llegar .datos li{font-size:var(--t-cuerpo)}
+.invitados{padding-block:var(--seccion-s)}
+.invitados .habs-cab{margin-bottom:0}
+.cotiza-nota{font-size:var(--t-chico)}
+
+/* ── Formulario que manda correo: enviando, enviado y fallo ── */
+.b-enviando{display:none}
+.formulario.enviando .b-normal,.formulario.enviando .boton .flecha{display:none}
+.formulario.enviando .b-enviando{display:inline}
+.formulario.enviando .boton{pointer-events:none;opacity:.75}
+.form-fallo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--e-3) var(--e-5);padding:var(--e-4) var(--e-5);border-radius:var(--r-control);background:color-mix(in oklab,var(--error-600,#b3261e) 7%,var(--c-superficie));box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--error-600,#b3261e) 38%,transparent)}
+.form-fallo[hidden],.form-ok[hidden]{display:none}
+.form-fallo p{flex:1 1 14rem;font-size:var(--t-chico);line-height:1.45}
+.form-ok{display:flex;flex-direction:column;align-items:flex-start;gap:var(--e-3);padding-block:var(--e-6)}
+.form-ok:focus{outline:none}
+.form-ok-ico{display:grid;place-items:center;width:3.25rem;height:3.25rem;border-radius:50%;background:var(--c-marca-suave);color:var(--c-texto-marca)}
+.form-ok-ico .ico{width:1.5rem;height:1.5rem}
+.form-ok h3{font:400 var(--t-h3)/1.15 var(--f-serif)}
+.form-ok p{color:var(--c-texto-2)}
+.formulario.enviado > :not(.form-ok){display:none}
+
+/* ── Departamentos y Empresas (Los Arcos) ── */
+.tiene-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--e-3);margin-bottom:var(--bloque)}
+.tiene-grid.tres{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:0}
+.tiene-grid li{display:flex;align-items:center;gap:var(--e-3);min-height:var(--ctrl-l);padding:var(--e-4) var(--e-5);border-radius:var(--r-tarjeta);background:var(--c-fondo-2);font-weight:var(--p-medio);line-height:1.3}
+.tiene-grid .ico{flex:none;width:1.5rem;height:1.5rem;color:var(--c-marca)}
+.tarifas thead th{padding-top:var(--e-6)}
+.tarifas td,.tarifas th{white-space:normal}
+.tarifas-pie{align-items:center;margin-top:var(--e-6)}
+.opc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--hueco)}
+.opc-grid.dos{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opc-caja{display:flex;flex-direction:column;align-items:flex-start;gap:var(--e-3);padding:clamp(1.5rem,2.4vw,2.25rem);border-radius:var(--r-tarjeta);background:var(--c-fondo-2)}
+.f-2 .opc-caja{background:var(--c-superficie)}
+.opc-num{font:400 var(--t-h2)/1 var(--f-serif);color:var(--c-marca)}
+.opc-caja h3{font:400 var(--t-h3)/1.15 var(--f-serif)}
+.opc-caja p{color:var(--c-texto-2);line-height:1.55}
+.opc-caja .enlace{margin-top:auto}
+.opc-caja.con-foto{padding:0;overflow:hidden;gap:0}
+.opc-caja.con-foto > :not(.opc-foto){margin-inline:clamp(1.5rem,2.4vw,2.25rem)}
+.opc-caja.con-foto h3{margin-top:var(--e-6)}
+.opc-caja.con-foto p{margin-top:var(--e-3)}
+.opc-caja.con-foto .enlace{margin-top:var(--e-5);margin-bottom:var(--e-6)}
+.opc-foto{display:block;width:100%;aspect-ratio:16 / 9;overflow:hidden;background:var(--c-fondo-3)}
+.opc-foto picture,.opc-foto img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--foco,50% 50%);transition:transform var(--d-revela) var(--curva-suave)}
+.opc-caja.con-foto:hover .opc-foto img{transform:scale(1.04)}
+.apartar-marco{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-10);align-items:center}
+.apartar-marco > div{grid-column:1 / span 5;display:flex;flex-direction:column;gap:var(--e-5)}
+.apartar-marco > .pasos{grid-column:7 / span 6}
+
+/* ── Pie: tres columnas (el hotel, contacto y el blog); sus rótulos son etiquetas, no títulos ── */
+.pie-inv{grid-column:1 / span 5}
+.pie-cols{grid-column:6 / span 7;grid-template-columns:minmax(0,.85fr) minmax(0,1fr) minmax(0,1.3fr)}
+.pie-cols .pie-tit{font-size:var(--t-chico);font-weight:var(--p-medio);color:rgb(237 232 225 / .62);margin-bottom:var(--e-3)}
+
+@media (max-width:1024px){
+  .faq-cab,.faq-pag-cab,.faq-grupos,.legal-marco .legal,.legal-cab,.legal-indice,.enlaces-rotulo,.enlaces-rel ul,.apartar-marco > div,.apartar-marco > .pasos,.pie-inv,.pie-cols{grid-column:1 / -1}
+  .faq-pag-cab,.legal-indice{position:static}
+  .legal-indice{grid-row:auto}
+  .tiene-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .opc-grid{grid-template-columns:minmax(0,1fr)}
+  .opc-grid.dos{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .enlaces-rel ul{grid-template-columns:minmax(0,1fr);gap:var(--e-2)}
+  .tiene-grid,.tiene-grid.tres,.opc-grid.dos{grid-template-columns:minmax(0,1fr)}
+  .pie-cols{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .pie-cols > :last-child{grid-column:1 / -1}
+}
+@media (max-width:480px){
+  .pie-cols{grid-template-columns:minmax(0,1fr)}
+}
+
+/* Comparador de habitaciones: la frase que explica qué conviene según cuántos son */
+.sugerencia{min-height:2.9em;font-size:var(--t-ui);font-weight:var(--p-medio);line-height:1.45;color:var(--c-texto);max-width:34rem}
+@media (max-width:700px){.sugerencia{min-height:4.4em}}
+
+/* «Por qué reservar directo»: tres razones cortas bajo el comparador del Inicio */
+.directo{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--hueco);row-gap:var(--e-5);align-items:start;margin-top:var(--e-8);padding-top:var(--e-7);border-top:var(--linea) solid var(--c-borde)}
+.directo-tit{grid-column:1 / span 3;font:400 var(--t-h3)/1.15 var(--f-serif);color:var(--c-marca)}
+.directo-lista{grid-column:4 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--e-5) var(--hueco)}
+.directo-lista li{display:flex;align-items:flex-start;gap:var(--e-4)}
+.directo-ico{flex:none;display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:50%;background:var(--c-fondo-2);color:var(--c-marca)}
+.directo-ico .ico{width:1.25rem;height:1.25rem}
+.directo-lista p{font-size:var(--t-ui);line-height:1.45;color:var(--c-texto-2)}
+.directo-lista b{display:block;font-weight:var(--p-fuerte);color:var(--c-texto)}
+@media (max-width:1024px){.directo-tit,.directo-lista{grid-column:1 / -1}}
+@media (max-width:860px){.directo-lista{grid-template-columns:minmax(0,1fr)}}
+
+/* ── Auditoría del 11 nov ── */
+/* Botones: en celular un texto largo parte en dos líneas en vez de ensanchar la página */
+@media (max-width:760px){.boton{white-space:normal;text-align:center;max-width:100%}.boton .flecha,.boton .ico{flex:none}}
+/* Los botones de la portada se quedan en celular donde son la salida (404) o la acción de la página (contacto) */
+@media (max-width:760px){.portada-txt .botones.siempre{display:flex}}
+/* Medida de lectura: el texto corrido no pasa de unos 70 caracteres por línea (fotos, tablas y video sí usan todo el ancho) */
+.cuerpo > :is(p,ul,ol,h2,h3,h4,blockquote,.resumen,.verificado,.acordeon,.hospedate),.legal > :is(p,ul,ol,h2,h3){max-width:44rem}
+/* Sección corta seguida de otra que no trae aire arriba: el aire lo pone ella */
+.invitados,.al-llegar{padding-bottom:var(--seccion)}
+/* Página de una sola pantalla (404): la portada no se desvanece al bajar */
+.portada:only-child [data-portada-txt],.portada:only-child .portada-foto{animation:none}
+/* Migas sobre la portada en celular: una sola línea; lo que no cabe se corta con puntos */
+@media (max-width:760px){.migas.en-portada{flex-wrap:nowrap}.migas.en-portada > *{flex:none;white-space:nowrap}.migas.en-portada > :last-child{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}}
+/* Recuadro de datos de la portada en celular chico: las palabras largas parten con guion y, si hay cifra, se quita la segunda línea */
+@media (max-width:480px){.portada-barra li{min-width:0}.portada-barra b,.portada-barra small{hyphens:auto;overflow-wrap:anywhere}.portada-barra li:has(.cifra) > span:last-child small{display:none}}
+
+/* ── Auditoría del 11 nov, segunda tanda ── */
+.nb{white-space:nowrap}
+/* Quinta Azul no usa arcos: las miniaturas de «Qué puedes celebrar» van con esquinas normales */
+[data-hotel="qa"] .fila-foto{border-radius:var(--r-media)}
+/* Preguntas frecuentes: el enlace de cada grupo va siempre debajo del título salvo en pantallas anchas; en pantallas bajas el título se achica para que quepan los temas y el botón */
+@media (max-width:1400px){.faq-grupo-cab{flex-direction:column;align-items:flex-start}}
+@media (min-width:1025px) and (max-height:780px){.faq-pag-tit{font-size:clamp(1.875rem,3vw,2.5rem)}.faq-pag-cab{gap:var(--e-4);top:calc(var(--alto-cab) + var(--e-5))}}
+.faq-pag-hotel{color:var(--c-texto-marca)}
+/* Pie en celular: cada enlace con alto suficiente para el dedo */
+@media (max-width:760px){.pie-cols li > a,.pie-legal a{display:inline-block;padding-block:.6rem}.pie-cols ul{gap:0}}
+/* Selector de personas en celular chico: caben los seis en una fila */
+@media (max-width:400px){.segmento{gap:var(--e-15)}.segmento button{min-width:2.75rem;padding:0 var(--e-3)}}
+/* Recuadro de datos de la portada en celular: si sobra uno, ocupa las dos columnas */
+@media (max-width:760px){.portada-barra li:last-child:nth-child(odd){grid-column:1 / -1}}
+/* Tres tarjetas de artículo en tablet grande: caben las tres en fila (en dos columnas quedaba una suelta) */
+@media (min-width:900px) and (max-width:1024px){.art-grid.de-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* La cinta se desvanece antes de llegar al botón de pausa, para que el texto no pase por debajo */
+.cinta::after{content:"";position:absolute;top:0;bottom:0;right:0;width:7rem;background:linear-gradient(90deg,transparent,var(--c-accion) 52%);pointer-events:none}
+.cinta-pausa{z-index:1}
+@media (prefers-reduced-motion:reduce){.cinta::after{display:none}}
+/* Tablet: la palapa y la ruta van en dos columnas (texto y foto o video), no con la pieza suelta a la izquierda */
+@media (min-width:900px) and (max-width:1024px){.palapa-txt{grid-column:1 / span 6}.palapa-foto{grid-column:7 / span 6;max-width:none}}
+@media (min-width:761px) and (max-width:899px){.palapa-foto{justify-self:center}}
+@media (min-width:761px) and (max-width:1024px){.dos.llegar > .dos-txt{grid-column:1 / span 7}.dos.llegar > .video{grid-column:8 / span 5;justify-self:end;width:100%}}
+@media (max-width:480px){.dos.llegar > .video{width:100%}}
+/* Portadas interiores en celular y tablet: el contenido nunca sube hasta pegarse a las migas */
+@media (max-width:1024px){.portada.interior:has(.migas) .portada-marco{padding-top:calc(var(--alto-cab) + 3.5rem)}}
+/* Barra de fechas junto a la tarjeta de precio en pantallas medianas: menos relleno para que la fecha quepa entera */
+@media (min-width:1025px) and (max-width:1440px){.portada-pie .campo-btn{padding-inline:var(--e-4)}.portada-pie .barra > .boton{padding-inline:var(--e-5);margin-left:var(--e-2)}}
+/* Tablas que se deslizan a los lados en celular: una pista arriba para que se note */
+.tabla-pista{display:none}
+@media (max-width:760px){.tabla-pista{display:flex;align-items:center;gap:var(--e-2);margin-bottom:var(--e-3);font-size:var(--t-chico);color:var(--c-texto-2)}.tabla-pista .ico{width:1rem;height:1rem}}
+/* Portada en celular: cada foto puede traer su propio encuadre (--foco-cel) */
+@media (max-width:760px){.portada-foto img{object-position:var(--foco-cel,50% 50%)}}
+/* ── Aire entre secciones del mismo fondo (11 nov): un solo aire de sección, nunca dos sumados ── */
+/* Inicio: la «ventana» ya no pone aire abajo; el de arriba de «habitaciones» separa las dos */
+.ventana{padding-bottom:0}
+/* Fila «Sigue por aquí»: aire corto e igual a los dos lados (antes, un aire y cuarto por lado) */
+:is(.seccion,.planes-corto):has(+ .enlaces-rel){padding-bottom:var(--seccion-s)}
+.enlaces-rel + .seccion{padding-top:var(--seccion-s)}
+/* la página de preguntas termina en una lista con rayas: ahí el aire completo, para que la raya de la fila no se le pegue */
+.faq-pag:has(+ .enlaces-rel){padding-bottom:var(--seccion)}
+
+/* ── Fotos parejas (12 nov): las fotos que van juntas miden lo mismo y arrancan a la misma altura ──
+   En celular, una fila escalonada o una foto más alta que sus vecinas se lee como «unas más grandes que otras». */
+/* Galería de los artículos: rejilla de dos columnas con todas las fotos a 4:3; si sobra una, va ancha abajo */
+.galeria.dos-col{columns:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--hueco)}
+.galeria.dos-col figure{margin:0;aspect-ratio:4 / 3}
+.galeria.dos-col figure:last-child:nth-child(odd){grid-column:1 / -1;aspect-ratio:16 / 9}
+.galeria.dos-col .foto-btn,.galeria.dos-col .foto-btn picture,.galeria.dos-col .foto-btn img{display:block;width:100%;height:100%;object-fit:cover}
+@media (max-width:760px){
+  .galeria.dos-col{gap:var(--e-25)}
+  /* galería deslizante y tarjetas del blog: sin escalón, todas a la misma altura */
+  .galeria-pista figure:nth-child(even),.pc-carta:nth-child(even){margin-top:0}
+  /* mosaico de «incluido» en una columna: las cuatro tarjetas del mismo alto */
+  .teja:nth-child(n){min-height:clamp(15rem,62vw,20rem)}
+}
+
+/* ── Auditoría SEO del 13 nov 2026 ──
+   El título principal (h1) de cada portada es solo la frase que la gente busca (.clave). El lema grande va en un
+   párrafo que no pinta caja propia: sus líneas siguen siendo piezas del título, así que se ve igual que antes. */
+.titulo .lema{display:contents}
+.titulo h1.l{font:inherit;letter-spacing:inherit}
+/* Ficha única de habitación: en celular y tableta el carrusel de fotos entra primero, no al final */
+@media (max-width:1024px){.habs-lista .hab.visto > .hab-fotos{animation-delay:0s}}
+
+/* ── Portadas en celular, parejas en los dos hoteles (13 nov 2026) ──
+   El dueño las comparó en celular y la de Los Arcos se veía apretada: su primer renglón («Descanso, familia y») es
+   más largo que el de Quinta Azul y se partía en dos, y la nota del estimado se iba a dos líneas.
+   · El título se achica lo justo para que su renglón más largo quepa en una línea: --largo son sus letras (lo pone
+     Portada.astro) y cada letra de Poppins a ese grueso mide cerca de media letra de ancho (0.5).
+   · La nota del estimado va en una sola línea desde 360 px de ancho, alineada con el resto del texto. */
+@media (max-width:760px){
+  .portada:not(.interior) .titulo-portada{font-size:min(2.75rem,calc((100vw - 2.5rem) / (var(--largo,12) * .5)))}
+  :root[data-hotel="la"] .portada:not(.interior) .titulo-portada{font-size:min(2.5rem,calc((100vw - 2.5rem) / (var(--largo,12) * .5)))}
+  :root[data-hotel="la"] .portada:not(.interior) .titulo-portada .l.o .ovalo{font-size:.86em}
+  .reserva-nota{padding-inline:0;gap:var(--e-1) var(--e-15);font-size:.8125rem}
+}
+/* Autor en la portada de un artículo: el sello del hotel junto al nombre, nunca solo en un renglón */
+.autor-foto{background:var(--c-marca);box-shadow:0 0 0 2px rgb(255 255 255 / .92)}
+/* El dibujo va centrado de verdad en el círculo: se coloca por sus cuatro lados, no por la rejilla (las piezas
+   <source> de la foto contaban como renglones y lo empujaban hacia abajo). Los arcos son muy apaisados: van más anchos. */
+.autor-foto{position:relative}
+.autor-foto picture{display:block}
+.autor-foto img{position:absolute;inset:0;margin:auto;width:58%;height:auto}
+:root[data-hotel="la"] .autor-foto img{width:72%}
+@media (max-width:1024px){
+  .autor.en-portada{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:var(--e-25) var(--e-3)}
+  .autor.en-portada .autor-fechas{grid-column:1 / -1}
+}
+
+/* Barra de datos de las portadas en celular: los minutos no se parten («15 m / in») y una palabra larga solo se corta
+   donde lleva guion blando (13 nov 2026) */
+.portada-barra .cifra{flex:none;white-space:nowrap}
+.portada-barra .cifra small{overflow-wrap:normal;hyphens:manual}
+@media (max-width:480px){.portada-barra b,.portada-barra small{overflow-wrap:break-word}}
+
+/* ── Pasada final del 13 nov 2026: lo que salió al revisar cada página pantalla por pantalla ──
+   · .solo-pc / .solo-cel: el mismo botón con un rótulo corto en celular, para que no se parta en dos renglones.
+   · Un teléfono nunca se parte entre renglones. Un botón con flecha cuyo texto ocupa dos renglones se lee de corrido.
+   · El grupo de pastillas del formulario deja el mismo aire bajo su rótulo que los demás campos. */
+.solo-cel{display:none}
+a[href^="tel:"],.portada a[href="#mapa"]{white-space:nowrap}
+/* (solo hasta tablet: en computadora el formulario de Contacto está medido para caber en la portada) */
+@media (max-width:1024px){fieldset.campo > legend.campo-et{margin-bottom:var(--e-2)}}
+@media (max-width:1024px){
+  /* El «1 de 4» de cada habitación queda justo bajo su carrusel y se lee como «foto 1 de 4» */
+  .hab .num-hab{display:none}
+  /* El índice de un artículo va antes del texto, no después de las preguntas */
+  .lateral:has(.indice-art){order:-1}
+}
+@media (max-width:760px){
+  .solo-pc{display:none}
+  .solo-cel{display:inline}
+  .boton:has(> .flecha){text-align:left}
+  /* Pie: la fecha de cada artículo va en su renglón (una regla de área táctil la dejaba pegada al título) */
+  .pie-cols li > a.art-linea{display:flex}
+  /* Lo incluido: apiladas en una columna, las cuatro tejas llevan el mismo título */
+  .teja:nth-child(1) h3{font:500 clamp(1.25rem,1rem + .8vw,1.75rem)/1.15 var(--f-sans);letter-spacing:-.015em}
+  /* Barra de datos de las portadas: cada columna mide lo que pide su texto (antes, dos mitades iguales partían
+     «Estacionamiento» a media palabra), los números alinean sus rótulos y un dato suelto ocupa el renglón */
+  .portada-barra{grid-template-columns:repeat(2,auto)}
+  .portada-barra li:last-child:nth-child(odd){grid-column:1 / -1}
+  .portada-barra .cifra{min-width:3.6rem}
+  /* Créditos del mapa en un solo renglón */
+  .creditos-mapa{font-size:min(.625rem,2.55vw);white-space:nowrap;padding-inline:var(--e-15)}
+  /* Una tarjeta o una fila de botones al final de una portada no queda pegada a la sección que sigue */
+  .portada:has(.tarjeta-form,.botones.iguales) .portada-marco{padding-bottom:3.5rem}
+  .portada .portada-txt .botones.iguales{display:grid;grid-template-columns:minmax(0,1fr);width:min(100%,21rem)}
+  /* Cartas chicas del blog: sin el rótulo del tema, que en dos renglones se encimaba con la foto */
+  .pc-pie small{display:none}
+  /* Tablas de los artículos: menos relleno para que quepa cada dato */
+  .cuerpo th,.cuerpo td{padding:var(--e-25) var(--e-3)}
+}
+
+/* ── Pasada final, computadora (13 nov 2026) ──
+   · Un título dentro de una columna que alinea a la izquierda se encogía al ancho de su frase; el guion del óvalo
+     creía entonces que no había sitio a la derecha, achicaba la frase y le pegaba el trazo a las letras («hecho para
+     descansar», «cerca del hotel», «escribirnos», «las Grutas»…). El título ocupa ahora toda su columna.
+   · El video de la ruta llega al margen derecho, como las demás piezas.
+   · La raya de «También te sirve» mide lo que el contenido, no lo que el marco con sus márgenes.
+   · La cita de las reseñas reparte sus renglones; las tablas de un artículo miden lo que su texto. */
+:is(.ventana-txt,.pc-txt,.faq-cab,.pie-inv) > .titulo{align-self:stretch}
+.enlaces-rel{border-top:0;background:linear-gradient(var(--c-borde),var(--c-borde)) center top / calc(100% - 2 * var(--margen)) var(--linea) no-repeat}
+.cita{text-wrap:balance}
+.cuerpo > table{max-width:44rem}
+.teja:nth-child(n+2)::after{background:linear-gradient(180deg,rgb(var(--c-noche) / 0) 22%,rgb(var(--c-noche) / .8) 100%)}
+/* En computadora la tarjeta del mapa, con la misma dirección y los mismos botones, queda justo debajo: la fila se guarda para celular */
+@media (min-width:1025px){.dos.llegar > .video{grid-column:9 / span 4;justify-self:end}.dos.llegar .dos-txt > .llegar-pie{display:none}}
+/* En los celulares más angostos la barra de datos aprieta su relleno para que «Grutas de García» quepa en dos renglones */
+@media (max-width:380px){.portada-barra li{padding-inline:var(--e-2);gap:var(--e-2)}.portada-barra .cifra{min-width:3.3rem}}

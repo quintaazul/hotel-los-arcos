@@ -1,0 +1,76 @@
+/* Paleta de Hotel Quinta Azul. Generada por scripts/paleta.mjs: no se edita a mano.
+   Capa 1 = colores (rampas 50–950). Capa 2 = papeles (--c-*), que es lo único que usan los componentes. */
+:root[data-hotel="qa"]{
+  /* azul: Primario */
+  --azul-50:#F4F7FF; --azul-100:#E6ECFF; --azul-200:#CFDCFF; --azul-300:#AEC2FF; --azul-400:#8AA3F5; --azul-500:#6B84DD; --azul-600:#5167BD; --azul-700:#3B4E9C; --azul-800:#2B3A7C; --azul-900:#1D295A; --azul-950:#10183B;
+  /* agua: Secundario */
+  --agua-50:#ECFAFE; --agua-100:#D8F2FA; --agua-200:#B6E6F4; --agua-300:#86D1E7; --agua-400:#4EB7D3; --agua-500:#009BB8; --agua-600:#007C94; --agua-700:#006175; --agua-800:#004959; --agua-900:#003440; --agua-950:#002028;
+  /* sol: Acento */
+  --sol-50:#FFF5E7; --sol-100:#FCEACF; --sol-200:#F7D7A7; --sol-300:#EBBB70; --sol-400:#D79B2A; --sol-500:#B67F00; --sol-600:#926500; --sol-700:#734F00; --sol-800:#573B00; --sol-900:#3F2900; --sol-950:#281800;
+  /* arena: Neutros */
+  --arena-50:#F8F5F0; --arena-100:#EFEBE2; --arena-200:#E1DCD1; --arena-300:#CCC7BC; --arena-400:#AAA39D; --arena-500:#867E7E; --arena-600:#686067; --arena-700:#4A4755; --arena-800:#333243; --arena-900:#212133; --arena-950:#151527;
+  /* exito: Estado: correcto */
+  --exito-50:#EEFBF0; --exito-100:#DCF4E1; --exito-200:#BEE9C8; --exito-300:#93D7A5; --exito-400:#64BE80; --exito-500:#38A25E; --exito-600:#078543; --exito-700:#006933; --exito-800:#004F25; --exito-900:#003818; --exito-950:#00230D;
+  /* aviso: Estado: atención */
+  --aviso-50:#FFF5E9; --aviso-100:#FEE9D1; --aviso-200:#F9D6AB; --aviso-300:#EEB976; --aviso-400:#DB9838; --aviso-500:#BC7B00; --aviso-600:#976200; --aviso-700:#774C00; --aviso-800:#5B3900; --aviso-900:#412800; --aviso-950:#291700;
+  /* error: Estado: error */
+  --error-50:#FFF4F2; --error-100:#FFE6E3; --error-200:#FFCFC9; --error-300:#FFABA1; --error-400:#FF796D; --error-500:#E74F46; --error-600:#C52C2A; --error-700:#A30D14; --error-800:#7F0009; --error-900:#5D0005; --error-950:#3C0002;
+  /* info: Estado: información */
+  --info-50:#F0F8FF; --info-100:#DEEFFF; --info-200:#BFE1FF; --info-300:#96CAF7; --info-400:#6AAFE7; --info-500:#4391CE; --info-600:#2274AF; --info-700:#045B91; --info-800:#00446F; --info-900:#003051; --info-950:#001D34;
+  /* Papeles */
+  --c-noche:12 11 24;
+  --c-fondo:var(--arena-50);
+  --c-fondo-2:var(--arena-100);
+  --c-fondo-3:var(--arena-200);
+  --c-superficie:#FFFFFF;
+  --c-fondo-oscuro:var(--arena-950);
+  --c-fondo-oscuro-2:var(--arena-900);
+  --c-texto:var(--arena-950);
+  --c-texto-2:var(--arena-700);
+  --c-texto-3:var(--arena-600);
+  --c-texto-apagado:var(--arena-500);
+  --c-borde:var(--arena-200);
+  --c-borde-fuerte:var(--arena-300);
+  --c-borde-control:var(--arena-500);
+  --c-blanco:#FFFFFF;
+  --c-sobre-accion:#FFFFFF;
+  --c-sobre-oscuro:var(--arena-50);
+  --c-sobre-oscuro-2:var(--arena-300);
+  --c-marca:var(--azul-700);
+  --c-accion:var(--azul-700);
+  --c-accion-hover:var(--azul-800);
+  --c-accion-activa:var(--azul-900);
+  --c-texto-marca:var(--azul-700);
+  --c-marca-hondo:var(--azul-900);
+  --c-marca-suave:var(--azul-100);
+  --c-marca-suave-2:var(--azul-200);
+  --c-foco:var(--azul-600);
+  --c-secundario:var(--agua-600);
+  --c-secundario-suave:var(--agua-100);
+  --c-acento:var(--sol-500);
+  --c-estrella:var(--sol-400);
+  --c-exito:var(--exito-600);
+  --c-exito-texto:var(--exito-700);
+  --c-exito-fondo:var(--exito-50);
+  --c-exito-borde:var(--exito-300);
+  --c-aviso:var(--aviso-600);
+  --c-aviso-texto:var(--aviso-700);
+  --c-aviso-fondo:var(--aviso-50);
+  --c-aviso-borde:var(--aviso-300);
+  --c-error:var(--error-600);
+  --c-error-texto:var(--error-700);
+  --c-error-fondo:var(--error-50);
+  --c-error-borde:var(--error-300);
+  --c-info:var(--info-600);
+  --c-info-texto:var(--info-700);
+  --c-info-fondo:var(--info-50);
+  --c-info-borde:var(--info-300);
+  --c-velo:rgb(var(--c-noche) / .46); --c-seleccion:var(--c-marca-suave-2);
+  /* Piezas con color propio */
+  --serie-fondo:var(--arena-50);
+  --serie-tinta:var(--arena-950);
+  --serie-linea:transparent;
+  --serie-tapa:var(--arena-200);
+  --serie-pill:var(--azul-700);
+  --serie-pill-tinta:#FFFFFF;
+}

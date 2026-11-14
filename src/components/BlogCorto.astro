@@ -1,0 +1,57 @@
+---
+// El blog en el resto del sitio. Dos formas:
+//   abanico  (inicio y ubicación) un título, una línea y las portadas de los artículos más recientes, que se abren
+//            en abanico al llegar a ellas; es la pieza que antes anunciaba «Planes cerca».
+//   lista    (habitaciones, celebraciones, departamentos, empresas) dos o tres tarjetas normales, de un tema si se pide.
+// Los textos cambian por hotel y por página: se pasan desde src/data/textos.ts.
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+import Titulo from './Titulo.astro';
+import TarjetaArticulo from './TarjetaArticulo.astro';
+import { H, foco } from '../data/hoteles';
+import { articulos, tema, urlArt, urlTema } from '../data/blog';
+interface Props { forma?: 'abanico' | 'lista'; cuantos?: number; deTema?: string | string[]; estricto?: boolean; mini?: string; lineas: string[]; ovalo: string; texto?: string; clase?: string }
+const { forma = 'abanico', cuantos = forma === 'abanico' ? 4 : 3, deTema, estricto, mini = 'Del blog', lineas, ovalo, texto, clase } = Astro.props;
+const todos = await articulos();
+// deTema puede ser un tema o varios; con «estricto» solo salen artículos de esos temas (en Ubicación el título promete
+// planes cerca: no se rellena con artículos de fiestas).
+const temas = deTema ? [deTema].flat() : [], tema0 = temas[0];
+const elegidos = [...todos.filter((a) => !temas.length || temas.includes(a.data.tema)), ...(estricto ? [] : todos.filter((a) => temas.length && !temas.includes(a.data.tema)))].slice(0, cuantos);
+const id = 't-blog-' + forma;
+---
+{elegidos.length > 0 && (forma === 'abanico' ? (
+  <section class:list={['planes-corto seccion', clase]} aria-labelledby={id}>
+    <div class="marco pc-escena">
+      <div class="pc-txt">
+        <p class="mini" data-aparece>{mini}</p>
+        <Titulo lineas={lineas} ovalo={ovalo} id={id} marca />
+        {texto && <p class="texto" data-aparece>{texto}</p>}
+        <div data-aparece><a class="boton" href="/blog">Ver todos los artículos<span class="flecha"><Icono n="flecha" /></span></a></div>
+      </div>
+      <ul class="pc-abanico lista" style={`--cartas:${elegidos.length}`}>
+        {elegidos.map((a, i) => (
+          <li class="pc-carta" style={`--i:${i};--n:${elegidos.length}`}>
+            <a class="pc-in" href={urlArt(a)} data-aparece style={foco(a.data.foto)}>
+              <Foto src={H.id + '/' + a.data.foto} alt="" sizes={`(max-width: 760px) 45vw, (max-width: 1024px) ${Math.ceil(94 / elegidos.length)}vw, (min-width: 1700px) ${(54 / elegidos.length).toFixed(1)}vw, ${Math.ceil(60 / elegidos.length)}vw`} cubre={0.74} anchos={[480, 800, 1200]} />
+              <span class="pc-pie"><small>{tema(a.data.tema).nombre}</small><b>{a.data.corto}</b></span>
+              <span class="pc-ir" aria-hidden="true"><Icono n="diag" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+) : (
+  <section class:list={['seccion blog-rel', clase]} aria-labelledby={id}>
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={lineas} ovalo={ovalo} id={id} marca />
+        <div class="lado">
+          {texto && <p class="texto" data-aparece>{texto}</p>}
+          <div data-aparece><a class="enlace" href={tema0 ? urlTema(tema0) : '/blog'}>{tema0 ? 'Más de ' + tema(tema0).nombre.toLowerCase() : 'Ver todos los artículos'}<Icono n="flecha" /></a></div>
+        </div>
+      </div>
+      <div class:list={['art-grid', 'de-' + elegidos.length]}>{elegidos.map((a, i) => <TarjetaArticulo art={a} orden={i} sizes={elegidos.length <= 2 ? '(min-width: 1025px) 44vw, (min-width: 641px) 46vw, 100vw' : undefined} />)}</div>
+    </div>
+  </section>
+))}

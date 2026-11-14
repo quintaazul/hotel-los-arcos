@@ -1,0 +1,38 @@
+---
+import { H, waLink, foco } from '../data/hoteles';
+import Foto from './Foto.astro';
+import FotoVisor from './FotoVisor.astro';
+import Titulo from './Titulo.astro';
+import Icono from './Icono.astro';
+import { T } from '../data/textos';
+interface Props { pagina?: boolean }
+const { pagina = false } = Astro.props;
+const p = H.palapa;
+const img = (pagina && p.imgPag) || p.img, alt = (pagina && p.altPag) || p.alt;   // en su página puede llevar otra foto
+---
+<section class="seccion sin-abajo" aria-labelledby="t-palapa">
+  <div class="marco palapa">
+    <div class="palapa-txt">
+      {/* En su propia página el bloque lleva otro título y otro texto que en el inicio: no se repite el mismo párrafo. */}
+      <Titulo lineas={[pagina ? T.celebraciones.bloque.l : p.s]} ovalo={pagina ? T.celebraciones.bloque.o : p.o} id="t-palapa" marca />
+      <p class="texto" data-aparece>{pagina ? T.celebraciones.bloque.texto : p.texto}</p>
+      <ul class="incluye lista">{p.incluye.map(([ic, t]) => <li data-aparece><Icono n={ic} />{t}</li>)}</ul>
+      <div class="botones" data-aparece>
+        <a class="boton" href={waLink('Hola, ' + T.palapaBloque.waMsg + ' del ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />{T.palapaBloque.cotizar}</a>
+        {!pagina && <a class="boton contorno" href="/celebraciones">{T.palapaBloque.ver}<span class="flecha"><Icono n="flecha" /></span></a>}
+      </div>
+    </div>
+    <div class="palapa-foto foto-caja" data-revela="arco" data-paralaje style={foco(img)}><Foto src={H.id + '/' + img} alt={alt} sizes="(min-width: 1025px) 46vw, (min-width: 761px) 70vw, 100vw" cubre={4 / 5} /></div>
+  </div>
+  <div class="galeria-desliza" role="group" aria-label="Fotos del hotel">
+    <div class="galeria-pista" data-galeria>
+      {p.galeria.map(([f, c]) => (
+        <figure>
+          <div class="foto-caja"><FotoVisor src={H.id + '/' + f} alt={c + ', ' + H.nombre} pie={c} grupo="palapa" sizes="(max-width: 760px) 73vw, (min-width: 1534px) 460px, 30vw" cubre={4 / 5} /></div>
+          <figcaption>{c}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+  <div style="height:var(--seccion)"></div>
+</section>

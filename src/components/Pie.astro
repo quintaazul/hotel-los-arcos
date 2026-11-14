@@ -1,0 +1,72 @@
+---
+// Pie: la invitación a reservar, tres columnas (el hotel, contacto y los artículos más recientes del blog) y, abajo,
+// el logo con las redes y los enlaces legales. Los rótulos de las columnas no son títulos (h2): son etiquetas.
+// (Hasta el 10 de noviembre de 2026 cerraba con el nombre del hotel en letras gigantes; se cambió por las redes.)
+import { H, waLink } from '../data/hoteles';
+import { T } from '../data/textos';
+import { articulos } from '../data/blog';
+import Icono from './Icono.astro';
+import Foto from './Foto.astro';
+import Titulo from './Titulo.astro';
+import TarjetaArticulo from './TarjetaArticulo.astro';
+const simbolo = H.id === 'qa' ? 'simbolo' : 'arcos';
+const redes = [
+  { ico: 'instagram', t: 'Instagram ' + H.ig, href: H.igUrl },
+  { ico: 'facebook', t: 'Facebook', href: H.facebook },
+  { ico: 'wa', t: 'WhatsApp ' + H.tel, href: waLink() },
+];
+const recientes = (await articulos()).slice(0, 3);
+---
+<footer class="pie sobre-oscuro" id="pie">
+  <div class="marco">
+    <div class="pie-grid">
+      <div class="pie-inv">
+        <Titulo tag="p" lineas={[T.pie.s]} ovalo={T.pie.o} />
+        <a class="boton blanco" href={waLink()} target="_blank" rel="noopener"><Icono n="wa" />Reservar por WhatsApp</a>
+      </div>
+      <div class="pie-cols">
+        <nav aria-label="Páginas del sitio">
+          <p class="pie-tit">El hotel</p>
+          <ul class="lista">
+            <li><a href={'/' + H.rutaHabs}>Habitaciones</a></li>
+            {H.id === 'la' && <li><a href="/departamentos">Departamentos</a></li>}
+            {H.id === 'la' && <li><a href="/empresas">Empresas</a></li>}
+            <li><a href="/celebraciones">Celebraciones</a></li>
+            <li><a href="/ubicacion">Ubicación</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
+            <li><a href="/contacto">Contacto</a></li>
+          </ul>
+        </nav>
+        <div>
+          <p class="pie-tit">Contacto</p>
+          <ul class="lista">
+            <li><a href={'tel:' + H.telLink}>WhatsApp y teléfono <span class="nb">{H.tel}</span></a></li>
+            <li>De 7 AM a 11 PM, todos los días</li>
+            <li>{H.dir1}</li>
+            <li>{H.dir2}</li>
+          </ul>
+        </div>
+        {recientes.length > 0 && (
+          <nav aria-label="Del blog">
+            <p class="pie-tit">Del blog</p>
+            <ul class="lista">{recientes.map((a) => <li><TarjetaArticulo art={a} tamano="texto" /></li>)}</ul>
+          </nav>
+        )}
+      </div>
+    </div>
+    <div class="pie-base">
+      <a class:list={['logo con-nombre pie-logo', H.id]} href="/" aria-label={H.nombre + ', inicio'}>
+        <Foto src={H.id + '/' + simbolo + '-blanco.png'} alt="" sizes="110px" anchos={[128, 256]} />
+        <span class="logo-nombre" aria-hidden="true"><small>Hotel</small>{' '}{H.id === 'qa' ? 'Quinta Azul' : <Foto src="la/nombre-blanco.png" alt="" sizes="190px" anchos={[220, 440]} />}</span>
+      </a>
+      <ul class="redes lista" aria-label="Redes del hotel">
+        {redes.map((r) => <li><a href={r.href} target="_blank" rel="noopener" aria-label={r.t} title={r.t}><Icono n={r.ico} /></a></li>)}
+      </ul>
+    </div>
+    <div class="pie-legal">
+      <span>© 2026 {H.nombre} · García, Nuevo León</span>
+      <div><a href="/aviso-de-privacidad">Aviso de privacidad</a><a href="/politicas">Políticas de reservación</a><a href="/terminos">Términos y condiciones</a></div>
+    </div>
+  </div>
+</footer>

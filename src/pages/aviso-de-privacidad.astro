@@ -1,0 +1,34 @@
+---
+// Aviso de privacidad. Describe lo que de verdad hace el sitio con los datos del formulario (se guardan y se avisa
+// al correo del hotel) y lo que no hace. Versión de trabajo: la revisa el responsable del hotel antes de publicarse
+// en el dominio real; falta la razón social y el domicilio fiscal de quien responde por los datos.
+import Legal from '../components/Legal.astro';
+import { H } from '../data/hoteles';
+const apartados: [string, string][] = [['responsable', 'Quién responde por tus datos'], ['datos', 'Qué datos pedimos'], ['fines', 'Para qué los usamos'], ['terceros', 'Con quién se comparten'], ['tiempo', 'Cuánto tiempo se guardan'], ['arco', 'Tus derechos (ARCO)'], ['medicion', 'Medición de visitas'], ['cambios', 'Cambios al aviso']];
+---
+<Legal pagina="aviso" ruta="/aviso-de-privacidad" nombre="Aviso de privacidad" actualizado="11 de noviembre de 2026" apartados={apartados}>
+  <p slot="entrada" class="legal-entrada">Este aviso explica qué datos personales recibe el {H.nombre} cuando pides una reservación o una cotización, para qué los usa y cómo puedes pedir que se corrijan o se borren, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+  <h2 id="responsable">Quién responde por tus datos</h2>
+  <p>{H.nombre}, con domicilio en {H.dir1}, {H.dir2}, México. Contacto: WhatsApp y teléfono {H.tel}{H.correo ? `, correo ${H.correo}` : ''}.</p>
+  <h2 id="datos">Qué datos pedimos</h2>
+  <p>En el formulario de reserva: tu nombre, un teléfono o correo para responderte, las fechas de tu estancia, cuántas personas viajan, el tipo de habitación, el motivo del viaje y el mensaje que quieras escribir.</p>
+  <p>Al enviar el formulario también se registran el país desde el que escribes y el tipo de navegador, para detectar envíos automáticos. No pedimos datos sensibles ni datos bancarios por el sitio.</p>
+  <p>Si nos escribes por WhatsApp o nos llamas, recibimos tu número y lo que nos cuentes.</p>
+  <h2 id="fines">Para qué los usamos</h2>
+  <ul>
+    <li>Responder tu solicitud y confirmarte disponibilidad y precio.</li>
+    <li>Registrar y dar seguimiento a tu reservación o a tu evento.</li>
+    <li>Hacer tu factura, si la pides.</li>
+  </ul>
+  <p>No usamos tus datos para enviarte publicidad ni los vendemos.</p>
+  <h2 id="terceros">Con quién se comparten</h2>
+  <p>Solo con los proveedores que hacen funcionar el sitio y el correo del hotel: Cloudflare, que aloja el sitio, recibe el formulario y lo protege de envíos automáticos, y Google, cuyo servicio de correo recibe el aviso de cada solicitud. Si eliges escribirnos por WhatsApp, esa conversación pasa por el servicio de WhatsApp. Fuera de eso, tus datos solo se entregarían a una autoridad que los pida conforme a la ley.</p>
+  <h2 id="tiempo">Cuánto tiempo se guardan</h2>
+  <p>El tiempo necesario para atender tu solicitud y tu estancia, y el que exijan las obligaciones fiscales cuando hay factura. Después se eliminan.</p>
+  <h2 id="arco">Tus derechos (ARCO)</h2>
+  <p>Puedes pedir en cualquier momento el acceso a tus datos, su rectificación, su cancelación o la oposición a su uso, así como retirar tu consentimiento. Escríbenos por WhatsApp o llama al {H.tel}{H.correo ? `, o envía un correo a ${H.correo}` : ''}, con tu nombre, lo que solicitas y un medio para responderte. Te contestaremos dentro del plazo que marca la ley.</p>
+  <h2 id="medicion">Medición de visitas</h2>
+  <p>El sitio cuenta sus visitas con una herramienta de Cloudflare que no usa cookies ni identifica a las personas. No usamos cookies de publicidad.</p>
+  <h2 id="cambios">Cambios al aviso</h2>
+  <p>Si este aviso cambia, la versión nueva se publicará en esta misma página con su fecha de actualización.</p>
+</Legal>

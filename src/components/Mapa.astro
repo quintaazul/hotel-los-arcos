@@ -1,0 +1,47 @@
+---
+import { H, mapsBuscar, mapsRuta, wazeRuta } from '../data/hoteles';
+import { getImage } from 'astro:assets';
+import mapa from '@fotos/mapa-garcia.jpg';
+import mapaCel from '@fotos/mapa-garcia-celular.jpg';
+import Foto from './Foto.astro';
+import Icono from './Icono.astro';
+import { T } from '../data/textos';
+// modo: «completo» (Ubicación: todas las distancias), «inicio» o «contacto» (versión corta, con enlace a Ubicación).
+// Así el mismo bloque no se repite palabra por palabra en tres páginas.
+interface Props { modo?: 'completo' | 'inicio' | 'contacto' }
+const { modo = 'completo' } = Astro.props;
+const m = T.mapa[modo];
+const lado = H.id === 'qa' ? 'flex-start' : 'flex-end';
+const sx = H.id === 'qa' ? '66%' : '34%';
+// Dos imágenes del mismo mapa (scripts/mapa.mjs): apaisada para computadoras y tabletas, vertical para celulares.
+const grande = await getImage({ src: mapa, widths: [1200, 1800, 2400, 3000, 3600, 4400, 6000], format: 'webp' });
+const cel = await getImage({ src: mapaCel, widths: [600, 900, 1200, 1600, 2400], format: 'webp' });
+const respaldo = await getImage({ src: mapa, width: 2400, format: 'webp' });
+---
+<section class="mapa" id="mapa" aria-labelledby="t-mapa" style={`--pin-x:${H.pin[0]};--pin-y:${H.pin[1]};--pin-xm:${H.pinCel[0]};--pin-ym:${H.pinCel[1]};--prop-cel:${(mapaCel.width / mapaCel.height).toFixed(4)};--sx:${sx};--lado-visita:${lado}`}>
+  <div class="mapa-capa">
+    <div class="lienzo">
+      <div class="lienzo-mov" data-mapa-mov><picture>
+        <source media="(max-width: 700px)" srcset={cel.srcSet.attribute} sizes="max(104vw, 48svh)" width={mapaCel.width} height={mapaCel.height} />
+        <img src={respaldo.src} srcset={grande.srcSet.attribute} sizes="(min-width: 1025px) max(104vw, 82rem), 90rem" width={mapa.width} height={mapa.height} alt={'Mapa del centro de García, Nuevo León, con la ubicación del ' + H.nombre + ' y los lugares cercanos'} loading="lazy" decoding="async" />
+      </picture></div>
+      <div class="pin" aria-hidden="true"><span class="pin-onda"></span><span class="pin-gota" data-pin><Foto src={H.id + (H.id === 'qa' ? '/simbolo-blanco.png' : '/arcos-blanco.png')} alt="" sizes="40px" anchos={[80]} /></span><span class="pin-etq" data-pin-etq>{H.nombre}</span></div>
+    </div>
+  </div>
+  <div class="marco">
+    <div class="visita" data-aparece>
+      <h2 id="t-mapa">{m.titulo}</h2>
+      <address>{H.dir1}<br />{H.dir2}</address>
+      <dl class="filas">
+        {m.filas.map(([a, b]) => <div><dt>{a}</dt><dd>{b}</dd></div>)}
+      </dl>
+      <a class="tel" href={'tel:' + H.telLink}>{H.tel}</a>
+      <div class="botones"><a class="boton" href={mapsRuta()} target="_blank" rel="noopener"><Icono n="ruta" /><span class="solo-pc">Cómo llegar en Google Maps</span><span class="solo-cel">Abrir en Google Maps</span></a></div>
+      <div class="mas-acciones">
+        {m.enlace ? <a class="enlace" href="/ubicacion">{m.enlace}<Icono n="flecha" /></a> : <button type="button" class="enlace copiar" data-copiar={mapsBuscar()}><Icono n="copiar" class="ico-copiar" /><Icono n="ok" class="ico-ok" /><span data-copiar-txt>Copiar enlace</span></button>}
+        <a class="enlace" href={wazeRuta()} target="_blank" rel="noopener">Abrir en Waze<Icono n="diag" /></a>
+      </div>
+    </div>
+  </div>
+  <span class="creditos-mapa">Mapa © OpenStreetMap · OpenMapTiles · OpenFreeMap · Overture Maps</span>
+</section>

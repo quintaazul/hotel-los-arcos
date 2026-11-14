@@ -1,0 +1,13 @@
+---
+// Campo de texto estándar: etiqueta arriba, caja, ayuda opcional y mensaje de error propio.
+interface Props { id: string; nombre: string; etiqueta: string; tipo?: string; area?: boolean; requerido?: boolean; ayuda?: string; falta?: string; autocomplete?: string; inputmode?: string; marcador?: string; validar?: string; class?: string }
+const { id, nombre, etiqueta, tipo = 'text', area = false, requerido = false, ayuda, falta, autocomplete, inputmode, marcador, validar, class: clase } = Astro.props;
+---
+<div class:list={['campo', clase]} data-falta={falta}>
+  <label class="campo-et" for={id}>{etiqueta}{!requerido && <span class="opc"> · opcional</span>}</label>
+  {area
+    ? <textarea class="ctrl" id={id} name={nombre} required={requerido} placeholder={marcador} rows="4"></textarea>
+    : <input class="ctrl" id={id} name={nombre} type={tipo} required={requerido} autocomplete={autocomplete} inputmode={inputmode} placeholder={marcador} data-tipo={validar} />}
+  {ayuda && <p class="campo-ayuda">{ayuda}</p>}
+  <p class="campo-error" role="alert"><span></span></p>
+</div>
