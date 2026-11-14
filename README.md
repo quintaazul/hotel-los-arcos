@@ -1,5 +1,7 @@
 # Hotel Los Arcos Inn
 
+> **Rediseño en curso (14 de noviembre de 2026).** El rediseño completo del sitio está en la rama `rediseno` y todavía no está publicado; se puede ver en https://prueba-los-arcos.bijuu-nexo.workers.dev. Esta rama (`main`) es el sitio publicado hoy. Más contexto en `CLAUDE.md`.
+
 Sitio estatico en Astro. Migrado desde Webflow (agosto 2026).
 Repo independiente por decision de arquitectura: este hotel y Los Arcos
 evolucionan por separado.
