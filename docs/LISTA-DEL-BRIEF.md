@@ -389,7 +389,7 @@ Queda por decidir o por conseguir:
 
 Todas las preguntas para el hotel, las fotos que faltan y los textos por escribir están juntos en `PREGUNTAS-Y-CONTENIDO-PENDIENTE.md` (claves A1–A15, Q1–Q13, L1–L18, T1–T5, F1–F9), con un anexo de los títulos de sección de hoy frente a los que propone la auditoría.
 
-## 15. El proyecto, listo para GitHub (14 de noviembre)
+## 15. El proyecto en GitHub (14 de noviembre)
 
 El rediseño va a los repositorios originales de los hoteles (`quintaazul/hotel-quinta-azul` y `quintaazul/hotel-los-arcos`), no a uno nuevo. Subir código ahí no publica nada: esos repositorios no tienen publicación automática; un sitio solo cambia cuando alguien ejecuta a mano la orden de publicar.
 
@@ -401,5 +401,7 @@ El rediseño va a los repositorios originales de los hoteles (`quintaazul/hotel-
 - [x] Precio y teléfono escritos una sola vez: los títulos, descripciones, enlaces y preguntas los toman de `hoteles.ts`. Probado cambiando un precio: se actualizó solo en todas las páginas
 - [x] El revisor de SEO avisa si un artículo del blog se queda con un precio viejo
 - [x] Probado desde una copia limpia del historial: compila los dos sitios y pasa el revisor
-- [ ] Subirlo a los dos repositorios de los hoteles (falta el permiso de escritura para la cuenta que usa esta PC)
+- [x] Subido a la rama `rediseno` de los dos repositorios (`quintaazul/hotel-quinta-azul` y `quintaazul/hotel-los-arcos`), con el mismo contenido en los dos. Los documentos públicos no llevan notas sobre debilidades de seguridad de los dominios
+- [x] La rama `main` de cada repositorio lleva un `CLAUDE.md` y un aviso en su `README.md`: `main` es el sitio publicado hoy, `rediseno` es el rediseño sin publicar, y dónde se ve la copia de prueba. Nada más cambió en `main`
+- [ ] Mantener iguales las dos ramas `rediseno`: cada cambio se sube a los dos repositorios (`git push hoteles rediseno`)
 - [ ] En un equipo nuevo, los revisores piden instalar Playwright una vez (`npm i -D playwright`)
