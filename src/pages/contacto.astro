@@ -35,7 +35,7 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'ContactPage', '@id
       <Fecha id="c-llegada" nombre="llegada" etiqueta="Llegada" />
       <Fecha id="c-salida" nombre="salida" etiqueta="Salida" despuesDe="c-llegada" />
       <Contador id="c-personas" nombre="personas" etiqueta="Personas" min={1} max={60} valor={2} />
-      <Desplegable id="c-hab" nombre="habitacion" etiqueta="Habitación" opciones={[...H.habs.map((x) => x.nombre), 'No sé todavía']} />
+      <Desplegable id="c-hab" nombre="habitacion" etiqueta="Habitación" opciones={[...H.habs.map((x) => (H.habs.length === 1 ? x.corto : x.nombre)), 'No sé todavía']} />
       <Opciones class="completo" nombre="motivo" etiqueta="Motivo del viaje" opciones={t.motivos} />
       <Campo class="completo" id="c-mensaje" nombre="mensaje" etiqueta="Mensaje" area marcador="Cuéntanos lo que necesites." />
       <Casilla class="completo" id="c-priv" nombre="privacidad" requerido falta="Necesitamos que aceptes el aviso de privacidad.">Acepto el <a href="/aviso-de-privacidad">aviso de privacidad</a></Casilla>

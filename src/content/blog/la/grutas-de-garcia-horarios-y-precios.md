@@ -11,7 +11,7 @@ resumen: "Las Grutas de García abren de martes a domingo, de 9:00 a 17:00, y co
 foto: "grutas-de-garcia-interior-cerca-hotel-los-arcos-inn.jpg"
 fotoAlt: "Interior de las Grutas de García, Nuevo León, con sus formaciones de roca iluminadas"
 publicado: 2026-11-11
-actualizado: 2026-11-18
+actualizado: 2026-11-17
 lectura: 5
 vende: habitaciones
 destacado: true
@@ -63,9 +63,9 @@ Normalmente sí, pero se detiene cuando hay lluvia, viento fuerte o mantenimient
 
 ## ¿Cómo llego desde el hotel?
 
-Desde el centro de García toma el Camino a Grutas de García: son 9.5 kilómetros, unos 15 minutos en auto. A medio camino, en el kilómetro 18, pasas por [Xenpal](/blog/xenpal-con-ninos), por si quieres juntar los dos paseos.
+Desde el centro de García toma el Camino a Grutas de García: son 9.5 kilómetros, unos 15 minutos en auto. A medio camino, en el kilómetro 18 de la carretera, pasas por [Xenpal](/blog/xenpal-con-ninos), por si quieres juntar los dos paseos.
 
-Si vienes de Monterrey, primero llegas al pueblo: aquí explicamos [cómo llegar a Hotel Los Arcos Inn](/ubicacion).
+Si vienes de Monterrey, primero llegas al pueblo: aquí explicamos [cómo llegar al Hotel Los Arcos Inn](/ubicacion).
 
 ## ¿Qué llevo?
 

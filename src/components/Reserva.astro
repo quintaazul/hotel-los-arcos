@@ -73,13 +73,15 @@ const SEM = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
   function actualizar() {
     const ps = sugerida(personas()), n = noches();
     const total = ps.reduce((t, x) => t + (x.hab.precio || 0) * x.n, 0), sinPrecio = ps.some((x) => !x.hab.precio);
-    const nombre = ps.map((x) => (x.n > 1 ? x.n + ' × ' : '') + x.hab.nombre.replace('Habitación ', 'hab. ').toLowerCase()).join(' + ');
+    // La nota del estimado va en un solo renglón desde 360 px (estándar): si el hotel tiene un solo tipo de
+    // habitación, basta «habitación»; si no, «hab. sencilla», «hab. triple», «departamento con cocina».
+    const nombre = ps.map((x) => (x.n > 1 ? x.n + ' × ' : '') + (D.habs.length === 1 ? 'habitación' : x.hab.nombre.replace('Habitación ', 'hab. ').toLowerCase())).join(' + ');
     const ll = $('#val-llegada')!, sa = $('#val-salida')!;
     ll.textContent = r.llegada ? fechaMedia(r.llegada) : 'Elige fecha'; ll.classList.toggle('sin-valor', !r.llegada);
     sa.textContent = r.salida ? fechaMedia(r.salida) : 'Elige fecha'; sa.classList.toggle('sin-valor', !r.salida);
     $('#val-personas')!.textContent = txtPersonas();
-    // Todos los precios son «desde» y sin IVA: el estimado lo dice igual
-    $('#val-estimado')!.textContent = !n ? 'elige tus fechas' : sinPrecio ? 'precio por confirmar' : 'desde ' + dinero(total * n) + ' + IVA';
+    // Los precios son sin IVA: el estimado lo dice («Estimado» ya avisa que es aproximado; con «desde» no cabía en un renglón)
+    $('#val-estimado')!.textContent = !n ? 'elige tus fechas' : sinPrecio ? 'precio por confirmar' : dinero(total * n) + ' + IVA';
     $('#sub-estimado')!.textContent = n ? txtNoches() + ' · ' + nombre : '';
     $('#pers-nota')!.textContent = 'Te sugerimos ' + listado(ps) + '.';
     $('#out-adultos')!.textContent = String(r.adultos); $('#out-ninos')!.textContent = String(r.ninos);

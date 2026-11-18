@@ -8,7 +8,7 @@ let fallas = 0;
 const ok = (cond, que, detalle = '') => { if (!cond) fallas++; console.log((cond ? '  ✓ ' : '  ✗ ') + que + (detalle ? '\n      ' + String(detalle).replace(/\n/g, '\n      ') : '')); };
 const texto = (href) => { try { return new URL(href).searchParams.get('text') || ''; } catch { return ''; } };
 
-async function sitio(base, habs, rutaHabs) {
+async function sitio(base, habs, rutaHabs, rutaPalapa) {
   console.log('\n══ ' + base);
   const ctx = await nav.newContext({ viewport: { width: 1905, height: 910 } });
   await ctx.addInitScript(() => { window.__abiertos = []; window.open = (u) => { window.__abiertos.push(String(u)); return null; }; });
@@ -57,7 +57,7 @@ async function sitio(base, habs, rutaHabs) {
   await p.goto(base + '/' + rutaHabs, { waitUntil: 'load' }); await p.waitForTimeout(500);
   ok(/3 adultos, 1 niño/.test(await p.locator('#val-personas').textContent()) && !/Elige/.test(await p.locator('#val-llegada').textContent()), 'En Habitaciones la barra abre con las mismas fechas y huéspedes', await p.locator('#val-llegada').textContent() + ' → ' + await p.locator('#val-salida').textContent() + ' · ' + await p.locator('#val-personas').textContent());
   const m6 = await enlace('.partida a[href*="wa.me"]');
-  ok(/grupo/.test(m6) && /Llegada:/.test(m6), '«Cotizar para un grupo» lleva las fechas', m6);
+  ok(/grupo|descuento/.test(m6) && /Llegada:/.test(m6), 'El botón de grupos o descuento lleva las fechas', m6);
 
   // 7. Contacto: abre con lo elegido; al enviar NO abre WhatsApp; si falla, el respaldo va completo
   await p.goto(base + '/contacto', { waitUntil: 'load' }); await p.waitForTimeout(600);
@@ -72,8 +72,9 @@ async function sitio(base, habs, rutaHabs) {
   if (estado.fallo) { const m7 = texto(estado.wa); ok(/Nombre: Prueba Automática\nContacto: 8100000000\nLlegada: .+\nSalida: .+\nPersonas: 4\n(Habitación: .+\n)?Motivo: .+\nMensaje: Llegamos tarde\./.test(m7), 'Respaldo por WhatsApp del formulario (aquí el envío falla porque no hay servicio de correo)', m7); }
   else ok(estado.ok, 'El formulario se envió y muestra el aviso de recibido');
 
-  // 8. Celebraciones: cotización de la palapa
-  await p.goto(base + '/celebraciones', { waitUntil: 'load' }); await p.waitForTimeout(600);
+  // 8. Palapa: cotización (solo Quinta Azul la renta; la de Los Arcos es solo para huéspedes y no lleva formulario)
+  await p.goto(base + '/' + rutaPalapa, { waitUntil: 'load' }); await p.waitForTimeout(600);
+  if (await p.locator('form[data-fiesta]').count()) {
   const m8 = await enlace('.celebra a.fila-plan[href*="wa.me"]');
   ok(/palapa/.test(m8) && !/\n/.test(m8), 'Tipo de fiesta sin elegir nada: solo la frase (no se mezcla con la estancia)', m8);
   const fc = p.locator('form[data-fiesta]'); await fc.scrollIntoViewIfNeeded(); await p.waitForTimeout(400);
@@ -81,17 +82,21 @@ async function sitio(base, habs, rutaHabs) {
   await fc.locator('[data-contador] button').last().click(); await p.waitForTimeout(150);
   await fc.locator('button[type=submit]').click(); await p.waitForTimeout(300);
   const m9 = await abierto();
-  ok(/^Hola, quiero cotizar la palapa .+ del Hotel [^\n]+\.\nFecha: [^\n]+ \d+ de [^\n]+\nPersonas: 41\nMotivo: .+$/.test(m9), '«Cotizar por WhatsApp» manda fecha, personas y motivo', m9);
+  ok(/^Hola, quiero cotizar la palapa (.+ )?del Hotel [^\n]+\.\nFecha: [^\n]+ \d+ de [^\n]+\nPersonas: 41\nMotivo: .+$/.test(m9), '«Cotizar por WhatsApp» manda fecha, personas y motivo', m9);
   const m10 = await enlace('.celebra a.fila-plan[href*="wa.me"]');
   ok(/Fecha: /.test(m10) && /Personas: 41/.test(m10) && !/Motivo/.test(m10), 'Después, cada tipo de fiesta lleva la fecha y las personas (sin repetir el motivo)', m10);
   const m11 = await enlace('.portada a.boton[href*="wa.me"]');
   ok(/Fecha: /.test(m11) && /Motivo: /.test(m11), 'El botón de la portada de Celebraciones lleva fecha, personas y motivo', m11);
   ok(!/Fecha:/.test(await enlace('.cabecera a.boton[href*="wa.me"]')) && /Llegada:/.test(await enlace('.cabecera a.boton[href*="wa.me"]')), 'El «Reservar» del menú sigue llevando la estancia, no la fiesta');
+  } else {
+    const mp = await enlace('main a[href*="wa.me"]');
+    ok(/Llegada:/.test(mp) && /Huéspedes:/.test(mp), 'Palapa para huéspedes (sin cotización): su botón de WhatsApp lleva la estancia elegida', mp);
+  }
 
   if (errores.length) { fallas++; console.log('  ✗ errores en la página: ' + errores.slice(0, 3).join(' | ')); }
   await ctx.close();
 }
-await sitio(QA, { indice: 1, frase: 'la habitación doble' }, 'hospedaje');
-await sitio(LA, { indice: 3, frase: 'el departamento con cocina' }, 'habitaciones');
+await sitio(QA, { indice: 0, frase: 'la habitación con vista a la sierra' }, 'hospedaje', 'celebraciones');
+await sitio(LA, { indice: 2, frase: 'el departamento con cocina' }, 'habitaciones', 'palapa');
 await nav.close();
 console.log(fallas ? `\n${fallas} comprobaciones fallaron` : '\nTodos los mensajes de WhatsApp llevan lo elegido');

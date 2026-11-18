@@ -21,7 +21,7 @@ export const GET: APIRoute = async () => {
     '- Reservas: directas, por WhatsApp, teléfono o formulario; no hay motor de reservas en línea',
     '- Precios por noche, más IVA: ' + H.habs.filter((x) => x.precio).map((x) => x.nombre + ' (' + x.para + ') desde ' + dinero(x.precio as number) + ' MXN').join('; '),
     '- Entrada 14:00, salida 11:00. Alberca abierta hasta las 22:00. Estacionamiento dentro del hotel',
-    '- ' + (la ? 'Palapa techada con asador, solo para huéspedes; no se rentan eventos' : 'Palapa con asador para hasta 60 personas, junto a la alberca; el precio se cotiza por WhatsApp'),
+    '- ' + (la ? 'Palapa techada con asador, solo para huéspedes; no se renta para eventos' : 'Palapa con asador para hasta 60 personas, junto a la alberca; el precio se cotiza por WhatsApp'),
     '- Se aparta con el 50 % de anticipo, no reembolsable. Mayores de 18 años con identificación. No se fuma en las habitaciones. No se admiten mascotas ni visitas',
     '- Calificación en Google: ' + H.rating + ' de 5, con ' + H.resenas + ' reseñas (al ' + H.resenasAl + ')', '',
     '## Páginas', '', ...paginas.map(([r, t, d]) => '- [' + t + '](' + u(r) + '): ' + d), '',

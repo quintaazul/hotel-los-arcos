@@ -11,7 +11,7 @@ resumen: "Las posadas se hacen del 16 al 24 de diciembre. Nuestra palapa recibe 
 foto: "palapa-asador-columnas-atardecer-hotel-quinta-azul.jpg"
 fotoAlt: "El asador de la palapa del Hotel Quinta Azul, entre columnas de azulejo, al atardecer"
 publicado: 2026-11-11
-actualizado: 2026-11-18
+actualizado: 2026-11-17
 lectura: 4
 vende: palapa
 destacado: true
@@ -20,7 +20,7 @@ datos:
   - ["Capacidad", "Hasta 60 personas"]
   - ["En la palapa", "Asador, refrigerador y baños"]
 preguntas:
-  - ["¿Cuántas personas caben en la posada?", "Hasta 60 personas en la palapa, que está junto a la alberca."]
+  - ["¿Cuántas personas caben en la palapa?", "Hasta 60 personas en la palapa, que está junto a la alberca."]
   - ["¿Cuánto cuesta rentar la palapa para una posada?", "Depende de la fecha y del horario. Escríbenos por WhatsApp con el día y cuántos son, y te mandamos la cotización."]
   - ["¿Los invitados pueden quedarse a dormir?", "Sí. Hay habitaciones para hasta 4 personas desde $900 + IVA la noche, y descuento para grupos de 3 habitaciones o más."]
   - ["¿Con cuánto tiempo conviene apartar?", "Los viernes y sábados de diciembre son los primeros en ocuparse. En cuanto tengas la fecha, escríbenos para revisarla."]
@@ -63,7 +63,7 @@ El estacionamiento está dentro del hotel y no tiene costo. Puedes ver cada cosa
 
 ## ¿Dónde se quedan los que vienen de fuera?
 
-En el mismo hotel. Las [habitaciones desde $900 + IVA](/hospedaje) son para hasta 4 personas y tienen aire acondicionado, televisión, frigobar y microondas; si reservan 3 o más, hay descuento. Nadie tiene que manejar de regreso a Monterrey de noche.
+En el mismo hotel. Las [habitaciones desde $900 + IVA](/hospedaje) son para hasta 4 personas y tienen aire acondicionado, televisión, frigobar y microondas; si reservan 3 habitaciones o más, hay descuento. Nadie tiene que manejar de regreso a Monterrey de noche.
 
 ## ¿Cómo aparto la fecha?
 

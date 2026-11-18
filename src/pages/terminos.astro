@@ -6,7 +6,7 @@ import { H } from '../data/hoteles';
 const dominio = H.sitio.replace('https://', '');
 const apartados: [string, string][] = [['sitio', 'Sobre este sitio'], ['informacion', 'Información y precios'], ['solicitudes', 'Solicitudes de reserva'], ['blog', 'Artículos del blog'], ['fotos-y-textos', 'Fotos y textos'], ['enlaces', 'Enlaces y servicios de terceros'], ['datos', 'Datos personales'], ['responsabilidad', 'Responsabilidad'], ['ley', 'Ley aplicable'], ['contacto', 'Contacto']];
 ---
-<Legal pagina="terminos" ruta="/terminos" nombre="Términos y condiciones" actualizado="11 de noviembre de 2026" apartados={apartados}>
+<Legal pagina="terminos" ruta="/terminos" nombre="Términos y condiciones" actualizado="17 de noviembre de 2026" apartados={apartados}>
   <p slot="entrada" class="legal-entrada">Al usar el sitio {dominio} aceptas estos términos. Si no estás de acuerdo con alguno, te pedimos no usar el sitio y contactarnos por teléfono.</p>
   <h2 id="sitio">Sobre este sitio</h2>
   <p>Este sitio es del {H.nombre}, ubicado en {H.dir1}, {H.dir2}. Sirve para conocer el hotel, sus habitaciones y servicios, y para pedir una reservación o una cotización.</p>
@@ -19,7 +19,7 @@ const apartados: [string, string][] = [['sitio', 'Sobre este sitio'], ['informac
   <h2 id="fotos-y-textos">Fotos y textos</h2>
   <p>Las fotos, los videos, los textos y los logotipos del sitio pertenecen al {H.nombre} o se usan con permiso. No pueden copiarse ni usarse con fines comerciales sin autorización por escrito.</p>
   <h2 id="enlaces">Enlaces y servicios de terceros</h2>
-  <p>El sitio enlaza a servicios de otras empresas, como WhatsApp, Google Maps, Waze, Facebook e Instagram. Cada uno tiene sus propios términos y su propia política de privacidad, que no dependen del hotel. El mapa del sitio usa datos de OpenStreetMap y Overture Maps.</p>
+  <p>El sitio enlaza a servicios de otras empresas, como WhatsApp, Google Maps, Waze, Facebook, Instagram y TikTok. Cada uno tiene sus propios términos y su propia política de privacidad, que no dependen del hotel. El mapa del sitio usa datos de OpenStreetMap y Overture Maps.</p>
   <h2 id="datos">Datos personales</h2>
   <p>El uso de los datos que nos compartes se explica en el <a href="/aviso-de-privacidad">aviso de privacidad</a>.</p>
   <h2 id="responsabilidad">Responsabilidad</h2>
@@ -27,5 +27,5 @@ const apartados: [string, string][] = [['sitio', 'Sobre este sitio'], ['informac
   <h2 id="ley">Ley aplicable</h2>
   <p>Estos términos se rigen por las leyes de los Estados Unidos Mexicanos.</p>
   <h2 id="contacto">Contacto</h2>
-  <p>Para cualquier duda sobre estos términos: WhatsApp y teléfono {H.tel}, todos los días de 7:00 a 23:00{H.correo ? `, o al correo ${H.correo}` : ''}.</p>
+  <p>Para cualquier duda sobre estos términos: WhatsApp y teléfono {H.tel}, todos los días de 7 AM a 11 PM{H.correo ? `, o al correo ${H.correo}` : ''}.</p>
 </Legal>

@@ -34,7 +34,7 @@ const schema = esDepa ? [{ '@context': 'https://schema.org', '@type': 'Apartment
 ---
 {esDepa ? (
 <Base title={seo.title} description={seo.description} pagina="departamentos" ogFoto={fotos[0]?.[0]} schema={schema}>
-  <PortadaCorta img={fotos[0][0]} alt={fotos[0][1] + ', ' + H.nombre} clave={seo.h1} lineas={['Departamentos']} ovalo="con cocina" frase="Hay viajes que no caben en una habitación. Para eso están los dos departamentos de Hotel Los Arcos Inn: dos recámaras, sala y cocina, con el jardín afuera."
+  <PortadaCorta img={fotos[0][0]} alt={fotos[0][1] + ', ' + H.nombre} clave={seo.h1} lineas={['Departamentos']} ovalo="con cocina" frase="Hay viajes que no caben en una habitación. Para eso están los dos departamentos del Hotel Los Arcos Inn: dos recámaras, sala y cocina, con el jardín afuera."
     migas={[['/', 'Inicio'], ['/departamentos', 'Departamentos']]}
     botones={[{ t: 'Cotizar un departamento', href: waDepa, ico: 'wa', clase: 'blanco', fuera: true }, { t: 'Ver los precios', href: '#tarifas', clase: 'contorno', flecha: true }]}
     tarjeta={{ rotulo: 'Precio por noche', valor: dinero(noche), sufijo: 'desde', texto: 'Más IVA. Para varios días, te damos el total.' }}
@@ -60,7 +60,7 @@ const schema = esDepa ? [{ '@context': 'https://schema.org', '@type': 'Apartment
     <div class="marco">
       <div class="habs-cab">
         <Titulo lineas={['Estancias de una']} ovalo="semana o más" id="t-tarifas" marca />
-        <div class="lado"><p class="texto" data-aparece>Desde {dinero(noche)} + IVA por noche. Si te quedas varios días, escríbenos con tus fechas y te damos el total.</p></div>
+        <div class="lado"><p class="texto" data-aparece>Desde {dinero(noche)}&nbsp;+&nbsp;IVA por noche. Si te quedas varios días, escríbenos con tus fechas y te damos el total.</p></div>
       </div>
       <p class="tabla-pista" aria-hidden="true">Desliza la tabla para ver todas las tarifas<Icono n="flecha" /></p>
       <div class="tabla-caja" data-aparece tabindex="0" role="region" aria-label="Tarifas del departamento">
@@ -68,7 +68,7 @@ const schema = esDepa ? [{ '@context': 'https://schema.org', '@type': 'Apartment
           <caption class="sr">Tarifas del departamento con cocina del {H.nombre}</caption>
           <thead><tr><th scope="col"><span class="sr">Concepto</span></th><th scope="col">Por noche</th><th scope="col">Por semana</th><th scope="col">Por mes</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Precio</th><td>Desde <b class="num">{dinero(noche)}</b> + IVA</td><td>Te damos el total</td><td>Te damos el total</td></tr>
+            <tr><th scope="row">Precio</th><td>Desde <b class="num">{dinero(noche)}</b>&nbsp;+&nbsp;IVA</td><td>Te damos el total</td><td>Te damos el total</td></tr>
             <tr><th scope="row">Cómo se cotiza</th><td>Precio publicado</td><td>Por WhatsApp, con tus fechas</td><td>Por WhatsApp, con tus fechas</td></tr>
             <tr><th scope="row">Para</th><td>4 a 8 personas</td><td>4 a 8 personas</td><td>4 a 8 personas</td></tr>
             <tr><th scope="row">Factura</th><td><Icono n="ok" /></td><td><Icono n="ok" /></td><td><Icono n="ok" /></td></tr>

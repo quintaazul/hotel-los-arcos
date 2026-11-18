@@ -16,9 +16,9 @@ const c = CAJAS[art.data.vende];
   <div class="hospedate-acc">
     {fuerte ? (
       <a class="boton blanco" href={waArt(art)} target="_blank" rel="noopener"><Icono n="wa" />Escribir por WhatsApp</a>
-      <a class="enlace" href={c.href}>{c.enlace}<Icono n="flecha" /></a>
+      <a class="enlace" href={c.href}><span class:list={[{ 'solo-pc': c.corto }]}>{c.enlace}</span>{c.corto && <span class="solo-cel">{c.corto}</span>}<Icono n="flecha" /></a>
     ) : (
-      <a class="boton contorno suave" href={c.href}>{c.enlace}<span class="flecha"><Icono n="flecha" /></span></a>
+      <a class="boton contorno suave" href={c.href}><span class:list={[{ 'solo-pc': c.corto }]}>{c.enlace}</span>{c.corto && <span class="solo-cel">{c.corto}</span>}<span class="flecha"><Icono n="flecha" /></span></a>
       <a class="enlace" href={waArt(art)} target="_blank" rel="noopener"><Icono n="wa" />Escribir por WhatsApp</a>
     )}
   </div>

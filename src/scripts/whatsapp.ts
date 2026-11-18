@@ -62,8 +62,8 @@ export function renglonesFiesta(f: Fiesta = fie, conMotivo = true): string[] {
 export const conRenglones = (frase: string, renglones: string[]) => (renglones.length ? frase.replace(/[\s.]+$/, '') + (/[?!]$/.test(frase.trim()) ? '' : '.') + '\n' + renglones.join('\n') : frase);
 /** El mensaje completo de un enlace a partir de su frase. */
 export function mensaje(frase: string): string {
-  if (/palapa/i.test(frase)) return conRenglones(frase, renglonesFiesta(fie, /cotizar (una fiesta|una reunión|la palapa)/i.test(frase)));   // si la frase ya dice qué se celebra, el motivo no se repite
-  if (/reservar|cotizar/i.test(frase)) return conRenglones(frase, renglonesEstancia());
+  if (/palapa/i.test(frase)) return conRenglones(frase, renglonesFiesta(fie, /cotizar (una fiesta|una reunión|una fecha|la palapa)/i.test(frase)));   // si la frase ya dice qué se celebra, el motivo no se repite
+  if (/reservar|cotizar|descuento/i.test(frase)) return conRenglones(frase, renglonesEstancia());
   return frase;
 }
 export const enlace = (numero: string, texto: string) => 'https://wa.me/' + numero + '?text=' + encodeURIComponent(texto);

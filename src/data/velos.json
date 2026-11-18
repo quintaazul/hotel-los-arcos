@@ -8,7 +8,7 @@
   "la|alberca-palapa-arcos-atardecer-hotel-los-arcos-inn.jpg|": {
     "t": 0.54,
     "a": 0.38,
-    "tm": 0.48,
+    "tm": 0.6,
     "am": 0.58
   },
   "la|cocinando-en-la-estufa-del-departamento-hotel-los-arcos-inn.jpg|": {
@@ -38,7 +38,7 @@
   "la|departamento-sala-vista-al-jardin-hotel-los-arcos-inn.jpg|departamento-sala-vista-al-jardin-cabecera-hotel-los-arcos-inn.jpg": {
     "t": 0.46,
     "a": 0.42,
-    "tm": 0.6,
+    "tm": 0.64,
     "am": 0.46
   },
   "la|fachada-arcos-alberca-reflejo-atardecer-hotel-los-arcos-inn.jpg|fachada-arcos-alberca-reflejo-atardecer-horizontal-hotel-los-arcos-inn.jpg": {
@@ -54,10 +54,10 @@
     "am": 0.54
   },
   "la|jardin-alberca-entre-palmas-hotel-los-arcos-inn.jpg|jardin-alberca-entre-palmas-cabecera-hotel-los-arcos-inn.jpg": {
-    "t": 0.46,
-    "a": 0.34,
-    "tm": 0.64,
-    "am": 0.46
+    "t": 0.34,
+    "a": 0.38,
+    "tm": 0.48,
+    "am": 0.5
   },
   "la|palapa-arco-asador-mesa-atardecer-hotel-los-arcos-inn.jpg|": {
     "t": 0.42,
@@ -132,9 +132,9 @@
     "am": 0.54
   },
   "qa|palapa-barra-bancos-alberca-al-fondo-hotel-quinta-azul.jpg|palapa-barra-bancos-alberca-al-fondo-cabecera-hotel-quinta-azul.jpg": {
-    "t": 0.5,
+    "t": 0.54,
     "a": 0.42,
-    "tm": 0.6,
+    "tm": 0.68,
     "am": 0.54
   },
   "qa|palapa-barra-bancos-luz-de-tarde-hotel-quinta-azul.jpg|": {
@@ -146,7 +146,7 @@
   "qa|sierra-camino-a-xenpal-cerca-hotel-quinta-azul.jpg|sierra-camino-a-xenpal-cerca-cabecera-hotel-quinta-azul.jpg": {
     "t": 0.5,
     "a": 0.42,
-    "tm": 0.4,
+    "tm": 0.44,
     "am": 0.38
   },
   "qa|sierra-canon-camino-a-xenpal-cerca-hotel-quinta-azul.jpg|": {

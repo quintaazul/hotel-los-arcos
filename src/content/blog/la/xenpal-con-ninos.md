@@ -12,7 +12,7 @@ foto: "xenpal-llamas-atardecer-cerca-hotel-los-arcos-inn.jpg"
 fotoAlt: "Llamas en Xenpal, al pie de la sierra de García, al caer la tarde"
 video: "xenpal"
 publicado: 2026-11-09
-actualizado: 2026-11-18
+actualizado: 2026-11-17
 lectura: 3
 vende: habitaciones
 verificado: 2026-11-11

@@ -36,7 +36,7 @@ const schema = seRenta ? [{ '@context': 'https://schema.org', '@type': 'EventVen
   <Palapa pagina />
   <Puntos />
   {t.alberca && (
-    <section class="seccion" aria-labelledby="t-alberca-palapa">
+    <section class="seccion sin-arriba" aria-labelledby="t-alberca-palapa">
       <div class="marco">
         <div class="habs-cab">
           <Titulo lineas={[t.alberca.l]} ovalo={t.alberca.o} id="t-alberca-palapa" marca />
@@ -90,7 +90,8 @@ const schema = seRenta ? [{ '@context': 'https://schema.org', '@type': 'EventVen
     </div>
   </section>
   )}
-  <section class="seccion invitados" aria-labelledby="t-invitados">
+  {/* Sin la cotización (Los Arcos) esta sección sigue a otra del mismo fondo: un solo aire entre las dos */}
+  <section class:list={['seccion invitados', { 'sin-arriba': !seRenta }]} aria-labelledby="t-invitados">
     <div class="marco">
       <div class="habs-cab">
         <Titulo lineas={[t.invitados.l]} ovalo={t.invitados.o} id="t-invitados" marca />

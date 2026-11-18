@@ -8,7 +8,7 @@ const palapa = qa ? 'palapa con asador' : 'palapa techada';
 const apartados: [string, string][] = [['reservaciones', 'Reservaciones y anticipo'], ['cancelaciones', 'Cancelaciones'], ['horarios', 'Entrada y salida'], ['registro', 'Registro'], ['pagos', 'Pagos y factura'], ['alberca', 'Alberca'], ['palapa', 'La ' + palapa], ['casa', 'Reglas de la casa'], ['cambios', 'Cambios']];
 ---
 <Legal pagina="politicas" ruta="/politicas" nombre="Políticas de reservación" actualizado="17 de noviembre de 2026" apartados={apartados}>
-  <p slot="entrada" class="legal-entrada">Estas son las reglas con las que se reserva y se disfruta el {H.nombre}. Si algo no queda claro, pregúntanos antes de apartar: WhatsApp y teléfono {H.tel}, de 7:00 a 23:00.</p>
+  <p slot="entrada" class="legal-entrada">Estas son las reglas con las que se reserva y se disfruta el {H.nombre}. Si algo no queda claro, pregúntanos antes de apartar: WhatsApp y teléfono {H.tel}, de 7 AM a 11 PM.</p>
   <h2 id="reservaciones">Reservaciones y anticipo</h2>
   <p>Puedes reservar por WhatsApp, por teléfono o con el <a href="/contacto">formulario de contacto</a>. La reservación queda apartada cuando el hotel te confirma disponibilidad y recibe un anticipo del 50 % del total, que no es reembolsable. El resto se paga al llegar.</p>
   <p>Los precios publicados en el sitio son «desde», por noche, y no incluyen IVA. El total depende de cuántas personas se quedan. {qa ? 'Hay descuento desde el tercer día de estancia y para grupos de 3 habitaciones o más.' : 'Hay mejor precio al reservar con anticipación y tarifa de grupo a partir de 3 habitaciones.'}</p>
@@ -19,13 +19,13 @@ const apartados: [string, string][] = [['reservaciones', 'Reservaciones y antici
   <h2 id="registro">Registro</h2>
   <p>Para registrarse hay que ser mayor de 18 años y presentar una identificación.</p>
   <h2 id="pagos">Pagos y factura</h2>
-  <p>{qa ? 'Facturamos tu estancia: pídelo al reservar o al llegar y ten a la mano tus datos fiscales.' : 'Aceptamos efectivo y tarjeta, y facturamos tu estancia: pídelo al reservar o al llegar y ten a la mano tus datos fiscales.'}</p>
+  <p>{qa ? 'Facturamos tu estancia: pídelo al reservar o al llegar y ten a la mano tus datos fiscales.' : 'Aceptamos efectivo y tarjeta, y facturamos tu estancia: pídela al reservar o al llegar y ten a la mano tus datos fiscales.'}</p>
   <h2 id="alberca">Alberca</h2>
   <p>{qa ? 'La alberca y el chapoteadero abren todos los días hasta las 10 PM y están incluidos en tu estancia.' : 'La alberca y el chapoteadero abren todos los días hasta las 10 PM y están incluidos en tu hospedaje.'}</p>
   <h2 id="palapa">La {palapa}</h2>
   {qa
     ? <p>La {palapa} recibe hasta 60 personas y se aparta por fecha. El precio, el horario y la forma de apartarla se confirman al cotizar, según el día y el número de personas. Más detalles en la página de la <a href="/celebraciones">palapa con alberca</a>.</p>
-    : <p>La {palapa} es solo para los huéspedes del hotel; no se rentan eventos. Más detalles en la página de la <a href="/palapa">palapa techada para huéspedes</a>.</p>}
+    : <p>La {palapa} es solo para los huéspedes del hotel; no se renta para eventos. Más detalles en la página de la <a href="/palapa">palapa techada para huéspedes</a>.</p>}
   <h2 id="casa">Reglas de la casa</h2>
   <ul>
     <li>No se admiten mascotas ni visitas.</li>

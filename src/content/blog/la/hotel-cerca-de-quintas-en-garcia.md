@@ -7,11 +7,11 @@ tituloSeo: "Hotel cerca de quintas en García | Hotel Los Arcos Inn"
 descripcion: "¿Vas a una boda o unos XV años en una quinta de García? Dónde dormir sin manejar de noche a Monterrey, y cómo reservar para todos los invitados."
 tema: reuniones-en-familia
 busqueda: "hotel cerca de quintas en García"
-resumen: "Las quintas de García casi nunca tienen cuartos para los invitados. En Hotel Los Arcos Inn, en el centro del pueblo, se pueden quedar hasta 42 personas entre habitaciones de una a seis personas y dos departamentos con cocina. Se reserva por WhatsApp con la fecha de la fiesta."
+resumen: "Las quintas de García casi nunca tienen cuartos para los invitados. En el Hotel Los Arcos Inn, en el centro del pueblo, se pueden quedar hasta 42 personas entre habitaciones de una a seis personas y dos departamentos con cocina. Se reserva por WhatsApp con la fecha de la fiesta."
 foto: "alberca-palapa-arcos-atardecer-hotel-los-arcos-inn.jpg"
 fotoAlt: "El jardín del Hotel Los Arcos Inn al atardecer, con la alberca, los arcos y la palapa techada al fondo"
-publicado: 2026-11-18
-actualizado: 2026-11-18
+publicado: 2026-11-17
+actualizado: 2026-11-17
 lectura: 3
 vende: habitaciones
 datos:

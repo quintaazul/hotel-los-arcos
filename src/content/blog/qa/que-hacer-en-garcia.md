@@ -11,7 +11,7 @@ resumen: "En García puedes recorrer a pie el centro histórico y el Museo El Oj
 foto: "sierra-de-garcia-panoramica-cerca-hotel-quinta-azul.jpg"
 fotoAlt: "La sierra de García, Nuevo León, vista desde el camino"
 publicado: 2026-11-11
-actualizado: 2026-11-18
+actualizado: 2026-11-17
 lectura: 5
 vende: ubicacion
 esencial: true
@@ -50,7 +50,7 @@ El hotel está en el centro, así que esto se hace caminando:
 
 Desde la plaza, el Camino a Grutas de García sube 9.5 km hasta la entrada de las grutas: unos 15 minutos en auto. Las grutas cierran los lunes; conviene subir temprano y revisar el horario antes de salir.
 
-Sobre ese mismo camino, en el kilómetro 18, está Xenpal, un centro de conservación de fauna con zoológico y recorrido tipo safari. Queda a unos 11 minutos de la plaza.
+Sobre ese mismo camino, en el kilómetro 18 de la carretera, está Xenpal, un centro de conservación de fauna con zoológico y recorrido tipo safari. Queda a unos 11 minutos de la plaza.
 
 ## ¿Y si prefiero caminar en el cerro?
 

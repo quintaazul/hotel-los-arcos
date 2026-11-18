@@ -18,6 +18,8 @@ const todos = await articulos();
 const temas = deTema ? [deTema].flat() : [], tema0 = temas[0];
 const elegidos = [...todos.filter((a) => !temas.length || temas.includes(a.data.tema)), ...(estricto ? [] : todos.filter((a) => temas.length && !temas.includes(a.data.tema)))].slice(0, cuantos);
 const id = 't-blog-' + forma;
+// «Más de fiestas en la palapa», pero «Más de Grutas y alrededores»: los nombres propios conservan su mayúscula
+const enFrase = (s: string) => (/^(Grutas|García|Monterrey|Xenpal)/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
 ---
 {elegidos.length > 0 && (forma === 'abanico' ? (
   <section class:list={['planes-corto seccion', clase]} aria-labelledby={id}>
@@ -48,7 +50,7 @@ const id = 't-blog-' + forma;
         <Titulo lineas={lineas} ovalo={ovalo} id={id} marca />
         <div class="lado">
           {texto && <p class="texto" data-aparece>{texto}</p>}
-          <div data-aparece><a class="enlace" href={tema0 ? urlTema(tema0) : '/blog'}>{tema0 ? 'Más de ' + tema(tema0).nombre.toLowerCase() : 'Ver todos los artículos'}<Icono n="flecha" /></a></div>
+          <div data-aparece><a class="enlace" href={tema0 ? urlTema(tema0) : '/blog'}>{tema0 ? 'Más de ' + enFrase(tema(tema0).nombre) : 'Ver todos los artículos'}<Icono n="flecha" /></a></div>
         </div>
       </div>
       <div class:list={['art-grid', 'de-' + elegidos.length]}>{elegidos.map((a, i) => <TarjetaArticulo art={a} orden={i} sizes={elegidos.length <= 2 ? '(min-width: 1025px) 44vw, (min-width: 641px) 46vw, 100vw' : undefined} />)}</div>

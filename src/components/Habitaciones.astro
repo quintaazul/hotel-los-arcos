@@ -10,7 +10,7 @@ const { pagina = false } = Astro.props;
 const habs = H.habs;
 const ops = H.id === 'qa' ? [1, 2, 3, 4] : [1, 2, 3, 4, 6, 8];
 const pr = (id: string) => habs.find((x) => x.id === id)?.precio ?? 0;
-const iva = (n: number) => 'desde ' + dinero(n) + ' + IVA';
+const iva = (n: number) => 'desde ' + dinero(n) + ' + IVA';
 // Qué conviene según cuántos son: las columnas que se marcan y la frase que lo explica. Todos los precios son «desde»:
 // el total depende de cuántos se quedan (documento de cambios del 17 de noviembre de 2026).
 const SUG: Record<number, { ids: string[]; texto: string }> = H.id === 'qa' ? {
@@ -30,7 +30,7 @@ const INICIAL = 2;
 const filas: [string, (x: (typeof habs)[number]) => string][] = [
   ['Capacidad', (x) => x.para ?? '<span class="no">Por confirmar</span>'],
   ['Camas', (x) => x.camas ?? '<span class="no">Por confirmar</span>'],
-  ['Precio por noche', (x) => x.precio ? 'Desde <b class="num">' + dinero(x.precio) + '</b> + IVA' : '<span class="no">Por confirmar</span>'],
+  ['Precio por noche', (x) => x.precio ? 'Desde <b class="num">' + dinero(x.precio) + '</b>&nbsp;+&nbsp;IVA' : '<span class="no">Por confirmar</span>'],
   ['Aire acondicionado', () => 'ok'], ['Pantalla y WiFi', () => 'ok'], ['Frigobar y microondas', () => 'ok'], ['Baño privado', () => 'ok'],
   ...(H.id === 'la' ? [['Cocina y sala', (x: (typeof habs)[number]) => (x.id === 'depa' ? 'ok' : '<span class="no">—</span>')] as [string, (x: (typeof habs)[number]) => string]] : [])
 ];
@@ -43,7 +43,7 @@ const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(
       <Titulo lineas={[pagina ? T.habitaciones.lista.l : T.inicio.habs.l]} ovalo={pagina ? T.habitaciones.lista.o : T.inicio.habs.o} id="t-habs" marca />
       <div class="lado">
         <p class="texto" data-aparece>{pagina ? T.habitaciones.lista.texto : T.inicio.habs.texto}</p>
-        <div data-aparece><a class="enlace" href="#comparar">Compáralas<Icono n="flecha" /></a></div>
+        <div data-aparece><a class="enlace" href="#comparar">{habs.length > 1 ? 'Compáralas' : 'Qué incluye'}<Icono n="flecha" /></a></div>
       </div>
     </div>
 
@@ -55,12 +55,12 @@ const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(
             {x.fotos.length > 1 && <button type="button" class="ver-fotos" data-visor-abre={'hab-' + x.id} aria-label={'Ver ' + x.fotos.length + ' fotos de la ' + x.nombre.toLowerCase()}><Icono n="fotos" />Ver {x.fotos.length} fotos</button>}
           </div>
         ))}
-        <span class="cuenta" data-cuenta aria-hidden="true">1 de {habs.length}</span>
+        {habs.length > 1 && <span class="cuenta" data-cuenta aria-hidden="true">1 de {habs.length}</span>}
       </div>
       <div class="habs-lista">
         {habs.map((x, i) => (
           <article class="hab" data-hab={i} aria-labelledby={'t-hab-' + x.id}>
-            <span class="num-hab">{i + 1} de {habs.length}</span>
+            {habs.length > 1 && <span class="num-hab">{i + 1} de {habs.length}</span>}
             <h3 id={'t-hab-' + x.id}>{x.nombre}</h3>
             <p class="meta"><span><Icono n="persona" />{x.para ?? 'Capacidad por confirmar'}</span>{x.camas && <span><Icono n="cama" />{x.camas}</span>}</p>
             <p class="texto">{x.texto}</p>
@@ -94,7 +94,7 @@ const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(
       </div>
       {habs.length > 2 && <p class="tabla-pista" aria-hidden="true">Desliza la tabla para ver las {habs.length} opciones<Icono n="flecha" /></p>}
       <div class="tabla-caja" data-aparece tabindex="0" role="region" aria-label="Comparación de habitaciones">
-        <table class="tabla" style={`--cols:${habs.length}`}>
+        <table class:list={['tabla', { una: habs.length === 1 }]} style={`--cols:${habs.length}`}>
           <caption class="sr">Comparación de habitaciones del {H.nombre}</caption>
           <thead><tr><th scope="col"><span class="sr">Característica</span></th>{habs.map((x) => <th scope="col" data-col={x.id} class={SUG[INICIAL].ids.includes(x.id) ? 'sugerida' : undefined}>{x.corto}</th>)}</tr></thead>
           <tbody>
@@ -137,7 +137,7 @@ const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(
         <p class="cajon-sub" role="heading" aria-level="3">Incluye</p>
         <ul class="incluye lista">{H.incluye.map(([ic, t]) => <li><Icono n={ic} />{t}</li>)}</ul>
         <p class="cajon-sub" role="heading" aria-level="3">Antes de reservar</p>
-        <dl class="reglas-mini"><div><dt>Entrada</dt><dd>2:00 PM</dd></div><div><dt>Salida</dt><dd>11:00 AM</dd></div><div><dt>Anticipo</dt><dd>50%</dd></div><div><dt>Mascotas</dt><dd>No</dd></div></dl>
+        <dl class="reglas-mini"><div><dt>Entrada</dt><dd>2:00 PM</dd></div><div><dt>Salida</dt><dd>11:00 AM</dd></div><div><dt>Anticipo</dt><dd>50&nbsp;%</dd></div><div><dt>Mascotas</dt><dd>No</dd></div></dl>
       </div>
       <div class="cajon-pie"><div set:html={precio(x.precio)} /><a class="boton" href={waLink(msgHab(x.nombre))} target="_blank" rel="noopener"><Icono n="wa" />Reservar</a></div>
     </template>

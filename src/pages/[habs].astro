@@ -17,7 +17,7 @@ import { H, waLink, dinero } from '../data/hoteles';
 import { T, SEO } from '../data/textos';
 export function getStaticPaths() { return [{ params: { habs: __HOTEL__ === 'qa' ? 'hospedaje' : 'habitaciones' } }]; }
 // Reglas de la casa: las mismas en los dos hoteles (documento de cambios del 17 de noviembre de 2026)
-const reglas: [string, string, string][] = [['Entrada', '2:00 PM', ''], ['Salida', '11:00 AM', ''], ['Anticipo', '50%', 'No es reembolsable.'], ['Edad', '18+', 'Con identificación.'], ['Mascotas y visitas', 'No', ''], ['Fumar', 'No', 'En las habitaciones.']];
+const reglas: [string, string, string][] = [['Entrada', '2:00 PM', ''], ['Salida', '11:00 AM', ''], ['Anticipo', '50\u00A0%', 'No es reembolsable.'], ['Edad', '18+', 'Con identificación.'], ['Mascotas y visitas', 'No', ''], ['Fumar', 'No', 'En las habitaciones.']];
 const pie = (f: string) => (H.galeria.find(([x]) => x === f) || ['', ''])[1];
 const resto = H.galeria.filter(([f]) => !H.mosaico.includes(f));
 const hora = (x: string) => x.split(' ');
@@ -76,14 +76,14 @@ const t = T.habitaciones, seo = SEO.habitaciones;
         <p class="texto" data-aparece>{t.grupos.texto}</p>
         <ul class="datos lista">{H.grupos.datos.map(([ic, x], i) => <li data-aparece style={`--orden:${i}`}><Icono n={ic} />{x}</li>)}</ul>
         <div class="botones" data-aparece>
-          {H.id === 'la' && <a class="boton" href="/departamentos">Departamentos con cocina para 4 a 8 personas<span class="flecha"><Icono n="flecha" /></span></a>}
+          {H.id === 'la' && <a class="boton" href="/departamentos"><span class="solo-pc">Departamentos con cocina para 4 a 8 personas</span><span class="solo-cel">Departamentos con cocina</span><span class="flecha"><Icono n="flecha" /></span></a>}
           <a class:list={['boton', { 'contorno suave': H.id === 'la' }]} href={waLink(H.id === 'qa' ? 'Hola, quiero preguntar por el descuento en el ' + H.nombre : 'Hola, quiero cotizar habitaciones para un grupo en el ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />{t.grupos.boton}</a>
         </div>
       </div>
     </div>
     <div class="sello" data-aparece aria-hidden="true"><b>{H.grupos.sello[0]}</b><span>{H.grupos.sello[1]}</span></div>
   </section>
-  <BlogCorto forma="lista" cuantos={2} lineas={[t.blog.l]} ovalo={t.blog.o} texto={t.blog.texto} />
+  <BlogCorto forma="lista" cuantos={2} deTema={t.blog.tema} lineas={[t.blog.l]} ovalo={t.blog.o} texto={t.blog.texto} />
   <Enlaces enlaces={t.enlaces} />
   <Preguntas de="habitaciones" />
 </Base>

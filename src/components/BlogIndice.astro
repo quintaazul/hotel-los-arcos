@@ -100,7 +100,7 @@ const fotoTema = t && lista[0] ? lista[0].data.foto : undefined;   // cada tema 
         <div><h2 id="t-blog-cierre">{c.titulo}</h2><p>{c.texto}</p></div>
         <div class="botones">
           <a class="boton" href={waLink('Hola, vengo del blog y quiero reservar en el ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />Reservar por WhatsApp</a>
-          <a class="boton contorno suave" href={c.href}>{c.enlace}<span class="flecha"><Icono n="flecha" /></span></a>
+          <a class="boton contorno suave" href={c.href}><span class:list={[{ 'solo-pc': c.corto }]}>{c.enlace}</span>{c.corto && <span class="solo-cel">{c.corto}</span>}<span class="flecha"><Icono n="flecha" /></span></a>
         </div>
       </div>
     </div>

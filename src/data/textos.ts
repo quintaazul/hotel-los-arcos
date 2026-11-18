@@ -18,7 +18,9 @@ export const precioDe = (id: string) => dinero(H.habs.find((x) => x.id === id)?.
 /** El precio más bajo del hotel, para los «desde $…» */
 export const DESDE = dinero(Math.min(...H.habs.map((x) => x.precio ?? Infinity)));
 /** «$900 + IVA»: así se dice siempre un precio en el sitio */
-export const DESDE_IVA = DESDE + ' + IVA';
+/** El teléfono escrito dentro de un texto: con espacios duros, para que no se parta entre renglones */
+const TEL_TXT = H.tel.replace(/ /g, '\u00A0');
+export const DESDE_IVA = DESDE + '\u00A0+\u00A0IVA';
 
 export type Seo = { title: string; description: string; h1: string };
 type Cab = { l: string; o: string; texto?: string };
@@ -45,7 +47,7 @@ const SEO_QA = {
   habitaciones: { title: 'Habitaciones en García, hasta 4 personas | Hotel Quinta Azul', description: 'Habitaciones en García, N.L., para hasta 4 personas: aire acondicionado, frigobar, microondas y agua caliente a toda hora. Desde ' + DESDE_IVA + ' por noche.', h1: 'Habitaciones en García, N.L., para 1 a 4 personas' },
   celebraciones: { title: 'Palapa con alberca en García | Hotel Quinta Azul', description: 'Palapa con asador para hasta 60 personas junto a la alberca en García, N.L. Tus invitados pueden quedarse a dormir en el mismo hotel.', h1: 'Palapa con alberca en García para reuniones de hasta 60 personas' },
   ubicacion: { title: 'Cómo llegar a García desde Monterrey | Hotel Quinta Azul', description: 'Cómo llegar a Hotel Quinta Azul en el centro de García, N.L., desde Monterrey. Qué ver cerca: el templo, el Parián, las huertas y las Grutas.', h1: 'Cómo llegar al Hotel Quinta Azul en el centro de García' },
-  contacto: { title: 'Reserva por WhatsApp en García, N.L. | Hotel Quinta Azul', description: 'Reserva en Hotel Quinta Azul por WhatsApp o al ' + H.tel + ', o envía el formulario. Te respondemos todos los días de 7 AM a 11 PM.', h1: 'Reservaciones en Hotel Quinta Azul' },
+  contacto: { title: 'Reserva por WhatsApp en García, N.L. | Hotel Quinta Azul', description: 'Reserva en Hotel Quinta Azul por WhatsApp o al ' + TEL_TXT + ', o envía el formulario. Te respondemos todos los días de 7 AM a 11 PM.', h1: 'Reservaciones en Hotel Quinta Azul' },
   faq: { title: 'Preguntas frecuentes antes de reservar | Hotel Quinta Azul', description: 'Respuestas sobre reservas, anticipo, habitaciones, alberca, la palapa con asador, reglas y cómo llegar al Hotel Quinta Azul en García, N.L.', h1: 'Preguntas frecuentes del Hotel Quinta Azul' },
   aviso: { title: 'Aviso de privacidad | Hotel Quinta Azul', description: 'Aviso de privacidad del Hotel Quinta Azul: qué datos pedimos al reservar, para qué los usamos, con quién se comparten y cómo ejercer tus derechos ARCO.', h1: 'Aviso de privacidad' },
   politicas: { title: 'Políticas de reservación | Hotel Quinta Azul', description: 'Políticas de reservación del Hotel Quinta Azul, en García, N.L.: anticipo, cancelaciones, horarios de entrada y salida, alberca, palapa y reglas.', h1: 'Políticas de reservación y estancia' },
@@ -59,7 +61,7 @@ const SEO_LA = {
   empresas: { title: 'Hospedaje para trabajadores en García | Hotel Los Arcos Inn', description: 'Hospedaje con factura para equipos de trabajo en García, N.L.: habitaciones por noche y departamentos para estancias largas, con estacionamiento y WiFi.', h1: 'Hospedaje para trabajadores y empresas en García' },
   celebraciones: { title: 'Palapa con asador para huéspedes | Hotel Los Arcos Inn', description: 'Palapa techada con asador, parrilla de gas, televisión y mesa grande, solo para los huéspedes de Hotel Los Arcos Inn en García, N.L.', h1: 'Palapa techada con asador para los huéspedes de Los Arcos Inn' },
   ubicacion: { title: 'Ubicación en el centro de García | Hotel Los Arcos Inn', description: 'Hotel Los Arcos Inn está en Mariano Escobedo 105-A, centro de García, N.L.: a 3 minutos de la plaza, ' + D.xenpal + ' de Xenpal y ' + D.grutas + ' de las Grutas.', h1: 'Cómo llegar al Hotel Los Arcos Inn en García' },
-  contacto: { title: 'Reserva por WhatsApp en García | Hotel Los Arcos Inn', description: 'Reserva en Hotel Los Arcos Inn por WhatsApp o al ' + H.tel + ', o envía el formulario. Te respondemos todos los días de 7 AM a 11 PM.', h1: 'Reservaciones en Hotel Los Arcos Inn' },
+  contacto: { title: 'Reserva por WhatsApp en García | Hotel Los Arcos Inn', description: 'Reserva en Hotel Los Arcos Inn por WhatsApp o al ' + TEL_TXT + ', o envía el formulario. Te respondemos todos los días de 7 AM a 11 PM.', h1: 'Reservaciones en Hotel Los Arcos Inn' },
   faq: { title: 'Preguntas frecuentes antes de reservar | Hotel Los Arcos Inn', description: 'Respuestas sobre reservas, anticipo, habitaciones, departamentos, alberca, palapa techada, reglas y cómo llegar a Hotel Los Arcos Inn en García.', h1: 'Preguntas frecuentes de Hotel Los Arcos Inn' },
   aviso: { title: 'Aviso de privacidad | Hotel Los Arcos Inn', description: 'Aviso de privacidad del Hotel Los Arcos Inn: qué datos pedimos al reservar, para qué los usamos, con quién se comparten y cómo ejercer tus derechos ARCO.', h1: 'Aviso de privacidad' },
   politicas: { title: 'Políticas de reservación | Hotel Los Arcos Inn', description: 'Políticas de reservación del Hotel Los Arcos Inn, en García, N.L.: anticipo, cancelaciones, horarios, formas de pago, alberca, palapa techada y reglas.', h1: 'Políticas de reservación y estancia' },
@@ -72,10 +74,10 @@ export const SEO: Record<string, Seo> = esQA ? SEO_QA : SEO_LA;
 const QA = {
   palapa: 'palapa con asador',
   inicio: {
-    cinta: ['Alberca hasta las 10 PM', 'Palapa con asador para 60 personas', 'A dos cuadras de la plaza', 'A ' + D.monterrey + ' minutos de Monterrey', 'Reserva directo por WhatsApp'],
+    cinta: ['Alberca hasta las 10\u00A0PM', 'Palapa con asador para 60 personas', 'A dos cuadras de la plaza', 'A ' + D.monterrey + ' minutos de Monterrey', 'Reserva directo por WhatsApp'],
     habs: { l: 'Habitaciones con vista a la sierra,', o: 'hasta 4 personas', texto: 'Una habitación para descansar de verdad: aire acondicionado, televisión, frigobar y microondas para lo que traigas del camino, y un baño con agua caliente que los huéspedes mencionan una y otra vez. Caben hasta cuatro, así que el viaje en pareja, con los niños o con los amigos cabe en el mismo cuarto. Desde ' + DESDE_IVA + ' por noche, según cuántos se quedan.' },
     comparar: { l: '¿Cuántos', o: 'se quedan?', texto: 'Caben hasta cuatro en una habitación. Dinos cuántos son y te damos el total exacto.' },
-    directo: { t: 'Por qué reservar directo', razones: [['mano', 'Tratas con el hotel', 'Sin plataformas de por medio ni sus comisiones.'], ['wa', 'Respuesta por WhatsApp', 'Todos los días, de 7 AM a 11 PM.'], ['factura', 'Facturamos sin problema', 'Pide tu factura al reservar o al llegar.']] as [string, string, string][] },
+    directo: { t: 'Por qué reservar directo', razones: [['mano', 'Tratas con el hotel', 'Sin plataformas de por medio ni sus comisiones.'], ['wa', 'Respuesta por WhatsApp', 'Todos los días, de 7\u00A0AM a 11\u00A0PM.'], ['factura', 'Facturamos sin problema', 'Pide tu factura al reservar o al llegar.']] as [string, string, string][] },
     incluido: { l: 'Alberca con chapoteadero, abierta', o: 'hasta las 10 de la noche', texto: 'Muchos de los mejores ratos de la estancia pasan aquí. Los niños en el chapoteadero, los grandes en el agua después de las Grutas y la plática que sigue en la orilla con la sierra de fondo. Como la alberca está abierta hasta las diez, todavía cabe el último chapuzón después de cenar.' },
     resenas: { l: H.rating + ' en Google', o: 'con ' + H.resenas + ' reseñas', texto: 'Lo que más se repite en las reseñas no es un adjetivo de folleto: es que aquí se descansa. Limpio, tranquilo, seguro, «como en casa». Muchos huéspedes ya volvieron más de una vez, y eso dice más que cualquier promesa.' },
     blog: { mini: 'Del blog', l: 'Planes', o: 'cerca del hotel', texto: 'Planes a pocos minutos del hotel, ideas para tu reunión en la palapa y escapadas de fin de semana.' },
@@ -92,7 +94,7 @@ const QA = {
     portada: { l: 'Habitaciones', o: 'desde ' + DESDE_IVA, texto: 'Un viaje a García puede ser muchas cosas. Todos terminan igual: en una habitación tranquila donde se duerme bien.' },
     lista: { l: 'Precio según', o: 'cuántos se quedan', texto: 'Las nueve habitaciones son iguales, así que no tienes que escoger tipo: solo dinos cuántos son. Para una persona, desde ' + DESDE_IVA + ' por noche, y el precio cambia con cada persona, hasta cuatro. Escríbenos y te damos el total exacto.' },
     galeria: { l: 'Míralas', o: 'por dentro', texto: 'Fotos tomadas en el hotel. Toca cualquiera para verla en grande.' },
-    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2 PM, salida a las 11 AM. Atendemos de 7 de la mañana a 11 de la noche, todos los días, y se cuida el ruido para que todos duerman.', incluye: 'Qué trae cada habitación', notiene: 'Lo que no tenemos: desayuno, restaurante ni lavandería. A cambio, el centro de García está a dos cuadras.' },
+    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2\u00A0PM, salida a las 11\u00A0AM. Atendemos de 7 de la mañana a 11 de la noche, todos los días, y se cuida el ruido para que todos duerman.', incluye: 'Qué trae cada habitación', notiene: 'Lo que no tenemos: desayuno, restaurante ni lavandería. A cambio, el centro de García está a dos cuadras.' },
     grupos: { l: 'Descuento desde', o: 'el tercer día', texto: 'Si te quedas tres noches o más, o vienen en grupo de tres habitaciones o más, hay descuento. Escríbenos con tus fechas y te decimos cuánto. Pensado para quien viene a trabajar, a visitar a la familia o a conocer García sin prisa.', boton: 'Preguntar por el descuento' },
     blog: { l: 'Para planear', o: 'tu visita', texto: 'Dos lecturas cortas antes de venir.' },
     enlaces: [['Palapa con alberca en García', rutaPalapa], ['Todas las preguntas frecuentes', '/preguntas-frecuentes'], ['Cómo llegar al hotel', '/ubicacion']] as Enlace[],
@@ -100,7 +102,7 @@ const QA = {
   celebraciones: {
     portada: { l: 'Palapa con', o: 'alberca', texto: 'En Nuevo León lo importante se celebra alrededor del asador: la carne asada es tradición regia y desde 2023 es patrimonio cultural del estado.' },
     cotizarBtn: 'Cotizar mi fecha', verBtn: 'Ver la palapa', tarjeta: 'Se aparta por fecha. Cotízala por WhatsApp.',
-    bloque: { l: 'Qué incluye', o: 'la palapa', texto: 'En la palapa de Hotel Quinta Azul caben el cumpleaños de la abuela, la posada de la oficina o la reunión de primos que no se ven desde hace años: la familia completa, la alberca a un lado y nadie con prisa por irse. Ustedes traen la comida; lo demás ya está aquí.' },
+    bloque: { l: 'Qué incluye', o: 'la palapa', texto: 'En la palapa del Hotel Quinta Azul caben el cumpleaños de la abuela, la posada de la oficina o la reunión de primos que no se ven desde hace años: la familia completa, la alberca a un lado y nadie con prisa por irse. Ustedes traen la comida; lo demás ya está aquí.' },
     puntos: { l: 'La palapa,', o: 'punto por punto' },
     alberca: { l: 'Alberca y chapoteadero', o: 'para los niños', texto: 'Mientras los grandes están en el asador, los niños están en el agua, a la vista de todos: la alberca y el chapoteadero quedan junto a la palapa.' } as Cab | null,
     tiposCab: { l: 'Qué puedes', o: 'celebrar aquí', texto: 'Elige tu reunión y te abrimos WhatsApp con el mensaje listo para cotizar.' },
@@ -116,19 +118,19 @@ const QA = {
   },
   ubicacion: {
     portada: { l: 'A ' + D.monterrey + ' minutos', o: 'de Monterrey', texto: 'Bernardo Reyes esquina con Garza Ayala, en el centro de García, a dos cuadras de la plaza.' },
-    intro: 'García está a unos 38 km del centro de Monterrey y a 25 de Cumbres, pero llegar se siente como cambiar de ritmo: calles de pueblo, huertas de granada y un centro con más de cuatro siglos de historia que se recorre a pie. Hotel Quinta Azul está justo ahí, y de aquí salen los planes del día.',
-    llegar: { l: 'Desde Monterrey por la avenida Lincoln', o: 'o la carretera a García', texto: 'Desde Cumbres son unos 25 km por la avenida Abraham Lincoln. Desde el centro de Monterrey, unos 38 km por la carretera a García (NL 65). En hora pico el camino puede tomar cerca de una hora; fuera de ella, bastante menos. Al reservar te mandamos la ubicación exacta por WhatsApp.' },
+    intro: 'García está a unos 38\u00A0km del centro de Monterrey y a 25 de Cumbres, pero llegar se siente como cambiar de ritmo: calles de pueblo, huertas de granada y un centro con más de cuatro siglos de historia que se recorre a pie. Hotel Quinta Azul está justo ahí, y de aquí salen los planes del día.',
+    llegar: { l: 'Desde Monterrey por la avenida Lincoln', o: 'o la carretera a García', texto: 'Desde Cumbres son unos 25\u00A0km por la avenida Abraham Lincoln. Desde el centro de Monterrey, unos 38\u00A0km por la carretera a García (NL 65). En hora pico el camino puede tomar cerca de una hora; fuera de ella, bastante menos. Al reservar te mandamos la ubicación exacta por WhatsApp.' },
     extras: [] as { titulo: string; texto: string }[],
     secciones: [
       { id: 'plaza', l: 'A dos cuadras de', o: 'la parroquia y la plaza', texto: 'García empezó en 1583 como Pesquería Grande, un punto del camino entre Saltillo y los Ojos de Santa Lucía, donde nacería Monterrey. En 1851 se convirtió en villa y tomó el nombre de Joaquín García, dos veces gobernador del estado. Lo que queda de esa historia está a unos pasos del hotel:',
-        lista: [['Templo de San Juan Bautista', 'frente a la plaza: reconstruido después del incendio de 1883, con su reloj de 1911.'], ['El Antiguo Parián', 'mercado de adobe que en 1915 fue cuartel carrancista y hoy es espacio cultural.'], ['Las huertas', 'alrededor de cien, con granada, aguacate, nuez e higo. La granada es la fruta del pueblo.']],
+        lista: [['Templo de San Juan Bautista', 'frente a la plaza, reconstruido después del incendio de 1883, con su reloj de 1911.'], ['El Antiguo Parián', 'mercado de adobe que en 1915 fue cuartel carrancista y hoy es espacio cultural.'], ['Las huertas', 'alrededor de cien, con granada, aguacate, nuez e higo. La granada es la fruta del pueblo.']],
         fuente: ['garcia.gob.mx/historia', 'https://garcia.gob.mx/historia'] },
       { id: 'cerca', l: 'Qué hay cerca: Grutas,', o: 'Xenpal y Los Faisanes', texto: 'Un día bien aprovechado empieza temprano en las Grutas de García, a unos ' + D.grutas + ' minutos en carro. Se descubrieron en 1843; se sube en teleférico o por la vereda, y el recorrido dentro de la cueva es de esos que los niños cuentan al regresar. En el mismo camino están Xenpal y Los Faisanes, para ver animales de cerca. En la tarde, de vuelta a la alberca; en la noche, a cenar al centro.' },
       { id: 'comer', l: 'Dónde comer', o: 'en el centro', texto: 'Tres lugares del centro, a pocos minutos a pie:',
         lista: [['Los Primos', 'cocina mexicana que abre temprano, buena para desayunar antes de las Grutas. Lo más pedido es la arrachera.'], ['Casco Antiguo', 'taquería del centro para una comida sencilla.'], ['La Mexicana', 'cocina mexicana que cierra tarde, para cenar después de la alberca.']] },
     ] as SeccionTxt[],
-    ingles: { id: 'in-english', l: 'In', o: 'English', lang: 'en', texto: 'Hotel Quinta Azul is in downtown García, two blocks from the main square, about 38 km (24 miles) from downtown Monterrey and 15 minutes from the García Caves. Nine rooms for up to four guests, a pool open until 10 PM and on-site parking. Check-in 2 PM, check-out 11 AM. Book by WhatsApp: +52 81 2921 8643.' } as SeccionTxt,
-    alLlegar: { l: 'Lo que encuentras', o: 'al llegar', items: [['alberca', 'Alberca abierta hasta las 10 PM, con chapoteadero'], ['fiesta', 'Palapa con asador para hasta 60 personas'], ['auto', 'Estacionamiento dentro del hotel']] as [string, string][] },
+    ingles: { id: 'in-english', l: 'In', o: 'English', lang: 'en', texto: 'Hotel Quinta Azul is in downtown García, two blocks from the main square, about 38\u00A0km (24 miles) from downtown Monterrey and 15 minutes from the García Caves. Nine rooms for up to four guests, a pool open until 10\u00A0PM and on-site parking. Check‑in 2\u00A0PM, check-out 11\u00A0AM. Book by WhatsApp: +52\u00A081\u00A02921\u00A08643.' } as SeccionTxt,
+    alLlegar: { l: 'Lo que encuentras', o: 'al llegar', items: [['alberca', 'Alberca abierta hasta las 10\u00A0PM, con chapoteadero'], ['fiesta', 'Palapa con asador para hasta 60 personas'], ['auto', 'Estacionamiento dentro del hotel']] as [string, string][] },
     blog: { l: 'Planes a', o: 'pocos minutos', texto: 'Guías del blog, con sus distancias desde el hotel.', tema: ['planes-en-garcia', 'escapadas'] },
     enlaces: [['Habitaciones desde ' + DESDE_IVA, '/hospedaje'], ['Qué hacer en García', '/blog/que-hacer-en-garcia'], ['Reserva directo', '/contacto']] as Enlace[],
   },
@@ -147,10 +149,10 @@ const LA: typeof QA = {
     cinta: ['Jardín, alberca y chapoteadero', 'Departamentos con cocina', 'Palapa techada para huéspedes', 'A ' + D.grutas + ' minutos de las Grutas', 'Aparta por WhatsApp'],
     habs: { l: 'Sencillas, triples y', o: 'departamentos con cocina', texto: 'Aquí cabe la familia completa, sin repartirla en tres hoteles. Hay habitaciones sencillas para una o dos personas, triples para tres a seis y dos departamentos con dos recámaras, sala y cocina para hasta ocho. Desde ' + DESDE_IVA + ' por noche; el departamento, desde ' + precioDe('depa') + ' + IVA.' },
     comparar: { l: '¿Cuántos', o: 'viajan?', texto: 'Dinos cuántos son y te señalamos la opción que mejor les queda.' },
-    directo: { t: 'Por qué apartar con el hotel', razones: [['mano', 'Sin intermediarios', 'Apartas con nosotros y no pagas comisiones de plataformas.'], ['tel', 'Te contestamos nosotros', 'Por WhatsApp o por teléfono, de 7 AM a 11 PM.'], ['factura', 'Con factura', 'Dinos al apartar que la necesitas y la preparamos.']] as [string, string, string][] },
+    directo: { t: 'Por qué apartar con el hotel', razones: [['mano', 'Sin intermediarios', 'Apartas con nosotros y no pagas comisiones de plataformas.'], ['tel', 'Te contestamos nosotros', 'Por WhatsApp o por teléfono, de 7\u00A0AM a 11\u00A0PM.'], ['factura', 'Con factura', 'Dinos al apartar que la necesitas y la preparamos.']] as [string, string, string][] },
     incluido: { l: 'Áreas verdes,', o: 'alberca y chapoteadero', texto: 'En la ciudad, los niños casi nunca tienen pasto donde correr. Aquí sí. El jardín de Los Arcos es para jugar y tirarse a la sombra; los chiquitos se mojan en el chapoteadero y los grandes en la alberca, mientras los papás platican cerca. También es un buen lugar para la foto de familia.' },
     resenas: { l: H.rating + ' en Google', o: 'con ' + H.resenas + ' reseñas', texto: 'Quienes se han quedado hablan de lo mismo: el trato, la limpieza, habitaciones amplias y la tranquilidad de dejar el carro seguro. Varios ya volvieron con la familia.' },
-    blog: { mini: 'Del blog', l: 'Guía de', o: 'las Grutas', texto: 'Horarios y precios de las Grutas, paseos para ir con niños y consejos para estancias de semanas.' },
+    blog: { mini: 'Del blog', tema: 'grutas-y-alrededores', l: 'Guía de', o: 'las Grutas', texto: 'Horarios y precios de las Grutas, paseos para ir con niños y consejos para estancias de semanas.' },
     faq: { l: 'Preguntas antes', o: 'de reservar' },
     verHabs: 'Habitaciones ' + TIPOS,
   },
@@ -164,16 +166,16 @@ const LA: typeof QA = {
     portada: { l: 'Cuartos', o: 'desde ' + DESDE_IVA, texto: 'Las familias que vienen a García casi nunca son de dos. Por eso una triple recibe hasta seis personas: los papás, los niños y la abuela, juntos.' },
     lista: { l: 'Precio según', o: 'cuántos se quedan', texto: 'Desde ' + DESDE_IVA + ' por noche; el departamento, desde ' + precioDe('depa') + ' + IVA. El total depende de cuántas personas se quedan. Escríbenos y te lo damos exacto.' },
     galeria: { l: 'Así son', o: 'por dentro', texto: 'Todas las fotos se tomaron en el hotel. Tócalas para ampliarlas.' },
-    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2 PM, salida a las 11 AM, y se cuida el ruido para que todos duerman.', incluye: 'Todas incluyen', notiene: '' },
+    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2\u00A0PM, salida a las 11\u00A0AM, y se cuida el ruido para que todos duerman.', incluye: 'Todas incluyen', notiene: '' },
     grupos: { l: '¿Son cuatro', o: 'o más?', texto: 'La triple recibe hasta seis personas, y para 4 a 8 hay departamentos con cocina, sala y dos recámaras. Si prefieren varios cuartos, desde 3 habitaciones hay tarifa de grupo.', boton: 'Cotizar para un grupo' },
-    blog: { l: 'Antes de', o: 'subir a las Grutas', texto: 'Lo que conviene leer para armar el viaje.' },
+    blog: { l: 'Antes de', o: 'subir a las Grutas', texto: 'Lo que conviene leer para armar el viaje.', tema: 'grutas-y-alrededores' },
     enlaces: [['Departamentos con cocina para 4 a 8 personas', '/departamentos'], ['Palapa techada para huéspedes', rutaPalapa], ['Preguntas frecuentes', '/preguntas-frecuentes']] as Enlace[],
   },
-  // La página de la palapa: en Los Arcos es solo para huéspedes (no se rentan eventos ni se cotiza)
+  // La página de la palapa: en Los Arcos es solo para huéspedes (no se renta para eventos ni se cotiza)
   celebraciones: {
     portada: { l: 'Palapa techada', o: 'en el jardín', texto: 'En el norte, la noche se arma alrededor del asador.' },
     cotizarBtn: 'Reservar por WhatsApp', verBtn: 'Ver la palapa techada', tarjeta: '',
-    bloque: { l: 'Qué tiene', o: 'la palapa', texto: 'La palapa de Hotel Los Arcos Inn está en el jardín, techada y lista: llegan de pasear, prenden el carbón y la cena se hace entre todos, sin salir a buscar dónde.' },
+    bloque: { l: 'Qué tiene', o: 'la palapa', texto: 'La palapa del Hotel Los Arcos Inn está en el jardín, techada y lista: llegan de pasear, prenden el carbón y la cena se hace entre todos, sin salir a buscar dónde.' },
     puntos: { l: 'Lo que hay', o: 'bajo la palapa' },
     alberca: null,
     tiposCab: { l: '', o: '', texto: '' },
@@ -182,7 +184,7 @@ const LA: typeof QA = {
     apartar: [],
     opciones: [], etiquetaOpc: '',
     invitados: { l: 'Para familias que', o: 'se hospedan juntas', texto: 'Cuando la familia ocupa varias habitaciones o un departamento, la palapa se vuelve su sala al aire libre. Los niños en el jardín, los grandes en la mesa.', enlace: 'Departamentos con cocina', href: '/departamentos' },
-    reglasUso: { l: 'Reglas', o: 'de uso', texto: 'La palapa es solo para huéspedes; no se rentan eventos.' },
+    reglasUso: { l: 'Reglas', o: 'de uso', texto: 'La palapa es solo para huéspedes; no se renta para eventos.' },
     blog: { l: 'Para planear', o: 'tu visita', texto: 'Dónde se queda la familia cuando viene a García.', tema: 'reuniones-en-familia' },
     enlaces: [['Departamentos con cocina para 4 a 8 personas', '/departamentos'], ['Habitaciones ' + TIPOS, '/habitaciones'], ['Cómo llegar al hotel', '/ubicacion']] as Enlace[],
     waBase: 'en el ',
@@ -190,16 +192,16 @@ const LA: typeof QA = {
   ubicacion: {
     portada: { l: 'En el centro', o: 'de García', texto: 'Mariano Escobedo 105-A, a tres minutos de la plaza principal y a ' + D.grutas + ' minutos de las Grutas de García.' },
     intro: '',
-    llegar: { l: 'En Mariano Escobedo 105-A, entre Bernardo Reyes', o: 'y Morelos', texto: 'En pleno centro de García, a unos 38 km del centro de Monterrey y 25 de Cumbres. Al reservar te mandamos la ubicación por WhatsApp.' },
+    llegar: { l: 'En Mariano Escobedo\u00A0105\u2011A, entre Bernardo Reyes', o: 'y Morelos', texto: 'En pleno centro de García, a unos 38\u00A0km del centro de Monterrey y 25 de Cumbres. Al reservar te mandamos la ubicación por WhatsApp.' },
     extras: [],
     secciones: [
       { id: 'plaza', l: 'A 3 minutos', o: 'de la plaza', texto: 'Una caminata corta por Morelos te lleva frente a la capilla de San Elías y hasta la plaza, con el templo de San Juan Bautista y el Antiguo Parián. Buen plan para la tarde: sentarse en la plaza a ver pasar el pueblo antes de cenar.' },
       { id: 'xenpal', l: 'Xenpal', o: 'a ' + D.xenpal + ' minutos', texto: 'Ver animales de cerca suele ser el plan favorito de los niños, y está a solo ' + D.xenpal + ' minutos. Vayan en la mañana y regresen a comer al jardín.' },
       { id: 'grutas', l: 'Grutas de García y Los Faisanes', o: 'a ' + D.grutas + ' minutos', texto: 'La visita que no puede faltar. Las Grutas se descubrieron en 1843; se sube en teleférico o caminando por la vereda, y en el mismo camino está Los Faisanes. Con niños es un día completo, y de los que se recuerdan.' },
       { id: 'comer', l: 'Dónde comer cerca: Los Primos, Casco Antiguo', o: 'y La Mexicana',
-        lista: [['Los Primos', 'cocina mexicana que abre temprano; para desayunar antes de salir a las Grutas. Lo más pedido es la arrachera.'], ['Casco Antiguo', 'taquería del centro, para una comida rápida.'], ['La Mexicana', 'cocina mexicana que cierra tarde, por si la familia regresa noche de pasear.']] },
+        lista: [['Los Primos', 'cocina mexicana que abre temprano; para desayunar antes de salir a las Grutas. Lo más pedido es la arrachera.'], ['Casco Antiguo', 'taquería del centro, para una comida rápida.'], ['La Mexicana', 'cocina mexicana que cierra tarde, por si la familia regresa tarde de pasear.']] },
     ],
-    ingles: { id: 'in-english', l: 'In', o: 'English', lang: 'en', texto: 'Hotel Los Arcos Inn is in downtown García, three minutes from the main square, 10 minutes from Xenpal and 15 from the García Caves. Rooms for up to six, two apartments with kitchen for up to eight, a garden, a pool and on-site parking. Check-in 2 PM, check-out 11 AM. Book by WhatsApp: +52 81 2615 5485.' },
+    ingles: { id: 'in-english', l: 'In', o: 'English', lang: 'en', texto: 'Hotel Los Arcos Inn is in downtown García, three minutes from the main square, 10 minutes from Xenpal and 15 from the García Caves. Rooms for up to six, two apartments with kitchen for up to eight, a garden, a pool and on-site parking. Check‑in 2\u00A0PM, check-out 11\u00A0AM. Book by WhatsApp: +52\u00A081\u00A02615\u00A05485.' },
     alLlegar: { l: 'Te esperan', o: 'al llegar', items: [['hoja', 'Jardín y alberca con chapoteadero'], ['asador', 'Palapa techada con asador para huéspedes'], ['auto', 'Estacionamiento dentro del hotel']] as [string, string][] },
     blog: { l: 'Paseos', o: 'a un paso', texto: 'Las Grutas y lo que hay sobre el mismo camino.', tema: 'grutas-y-alrededores' },
     enlaces: [['Guía de las Grutas de García', '/blog/grutas-de-garcia-horarios-y-precios'], ['Departamentos para una semana o más', '/departamentos'], ['Reserva directo', '/contacto']] as Enlace[],
@@ -219,14 +221,14 @@ export const T = esQA ? QA : LA;
 //    páginas toman de aquí las que les tocan, por su id. ──
 const FAQ_QA: GrupoFaq[] = [
   { id: 'reservas', nombre: 'Reservas y pagos', items: [
-    { id: 'apartar', q: '¿Cómo aparto?', a: 'Por WhatsApp, con el 50 % de anticipo (no reembolsable).' },
+    { id: 'apartar', q: '¿Cómo aparto?', a: 'Por WhatsApp, con el 50\u00A0% de anticipo (no reembolsable).' },
     { id: 'precio', q: '¿Cuánto cuesta una noche?', a: 'Desde ' + DESDE_IVA + ' por noche para una persona; el precio cambia con cada persona, hasta cuatro. Hay descuento desde el tercer día de estancia y para grupos de 3 habitaciones o más.' },
     { id: 'cancelar', q: '¿Qué pasa si cancelo?', a: 'El anticipo no es reembolsable: si cancelas, no se devuelve.' },
     { id: 'directo', q: '¿Conviene reservar directo con el hotel?', a: 'Sí. Al reservar con nosotros no pagas comisiones de plataformas y te atendemos por WhatsApp.' },
     { id: 'factura', q: '¿Dan factura?', a: 'Sí, facturamos sin problema. Pídela al reservar o al llegar.' },
   ] },
   { id: 'habitaciones', nombre: 'Habitaciones', items: [
-    { id: 'horarios', q: '¿A qué hora puedo llegar?', a: 'La entrada es a partir de las 2 PM y la salida a las 11 AM. Atendemos de 7 am a 11 pm.' },
+    { id: 'horarios', q: '¿A qué hora puedo llegar?', a: 'La entrada es a partir de las 2\u00A0PM y la salida a las 11\u00A0AM. Atendemos de 7\u00A0AM a 11\u00A0PM.' },
     { id: 'caben', q: '¿Cuántos caben por habitación?', a: 'Hasta cuatro personas. El precio cambia según cuántos sean.' },
     { id: 'incluye', q: '¿Qué trae cada habitación?', a: 'Vista a la sierra, aire acondicionado, televisión, frigobar, microondas y baño con agua caliente, toallas, shampoo y jabón.' },
     { id: 'camas', q: '¿Qué camas tienen las habitaciones?', a: 'Las nueve habitaciones son iguales, con dos camas queen.' },
@@ -236,7 +238,7 @@ const FAQ_QA: GrupoFaq[] = [
     { id: 'traer', q: '¿Qué traigo?', a: 'Traje de baño, lo que quieras para el frigobar y, si vas a usar la palapa, la carne. La primera noche, la plaza está a dos cuadras para cenar; al día siguiente, sal temprano a las Grutas y regresa a la alberca en la tarde.' },
   ] },
   { id: 'alberca', nombre: 'Alberca', items: [
-    { id: 'alberca-horario', q: '¿Hasta qué hora abre la alberca?', a: 'La alberca abre todos los días hasta las 10 PM.' },
+    { id: 'alberca-horario', q: '¿Hasta qué hora abre la alberca?', a: 'La alberca abre todos los días hasta las 10\u00A0PM.' },
     { id: 'alberca-ninos', q: '¿Hay alberca para niños?', a: 'Sí, hay chapoteadero junto a la alberca principal.' },
     { id: 'alberca-costo', q: '¿La alberca tiene costo extra?', a: 'No. Está incluida en tu estancia.' },
   ] },
@@ -254,22 +256,22 @@ const FAQ_QA: GrupoFaq[] = [
   ] },
   { id: 'ubicacion', nombre: 'Ubicación', items: [
     { id: 'donde', q: '¿Dónde está el hotel?', a: 'En Bernardo Reyes esquina con Garza Ayala, Centro, García, Nuevo León, a dos cuadras de la plaza.' },
-    { id: 'monterrey', q: '¿Qué tan lejos está de Monterrey?', a: 'Desde el centro de Monterrey son unos 38 km por la carretera a García; desde Cumbres, unos 25 km por la avenida Lincoln. En hora pico puede tomar cerca de una hora.' },
+    { id: 'monterrey', q: '¿Qué tan lejos está de Monterrey?', a: 'Desde el centro de Monterrey son unos 38\u00A0km por la carretera a García; desde Cumbres, unos 25\u00A0km por la avenida Lincoln. En hora pico puede tomar cerca de una hora.' },
     { id: 'estacionamiento', q: '¿Hay estacionamiento?', a: 'Sí, dentro del hotel.' },
-    { id: 'atencion', q: '¿En qué horario atienden?', a: 'Todos los días, de 7 AM a 11 PM, por WhatsApp y por teléfono.' },
+    { id: 'atencion', q: '¿En qué horario atienden?', a: 'Todos los días, de 7\u00A0AM a 11\u00A0PM, por WhatsApp y por teléfono.' },
     { id: 'grutas', q: '¿Qué tan cerca están las Grutas de García?', a: 'A unos ' + D.grutas + ' minutos en auto: son ' + D.grutasKm + ' km desde el centro de García.' },
   ] },
 ];
 const FAQ_LA: GrupoFaq[] = [
   { id: 'reservas', nombre: 'Reservas y pagos', items: [
-    { id: 'apartar', q: '¿Cómo reservo?', a: 'Por WhatsApp al ' + H.tel + ', con el 50 % de anticipo (no reembolsable).' },
+    { id: 'apartar', q: '¿Cómo reservo?', a: 'Por WhatsApp al ' + TEL_TXT + ', con el 50\u00A0% de anticipo (no reembolsable).' },
     { id: 'precio', q: '¿Desde cuánto cuesta hospedarse?', a: 'Desde ' + DESDE_IVA + ' por noche; el departamento, desde ' + precioDe('depa') + ' + IVA. El total depende de cuántas personas se quedan.' },
     { id: 'cancelar', q: '¿El anticipo se devuelve si cancelo?', a: 'No. El anticipo no es reembolsable.' },
     { id: 'pago', q: '¿Qué formas de pago aceptan?', a: 'Efectivo y tarjeta.' },
     { id: 'factura', q: '¿Facturan?', a: 'Sí. Dinos al reservar que necesitas factura y la preparamos.' },
   ] },
   { id: 'habitaciones', nombre: 'Habitaciones y departamentos', items: [
-    { id: 'horarios', q: '¿A qué hora puedo llegar?', a: 'La entrada es a partir de las 2 PM y la salida a las 11 AM.' },
+    { id: 'horarios', q: '¿A qué hora puedo llegar?', a: 'La entrada es a partir de las 2\u00A0PM y la salida a las 11\u00A0AM.' },
     { id: 'caben', q: '¿Cuántos caben?', a: 'De una a seis personas por habitación, y hasta ocho en un departamento.' },
     { id: 'incluye', q: '¿Qué tienen las habitaciones?', a: 'Aire acondicionado, pantalla, frigobar, microondas, WiFi y baño privado, además de alberca, jardín y estacionamiento.' },
     { id: 'depa', q: '¿Cómo son los departamentos?', a: 'Tienen 2 recámaras, sala y cocina, para 4 a 8 personas, y están dentro del mismo hotel.' },
@@ -279,7 +281,7 @@ const FAQ_LA: GrupoFaq[] = [
     { id: 'traer', q: '¿Qué traigo?', a: 'Traje de baño, la carne si quieren cenar en la palapa y, si vienen en departamento, lo del súper para la cocina.' },
   ] },
   { id: 'alberca', nombre: 'Alberca y jardín', items: [
-    { id: 'alberca-horario', q: '¿Qué horario tiene la alberca?', a: 'La alberca y el chapoteadero están abiertos todos los días hasta las 10 PM.' },
+    { id: 'alberca-horario', q: '¿Qué horario tiene la alberca?', a: 'La alberca y el chapoteadero están abiertos todos los días hasta las 10\u00A0PM.' },
     { id: 'alberca-ninos', q: '¿Los niños tienen dónde nadar?', a: 'Sí: hay chapoteadero, y la alberca tiene una cascada de piedra, en medio del jardín.' },
     { id: 'alberca-costo', q: '¿Se paga aparte por la alberca?', a: 'No. Es parte de tu hospedaje.' },
   ] },
@@ -297,9 +299,9 @@ const FAQ_LA: GrupoFaq[] = [
   { id: 'ubicacion', nombre: 'Ubicación', items: [
     { id: 'donde', q: '¿Cuál es la dirección?', a: 'Mariano Escobedo 105-A, entre Bernardo Reyes y Morelos, Centro, García, Nuevo León.' },
     { id: 'grutas', q: '¿Qué tan lejos están las Grutas?', a: 'Unos ' + D.grutas + ' minutos en carro; Xenpal, unos ' + D.xenpal + '.' },
-    { id: 'monterrey', q: '¿Cuánto se hace desde Monterrey?', a: 'Desde el centro de Monterrey son unos 38 km; desde Cumbres, unos 25. Al reservar te mandamos la ubicación por WhatsApp.' },
+    { id: 'monterrey', q: '¿Cuánto se hace desde Monterrey?', a: 'Desde el centro de Monterrey son unos 38\u00A0km; desde Cumbres, unos 25. Al reservar te mandamos la ubicación por WhatsApp.' },
     { id: 'estacionamiento', q: '¿Hay estacionamiento?', a: 'Sí, dentro del hotel.' },
-    { id: 'atencion', q: '¿A qué hora puedo llamar o escribir?', a: 'De 7 AM a 11 PM, todos los días.' },
+    { id: 'atencion', q: '¿A qué hora puedo llamar o escribir?', a: 'De 7\u00A0AM a 11\u00A0PM, todos los días.' },
   ] },
 ];
 export const FAQ: GrupoFaq[] = esQA ? FAQ_QA : FAQ_LA;

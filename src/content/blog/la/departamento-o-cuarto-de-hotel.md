@@ -11,7 +11,7 @@ resumen: "Si viajan cuatro o más, o se quedan más de un par de noches, el depa
 foto: "departamento-cocina-equipada-hotel-los-arcos-inn.jpg"
 fotoAlt: "Cocina equipada de un departamento del Hotel Los Arcos Inn, en García, Nuevo León"
 publicado: 2026-11-09
-actualizado: 2026-11-18
+actualizado: 2026-11-17
 lectura: 3
 vende: departamentos
 esencial: true

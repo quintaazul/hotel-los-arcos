@@ -11,7 +11,7 @@ resumen: "La palapa del hotel recibe hasta 60 personas y ya tiene asador, refrig
 foto: "palapa-barra-bancos-luz-de-tarde-hotel-quinta-azul.jpg"
 fotoAlt: "La palapa del Hotel Quinta Azul, con su asador, con luz de tarde"
 publicado: 2026-11-09
-actualizado: 2026-11-18
+actualizado: 2026-11-17
 lectura: 3
 vende: palapa
 esencial: true

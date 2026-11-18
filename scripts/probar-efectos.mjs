@@ -2,10 +2,10 @@
 const pw = await import('./_pw.mjs');
 const nav = await pw.chromium.launch({ channel: 'msedge' });
 const abiertos = (p) => p.evaluate(() => [...document.querySelectorAll('.punto')].map((x, i) => x.classList.contains('abierto') ? i + 1 : 0).filter(Boolean).join(',') || 'ninguno');
-for (const [h, base, habs] of [['QA', 'http://127.0.0.1:4321', '/hospedaje'], ['LA', 'http://127.0.0.1:4322', '/habitaciones']]) {
+for (const [h, base, habs, palapa] of [['QA', 'http://127.0.0.1:4321', '/hospedaje', '/celebraciones'], ['LA', 'http://127.0.0.1:4322', '/habitaciones', '/palapa']]) {
   // celular: tocar
   let ctx = await nav.newContext({ viewport: { width: 430, height: 932 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }), p = await ctx.newPage(); const err = []; p.on('pageerror', (e) => err.push(String(e)));
-  await p.goto(base + '/celebraciones', { waitUntil: 'load' }); await p.locator('.puntos').scrollIntoViewIfNeeded(); await p.waitForTimeout(1800);
+  await p.goto(base + palapa, { waitUntil: 'load' }); await p.locator('.puntos').scrollIntoViewIfNeeded(); await p.waitForTimeout(1800);
   const r = [await abiertos(p)];
   await p.locator('.punto button').nth(1).tap(); await p.waitForTimeout(300); r.push(await abiertos(p));
   await p.locator('.punto button').nth(1).tap(); await p.waitForTimeout(300); r.push(await abiertos(p));
@@ -16,10 +16,10 @@ for (const [h, base, habs] of [['QA', 'http://127.0.0.1:4321', '/hospedaje'], ['
   await ctx.close();
   // computadora: ratón, índice y teclado
   ctx = await nav.newContext({ viewport: { width: 1600, height: 900 } }); p = await ctx.newPage(); p.on('pageerror', (e) => err.push(String(e)));
-  await p.goto(base + '/celebraciones', { waitUntil: 'load' }); await p.locator('.puntos').scrollIntoViewIfNeeded(); await p.waitForTimeout(1800);
+  await p.goto(base + palapa, { waitUntil: 'load' }); await p.locator('.puntos').scrollIntoViewIfNeeded(); await p.waitForTimeout(1800);
   const s = [];
   await p.locator('.punto button').nth(2).hover(); await p.waitForTimeout(250); s.push(await abiertos(p));
-  await p.locator('[data-ir-punto]').nth(3).hover(); await p.waitForTimeout(250); s.push(await abiertos(p));
+  await p.locator('[data-ir-punto]').nth(Math.min(3, (await p.locator('[data-ir-punto]').count()) - 1)).hover(); await p.waitForTimeout(250); s.push(await abiertos(p));
   await p.locator('.punto button').first().focus(); await p.keyboard.press('Tab'); await p.waitForTimeout(250); s.push(await abiertos(p));
   await p.keyboard.press('Escape'); await p.waitForTimeout(200); s.push(await abiertos(p));
   const fuera = await p.evaluate(() => { let n = 0; document.querySelectorAll('.punto').forEach((x) => { x.classList.add('abierto'); }); document.querySelectorAll('.nota').forEach((x) => { const b = x.getBoundingClientRect(); if (b.left < 0 || b.right > innerWidth) n++; }); return n; });

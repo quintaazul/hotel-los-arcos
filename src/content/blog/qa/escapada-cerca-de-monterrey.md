@@ -11,7 +11,7 @@ resumen: "García queda a unos 38 km del centro de Monterrey. Sal el sábado tem
 foto: "alberca-atardecer-palmas-hotel-quinta-azul.jpg"
 fotoAlt: "La alberca del Hotel Quinta Azul al atardecer, con palmas"
 publicado: 2026-11-09
-actualizado: 2026-11-18
+actualizado: 2026-11-17
 lectura: 3
 vende: habitaciones
 verificado: 2026-11-11

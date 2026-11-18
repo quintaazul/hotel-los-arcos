@@ -311,3 +311,12 @@ a[href^="tel:"],.portada a[href="#mapa"]{white-space:nowrap}
 @media (min-width:1025px){.dos.llegar > .video{grid-column:9 / span 4;justify-self:end}.dos.llegar .dos-txt > .llegar-pie{display:none}}
 /* En los celulares más angostos la barra de datos aprieta su relleno para que «Grutas de García» quepa en dos renglones */
 @media (max-width:380px){.portada-barra li{padding-inline:var(--e-2);gap:var(--e-2)}.portada-barra .cifra{min-width:3.3rem}}
+
+/* ── Cambios del 17 nov 2026 ──
+   · Con un solo tipo de habitación (Quinta Azul), la tabla no marca «Te conviene»: no hay nada que escoger.
+   · El rótulo corto de un botón (solo-cel) no se parte. */
+.tabla.una .sugerida{background:none}
+.tabla.una thead .sugerida::after{content:none}
+@media (max-width:760px){.solo-cel{white-space:nowrap}}
+/* Una cabecera de sección (título y texto) que no tiene nada debajo no deja su aire de bloque: el de la sección basta */
+.habs-cab:last-child{margin-bottom:0}

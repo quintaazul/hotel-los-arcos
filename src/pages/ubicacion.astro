@@ -38,8 +38,9 @@ const t = T.ubicacion, seo = SEO.ubicacion;
     </div>
   </section>
   <Mapa />
-  {t.secciones.map((x) => (
-    <section class="seccion sin-arriba" aria-labelledby={'t-' + x.id}>
+  {/* La primera sección de texto viene después del mapa (otro fondo): lleva su aire arriba; las demás, solo uno entre ellas */}
+  {t.secciones.map((x, i) => (
+    <section class:list={['seccion', { 'sin-arriba': i > 0 }]} aria-labelledby={'t-' + x.id}>
       <div class="marco">
         <div class="habs-cab">
           <Titulo lineas={[x.l]} ovalo={x.o} id={'t-' + x.id} marca />
@@ -52,7 +53,7 @@ const t = T.ubicacion, seo = SEO.ubicacion;
       </div>
     </section>
   ))}
-  <section class="seccion al-llegar" aria-labelledby="t-al-llegar">
+  <section class:list={['seccion al-llegar', { 'sin-arriba': t.secciones.length > 0 }]} aria-labelledby="t-al-llegar">
     <div class="marco">
       <div class="habs-cab">
         <Titulo lineas={[t.alLlegar.l]} ovalo={t.alLlegar.o} id="t-al-llegar" marca />

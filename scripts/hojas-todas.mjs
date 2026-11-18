@@ -7,7 +7,7 @@ import { createRequire } from 'node:module'; const sharp = createRequire(RAIZ + 
 const { chromium } = await import('./_pw.mjs');
 const P = {
   qa: [4321, ['/', '/hospedaje', '/celebraciones', '/ubicacion', '/contacto', '/preguntas-frecuentes', '/blog', '/blog/que-hacer-en-garcia', '/blog/posada-navidena-en-palapa', '/politicas', '/no-existe']],
-  la: [4322, ['/', '/habitaciones', '/departamentos', '/empresas', '/celebraciones', '/ubicacion', '/contacto', '/preguntas-frecuentes', '/blog', '/blog/bautizo-en-jardin', '/blog/grutas-de-garcia-horarios-y-precios', '/terminos', '/no-existe']],
+  la: [4322, ['/', '/habitaciones', '/departamentos', '/empresas', '/palapa', '/ubicacion', '/contacto', '/preguntas-frecuentes', '/blog', '/blog/hotel-cerca-de-quintas-en-garcia', '/blog/grutas-de-garcia-horarios-y-precios', '/terminos', '/no-existe']],
 };
 const solo = process.argv[2], soloH = process.argv[3], soloR = process.argv[4] ? process.argv[4].split(',') : null;
 import { mkdirSync } from 'node:fs'; mkdirSync('.capturas/hojas', { recursive: true });   // «cel» o «pc»
