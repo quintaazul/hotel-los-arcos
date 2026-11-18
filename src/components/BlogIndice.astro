@@ -24,7 +24,8 @@ const paginas = t ? 1 : Math.max(1, Math.ceil(base.length / POR_PAGINA));
 const lista = t ? base : base.slice((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA);
 const urlPag = (n: number) => (n === 1 ? '/blog' : '/blog/pagina/' + n);
 const ruta = t ? urlTema(t.id) : urlPag(pagina);
-const title = t ? `${t.nombre}: guías y consejos | ${H.corto}` : pagina > 1 ? `Blog, página ${pagina} | ${H.nombre}` : BLOG.seo;
+const conGuias = t ? `${t.nombre}: guías y consejos | ${H.nombre}` : '';
+const title = t ? (conGuias.length <= 60 ? conGuias : `${t.nombre} | ${H.nombre}`) : pagina > 1 ? `Blog, página ${pagina} | ${H.nombre}` : BLOG.seo;
 const description = t ? t.meta : BLOG.descripcion;
 const delgado = !!t && base.length < TEMA_MINIMO;   // tema con pocos artículos: fuera de los buscadores por ahora
 const schema = principal ? [{ '@context': 'https://schema.org', '@type': 'Blog', '@id': H.sitio + '/blog#blog', name: BLOG.titulo, description: BLOG.descripcion, url: H.sitio + '/blog', inLanguage: 'es-MX', publisher: { '@id': H.sitio + '/#hotel' },

@@ -1,6 +1,8 @@
 ---
-// Celebraciones: la página de la palapa. Misma plantilla, dos enfoques (documento del rediseño):
-// Quinta Azul, «renta de palapa para fiestas», junto a la alberca; Los Arcos, «palapa techada en el jardín».
+// La página de la palapa. Misma plantilla, dos enfoques:
+// · Quinta Azul, /celebraciones: «palapa con alberca» para reuniones de hasta 60 personas; se cotiza por fecha.
+// · Los Arcos Inn, /palapa: «palapa techada» en el jardín, solo para huéspedes; no se rentan eventos (documento de
+//   cambios del 17 de noviembre de 2026). Antes vivía en /celebraciones, que redirige aquí (redirecciones.json).
 // El bloque de la palapa vive aquí y en el inicio, y en ningún otro lado (así lo pidió el dueño).
 import Fecha from '../components/controles/Fecha.astro';
 import Contador from '../components/controles/Contador.astro';
@@ -17,19 +19,33 @@ import BlogCorto from '../components/BlogCorto.astro';
 import Enlaces from '../components/Enlaces.astro';
 import { H, waLink, foco, altDe } from '../data/hoteles';
 import { T, SEO } from '../data/textos';
-const t = T.celebraciones, seo = SEO.celebraciones;
+export function getStaticPaths() { return [{ params: { palapa: __HOTEL__ === 'qa' ? 'celebraciones' : 'palapa' } }]; }
+const t = T.celebraciones, seo = SEO.celebraciones, ruta = '/' + H.rutaPalapa;
+const seRenta = H.id === 'qa';   // Los Arcos: solo huéspedes
 const wa = (que: string) => waLink('Hola, quiero cotizar ' + que + ' ' + t.waBase + H.nombre);
-const schema = [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id': H.sitio + '/celebraciones#palapa', name: (H.id === 'qa' ? 'Palapa para fiestas' : 'Palapa techada') + ' del ' + H.nombre, url: H.sitio + '/celebraciones', maximumAttendeeCapacity: 60, containedInPlace: { '@id': H.sitio + '/#hotel' },
-  address: { '@type': 'PostalAddress', streetAddress: H.calle, addressLocality: 'García', addressRegion: 'Nuevo León', postalCode: '66000', addressCountry: 'MX' }, amenityFeature: H.palapa.incluye.slice(1).map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })) }];
+const incluye = H.palapa.incluye.filter(([ic]) => ic !== 'gente');
+const schema = seRenta ? [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id': H.sitio + ruta + '#palapa', name: 'Palapa del ' + H.nombre, url: H.sitio + ruta, maximumAttendeeCapacity: 60, containedInPlace: { '@id': H.sitio + '/#hotel' },
+  address: { '@type': 'PostalAddress', streetAddress: H.calle, addressLocality: 'García', addressRegion: 'Nuevo León', postalCode: '66000', addressCountry: 'MX' }, amenityFeature: incluye.map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })) }] : [];
 ---
 <Base title={seo.title} description={seo.description} pagina="celebraciones" ogFoto={H.heroes.celebraciones} schema={schema}>
   <PortadaCorta img={H.heroes.celebraciones} alt={H.palapa.alt} clave={seo.h1} lineas={[t.portada.l]} ovalo={t.portada.o} frase={t.portada.texto}
-    migas={[['/', 'Inicio'], ['/celebraciones', 'Celebraciones']]}
-    botones={[{ t: t.cotizarBtn, href: wa(H.id === 'qa' ? 'una fiesta' : 'una reunión'), ico: 'wa', clase: 'blanco', fuera: true }, { t: t.verBtn, href: '#t-palapa', clase: 'contorno', flecha: true }]}
-    tarjeta={{ rotulo: 'Capacidad', valor: '60', sufijo: 'personas', texto: t.tarjeta }}
-    barra={H.palapa.incluye.slice(1).map(([ico, b]) => ({ ico, b }))} />
+    migas={[['/', 'Inicio'], [ruta, seRenta ? 'Celebraciones' : 'Palapa']]}
+    botones={[{ t: t.cotizarBtn, href: seRenta ? wa('una fecha') : waLink(), ico: 'wa', clase: 'blanco', fuera: true }, { t: t.verBtn, href: '#t-palapa', clase: 'contorno', flecha: true }]}
+    tarjeta={seRenta ? { rotulo: 'Capacidad', valor: '60', sufijo: 'personas', texto: t.tarjeta } : undefined}
+    barra={incluye.map(([ico, b]) => ({ ico, b }))} />
   <Palapa pagina />
   <Puntos />
+  {t.alberca && (
+    <section class="seccion" aria-labelledby="t-alberca-palapa">
+      <div class="marco">
+        <div class="habs-cab">
+          <Titulo lineas={[t.alberca.l]} ovalo={t.alberca.o} id="t-alberca-palapa" marca />
+          <div class="lado"><p class="texto" data-aparece>{t.alberca.texto}</p></div>
+        </div>
+      </div>
+    </section>
+  )}
+  {t.tipos.length > 0 && (
   <section class="seccion f-2 celebra" aria-labelledby="t-celebrar">
     <div class="marco">
       <div class="habs-cab">
@@ -55,6 +71,8 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id'
       </div>
     </div>
   </section>
+  )}
+  {seRenta && (
   <section class="seccion f-hondo" aria-labelledby="t-cotizar" id="cotizar">
     <div class="marco cotiza-marco">
       <div class="cotiza-txt sobre-oscuro">
@@ -63,7 +81,7 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id'
         <ol class="pasos" style={`--n:${t.apartar.length - 1}`}>{t.apartar.map(([a, b], k) => <li data-aparece style={`--k:${k}`}><p><b>{a}</b> {b}</p></li>)}</ol>
         <p class="texto cotiza-nota" data-aparece>El precio depende del día, del horario y de cuántas personas van: por eso se cotiza.</p>
       </div>
-      <form class="formulario tarjeta-form" data-whatsapp={'Hola, quiero cotizar la ' + T.palapa + ' del ' + H.nombre} data-numero={H.wa} data-fiesta data-aparece>
+      <form class="formulario tarjeta-form" data-whatsapp={'Hola, quiero cotizar la palapa del ' + H.nombre} data-numero={H.wa} data-fiesta data-aparece>
         <Fecha id="e-fecha" nombre="Fecha" etiqueta="Fecha" requerido falta="Elige la fecha." />
         <Contador id="e-personas" nombre="Personas" etiqueta="Personas" min={1} max={60} valor={40} />
         <Desplegable class="completo" id="e-tipo" nombre="Motivo" etiqueta={t.etiquetaOpc} opciones={t.opciones} />
@@ -71,6 +89,7 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id'
       </form>
     </div>
   </section>
+  )}
   <section class="seccion invitados" aria-labelledby="t-invitados">
     <div class="marco">
       <div class="habs-cab">
@@ -82,6 +101,16 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id'
       </div>
     </div>
   </section>
+  {t.reglasUso && (
+    <section class="seccion sin-arriba" aria-labelledby="t-reglas-uso">
+      <div class="marco">
+        <div class="habs-cab">
+          <Titulo lineas={[t.reglasUso.l]} ovalo={t.reglasUso.o} id="t-reglas-uso" marca />
+          <div class="lado"><p class="texto" data-aparece>{t.reglasUso.texto}</p></div>
+        </div>
+      </div>
+    </section>
+  )}
   <BlogCorto forma="lista" cuantos={3} deTema={t.blog.tema} lineas={[t.blog.l]} ovalo={t.blog.o} texto={t.blog.texto} clase="sin-arriba" />
   <Enlaces enlaces={t.enlaces} />
   <Preguntas de="celebraciones" />

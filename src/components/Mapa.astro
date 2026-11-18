@@ -31,6 +31,7 @@ const respaldo = await getImage({ src: mapa, width: 2400, format: 'webp' });
   <div class="marco">
     <div class="visita" data-aparece>
       <h2 id="t-mapa">{m.titulo}</h2>
+      {m.texto && <p class="visita-texto">{m.texto}</p>}
       <address>{H.dir1}<br />{H.dir2}</address>
       <dl class="filas">
         {m.filas.map(([a, b]) => <div><dt>{a}</dt><dd>{b}</dd></div>)}

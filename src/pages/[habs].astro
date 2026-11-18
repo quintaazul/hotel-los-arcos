@@ -16,7 +16,8 @@ import Enlaces from '../components/Enlaces.astro';
 import { H, waLink, dinero } from '../data/hoteles';
 import { T, SEO } from '../data/textos';
 export function getStaticPaths() { return [{ params: { habs: __HOTEL__ === 'qa' ? 'hospedaje' : 'habitaciones' } }]; }
-const reglas: [string, string, string][] = [['Entrada', '2:00 PM', ''], ['Salida', '11:00 AM', ''], ['Anticipo', '50%', 'No se devuelve si cancelas.'], ['Edad', '18+', 'Con identificación oficial.'], ['Mascotas', 'No', ''], H.id === 'qa' ? ['Fumar', 'No', 'En las habitaciones.'] : ['Pago', 'Efectivo y tarjeta', 'Con factura.']];
+// Reglas de la casa: las mismas en los dos hoteles (documento de cambios del 17 de noviembre de 2026)
+const reglas: [string, string, string][] = [['Entrada', '2:00 PM', ''], ['Salida', '11:00 AM', ''], ['Anticipo', '50%', 'No es reembolsable.'], ['Edad', '18+', 'Con identificación.'], ['Mascotas y visitas', 'No', ''], ['Fumar', 'No', 'En las habitaciones.']];
 const pie = (f: string) => (H.galeria.find(([x]) => x === f) || ['', ''])[1];
 const resto = H.galeria.filter(([f]) => !H.mosaico.includes(f));
 const hora = (x: string) => x.split(' ');
@@ -28,7 +29,7 @@ const t = T.habitaciones, seo = SEO.habitaciones;
   <PortadaCorta img={H.heroes.habitaciones} alt={'Habitación del ' + H.nombre + ', en García, Nuevo León'} clave={seo.h1} lineas={[t.portada.l]} ovalo={t.portada.o} frase={t.portada.texto}
     migas={[['/', 'Inicio'], ['/' + H.rutaHabs, 'Habitaciones']]}
     botones={[{ t: 'Reservar por WhatsApp', href: waLink(), ico: 'wa', clase: 'blanco', fuera: true }, { t: 'Ver las habitaciones', href: '#habitaciones', clase: 'contorno', flecha: true }]}
-    tarjeta={{ rotulo: 'Precio por noche', valor: dinero(desde), sufijo: 'desde', texto: conPrecio.slice(0, 3).map((x) => x.corto + ' ' + dinero(x.precio as number)).join(' · ') }}>
+    tarjeta={{ rotulo: 'Precio por noche', valor: dinero(desde), sufijo: 'desde', texto: conPrecio.length > 1 ? conPrecio.slice(0, 3).map((x) => x.corto + ' ' + dinero(x.precio as number)).join(' · ') + ', más IVA' : 'Más IVA. Cambia según cuántos se quedan.' }}>
     <Reserva slot="barra" />
   </PortadaCorta>
   <Habitaciones pagina />
@@ -53,6 +54,7 @@ const t = T.habitaciones, seo = SEO.habitaciones;
       <div class="estancia-cab">
         <Titulo lineas={[t.reglas.l]} ovalo={t.reglas.o} id="t-reglas" />
         <p class="texto" data-aparece>{t.reglas.texto} Las reglas completas están en las <a href="/politicas">políticas de reservación</a>.</p>
+        {t.reglas.notiene && <p class="texto" data-aparece>{t.reglas.notiene}</p>}
       </div>
       <div class="horario" data-aparece>
         <div><span class="mini">Entrada</span><b>{hora(reglas[0][1])[0]}<small>{hora(reglas[0][1])[1]}</small></b></div>
@@ -61,7 +63,7 @@ const t = T.habitaciones, seo = SEO.habitaciones;
       </div>
       <dl class="reglas-fila">{reglas.slice(2).map(([a, b, c], i) => <div data-aparece style={`--orden:${i}`}><dt>{a}</dt><dd>{b}{c && <small>{c}</small>}</dd></div>)}</dl>
       <div class="incluye-bloque" data-aparece>
-        <span class="rotulo">Todas incluyen</span>
+        <span class="rotulo">{t.reglas.incluye}</span>
         <ul class="incluye-fila lista">{H.incluye.map(([ic, x]) => <li><Icono n={ic} />{x}</li>)}</ul>
       </div>
     </div>
@@ -75,7 +77,7 @@ const t = T.habitaciones, seo = SEO.habitaciones;
         <ul class="datos lista">{H.grupos.datos.map(([ic, x], i) => <li data-aparece style={`--orden:${i}`}><Icono n={ic} />{x}</li>)}</ul>
         <div class="botones" data-aparece>
           {H.id === 'la' && <a class="boton" href="/departamentos">Departamentos con cocina para 4 a 8 personas<span class="flecha"><Icono n="flecha" /></span></a>}
-          <a class:list={['boton', { 'contorno suave': H.id === 'la' }]} href={waLink('Hola, quiero cotizar habitaciones para un grupo en el ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />Cotizar para un grupo</a>
+          <a class:list={['boton', { 'contorno suave': H.id === 'la' }]} href={waLink(H.id === 'qa' ? 'Hola, quiero preguntar por el descuento en el ' + H.nombre : 'Hola, quiero cotizar habitaciones para un grupo en el ' + H.nombre)} target="_blank" rel="noopener"><Icono n="wa" />{t.grupos.boton}</a>
         </div>
       </div>
     </div>

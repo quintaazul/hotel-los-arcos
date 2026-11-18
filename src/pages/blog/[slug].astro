@@ -34,7 +34,9 @@ const schema = [
     author: { '@type': 'Organization', '@id': H.sitio + '/#hotel', name: H.nombre, url: H.sitio }, publisher: { '@id': H.sitio + '/#hotel' }, mainEntityOfPage: url, isPartOf: { '@id': H.sitio + '/blog#blog' } },
   ...(d.preguntas.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.preguntas.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] : [])
 ];
-const tituloSeo = d.tituloSeo ?? (d.titulo.length + 3 + H.corto.length <= 60 ? d.titulo + ' | ' + H.corto : d.titulo);
+// Todo título termina en «| Hotel Quinta Azul» o «| Hotel Los Arcos Inn» (documento de cambios del 17 de noviembre de
+// 2026); si el del artículo no cabe en 60 caracteres con el nombre, el artículo trae su «tituloSeo»
+const tituloSeo = d.tituloSeo ?? d.titulo + ' | ' + H.nombre;
 ---
 <Base title={tituloSeo} description={d.descripcion} pagina="blog" ogFoto={d.foto} schema={schema} articulo={{ publicado: iso(d.publicado) + HORA, actualizado: iso(d.actualizado) + HORA, tema: t.nombre }} ogAlt={d.fotoAlt}>
   <div class="avance" aria-hidden="true"></div>
@@ -67,7 +69,7 @@ const tituloSeo = d.tituloSeo ?? (d.titulo.length + 3 + H.corto.length <= 60 ? d
         <HospedateCerca art={entry} fuerte />
       </div>
       <aside class="lateral" aria-label="Índice del artículo">
-        <nav class="tarjeta indice-art" aria-label="En este artículo"><h2>En este artículo</h2><ol>
+        <nav class="tarjeta indice-art" aria-label="En este artículo"><p class="indice-art-tit">En este artículo</p><ol>
           {headings.filter((h) => h.depth === 2).map((h) => <li><a href={'#' + h.slug}>{h.text}</a></li>)}
           {d.preguntas.length > 0 && <li><a href="#preguntas">Preguntas frecuentes</a></li>}
         </ol></nav>

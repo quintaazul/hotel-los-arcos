@@ -13,8 +13,9 @@ const url = 'https://www.google.com/maps/search/?api=1&query=' + encodeURICompon
       <div class="calif" data-aparece>
         <span class="grande" data-contar={H.rating} data-decimales="1">{H.rating}</span><span class="sr"> de 5 estrellas · </span>
         <Estrellas valor={H.rating} decorativa />
-        <p>{H.resenas} reseñas en Google</p>
+        <p>{H.resenas} reseñas en Google, al {H.resenasAl}</p>
       </div>
+      {T.inicio.resenas.texto && <p class="texto" data-aparece>{T.inicio.resenas.texto}</p>}
     </div>
     <div class="resenas-der">
       <blockquote class="cita" data-palabras>“{H.resena}”</blockquote>

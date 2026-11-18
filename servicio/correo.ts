@@ -24,8 +24,8 @@ export interface Solicitud {
 }
 export interface Correo { asunto: string; texto: string; html: string; responderA?: string }
 
-const HABITACION: Record<string, string> = { sencilla: 'Habitación sencilla', doble: 'Habitación doble', triple: 'Habitación triple', departamento: 'Departamento con cocina' };
-const HAB_CORTA: Record<string, string> = { sencilla: 'Sencilla', doble: 'Doble', triple: 'Triple', departamento: 'Depto.' };
+const HABITACION: Record<string, string> = { habitacion: 'Habitación', sencilla: 'Habitación sencilla', triple: 'Habitación triple', departamento: 'Departamento con cocina' };
+const HAB_CORTA: Record<string, string> = { habitacion: 'Habitación', sencilla: 'Sencilla', triple: 'Triple', departamento: 'Depto.' };
 const motivoDe = (h: Hotel): Record<string, string> => ({ hospedaje: 'Descanso', celebracion: h.palapa, negocios: 'Trabajo', consulta: 'Consulta', otro: 'Otro', 'otro-motivo': 'Otro' });
 
 // Un correo no admite renglones de más de 998 caracteres: el texto largo se parte en los espacios (y, si alguien

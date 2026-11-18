@@ -405,3 +405,43 @@ El rediseño va a los repositorios originales de los hoteles (`quintaazul/hotel-
 - [x] La rama `main` de cada repositorio lleva un `CLAUDE.md` y un aviso en su `README.md`: `main` es el sitio publicado hoy, `rediseno` es el rediseño sin publicar, y dónde se ve la copia de prueba. Nada más cambió en `main`
 - [ ] Mantener iguales las dos ramas `rediseno`: cada cambio se sube a los dos repositorios (`git push hoteles rediseno`)
 - [ ] En un equipo nuevo, los revisores piden instalar Playwright una vez (`npm i -D playwright`)
+
+## 16. Cambios para el desarrollador (documento del 17 de noviembre de 2026)
+
+Se aplicaron los textos y datos del documento «Cambios para el desarrollador · Hotel Quinta Azul y Hotel Los Arcos Inn». Los dos sitios compilan y `node scripts/seo.mjs` dice «sin fallas».
+
+**Datos (`src/data/hoteles.ts`)**
+
+- [x] Reseñas al 17 de noviembre de 2026: Quinta Azul 4.9 con 125, Los Arcos 4.6 con 133. Se enseñan con su fecha; el marcado para Google sigue sin `aggregateRating`
+- [x] Quinta Azul: nueve habitaciones iguales, de 1 a 4 personas, desde $900 + IVA. Ya no hay tarifa sencilla y doble (fichas, tabla, comparador, formulario y datos para Google)
+- [x] Los Arcos: 2 sencillas (1 o 2 personas), 4 triples (3 a 6) y 2 departamentos (4 a 8). La doble de $1,200 ya no se vende. Capacidad total: 42 huéspedes
+- [x] Todos los precios se dicen «desde $X + IVA»; en el marcado, `valueAddedTaxIncluded: false`
+- [x] Palapa de Quinta Azul sin «barra con bancos»; con microondas y abanicos. Palapa de Los Arcos solo para huéspedes, sin «60 personas»
+- [x] Quinta Azul: sin el descuento a adultos mayores, militares y servidores públicos. Descuento desde el tercer día y para grupos de 3 habitaciones o más
+- [x] Reglas de la casa iguales en los dos: anticipo del 50 % no reembolsable, mayores de 18 con identificación, no fumar, sin mascotas ni visitas, cuidar el ruido
+- [x] Redes en el pie y en `sameAs`, leídas de `H.redes`: Instagram, Facebook y TikTok de cada hotel (Los Arcos ya no usa `hotelarcosinn_mex`). Icono de TikTok agregado
+- [x] `foundingDate`, correo de Quinta Azul, dirección «Centro, García, N.L.» y Xenpal a 10 minutos de Los Arcos
+
+**Textos (`src/data/textos.ts` y páginas)**
+
+- [x] Títulos, descripciones y H1 del documento; todo título termina en «| Hotel Quinta Azul» o «| Hotel Los Arcos Inn» y mide 60 caracteres o menos (también los del blog)
+- [x] Inicio, Habitaciones, Celebraciones y Ubicación de Quinta Azul; Inicio, Habitaciones, Departamentos, Palapa y Ubicación de Los Arcos, con los encabezados y textos del documento en las secciones que ya existían
+- [x] Ubicación de los dos: secciones de historia del centro, qué hay cerca y dónde comer, y bloque «In English» marcado con `lang="en"`
+- [x] Preguntas frecuentes reescritas; el inicio enseña las preguntas del documento
+- [x] Los Arcos: la palapa pasa de `/celebraciones` a `/palapa` (301 directo). Sin formulario de cotizar, sin tipos de evento y sin «60 personas»
+- [x] Los Arcos: artículo nuevo `/blog/hotel-cerca-de-quintas-en-garcia`; el de bautizo se quitó y redirige ahí (también la dirección vieja que ya iba al de bautizo, sin cadena)
+- [x] Formulario y servicio (`servicio/worker.ts`): Quinta Azul acepta «habitacion»; Los Arcos, sencilla, triple y departamento (sin doble). Falta desplegar el servicio cuando se publique
+- [x] El índice «En este artículo» ya no es un H2; el autor del artículo sigue siendo el hotel (`Organization`)
+- [x] Ningún texto menciona Booking ni otras agencias
+
+**No se hizo (es técnico, no de textos)**
+
+- [ ] `/sitemap-index.xml` con 404 en la copia de prueba, cabecera `X-Robots-Tag: noindex` en `*.workers.dev`, CSS externo en vez de en línea, iconos en un sprite y `fetchpriority` en el inicio de Los Arcos (puntos 2, 3, 7, 8 y 9 del Paso 2 del documento)
+- [ ] Medir el inicio con PageSpeed Insights antes y después de esos cambios
+
+**Pendiente del hotel (preguntas P1 a P15 del documento)**
+
+- [ ] 🏨 P1 porcentaje del descuento · P2 reglas, precio y si hay barra en la palapa de Quinta Azul · P6 amenidades por habitación en Los Arcos · P9 si hay tarifa por semana o mes · P13 llegada después de las 11 PM · P14 formato de precio que pida el contador · P15 «El Mexicano» en Dónde comer
+- [ ] 🏨 Reseñas reales y cortas para el inicio (2 o 3 por hotel, solo primer nombre y mes): hoy se enseña una
+- [ ] 🏨 Confirmar el precio «desde» de la habitación triple de Los Arcos ($1,500 + IVA): el documento no lo menciona
+- [ ] 🏨 Confirmar si Quinta Azul tiene WiFi: el documento no lo lista entre las amenidades de la habitación; el sitio lo sigue diciendo

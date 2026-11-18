@@ -4,7 +4,8 @@
  * Sale del que hoy esta publicado en quintaazul/hotel-quinta-azul y quintaazul/hotel-los-arcos, con tres cambios:
  *   - el aviso al hotel lo arma servicio/correo.ts (con formato, botones para responder y version de solo texto);
  *   - el formulario manda la llegada y la salida aparte (AAAA-MM-DD) ademas del texto de siempre;
- *   - acepta los cuatro tipos de habitacion (antes solo sencilla y doble).
+ *   - acepta los tipos de habitacion que vende cada hotel: Quinta Azul, una sola («habitacion», 1 a 4 personas);
+ *     Los Arcos, sencilla, triple y departamento (la doble ya no se vende desde el 17 de noviembre de 2026).
  * La base de datos no cambia. A que hotel pertenece lo dice la variable HOTEL ("qa" o "la") de wrangler.jsonc; si
  * falta, se deduce del remitente.
  *
@@ -50,7 +51,7 @@ const LIMITES = {
   personasMax: 200,
 } as const;
 
-const HABITACIONES = new Set(['sencilla', 'doble', 'triple', 'departamento']);
+const HABITACIONES: Record<'qa' | 'la', Set<string>> = { qa: new Set(['habitacion']), la: new Set(['sencilla', 'triple', 'departamento']) };
 const esFechaIso = (v: unknown): v is string => typeof v === 'string' && /^\d{4}-\d\d-\d\d$/.test(v);
 const MOTIVOS = new Set(['hospedaje', 'celebracion', 'negocios', 'otro-motivo', 'consulta', 'otro']);
 
@@ -239,12 +240,13 @@ async function recibirSolicitud(request: Request, env: Env, ctx: ExecutionContex
   const nPersonas = Number.parseInt(texto(crudo.personas, 8), 10);
   const personas = Number.isFinite(nPersonas) && nPersonas > 0 && nPersonas <= LIMITES.personasMax ? nPersonas : null;
 
-  const habitacion = HABITACIONES.has(String(crudo.habitacion)) ? String(crudo.habitacion) : '';
+  const idHotel = env.HOTEL === 'la' || (!env.HOTEL && /arcos/i.test(env.CORREO_ORIGEN)) ? 'la' : 'qa';
+  const hotel = HOTELES[idHotel];
+  const habitacion = HABITACIONES[idHotel].has(String(crudo.habitacion)) ? String(crudo.habitacion) : '';
   // Llegada y salida aparte: solo sirven para que el aviso las muestre bien. Si
   // no vienen o no son fechas, el aviso usa el texto de `fechas`.
   const llegada = esFechaIso(crudo.llegada) ? crudo.llegada : undefined;
   const salida = llegada && esFechaIso(crudo.salida) && crudo.salida > llegada ? crudo.salida : undefined;
-  const hotel = HOTELES[env.HOTEL === 'la' || (!env.HOTEL && /arcos/i.test(env.CORREO_ORIGEN)) ? 'la' : 'qa'];
   const motivo = MOTIVOS.has(String(crudo.motivo)) ? String(crudo.motivo) : '';
   const recibida_en = new Date().toISOString();
 

@@ -3,7 +3,7 @@ hotel: la
 slug: grutas-de-garcia-horarios-y-precios
 corto: "Grutas de García"
 titulo: "Grutas de García: horarios, precios y cómo llegar"
-tituloSeo: "Grutas de García: horarios, precios y cómo llegar"
+tituloSeo: "Grutas de García: horarios y precios | Hotel Los Arcos Inn"
 descripcion: "Grutas de García: horario de martes a domingo, precios a pie y en teleférico, cuánto dura el recorrido y cómo llegar desde el centro de García, N.L."
 tema: grutas-y-alrededores
 busqueda: "Grutas de García horarios"
@@ -11,7 +11,7 @@ resumen: "Las Grutas de García abren de martes a domingo, de 9:00 a 17:00, y co
 foto: "grutas-de-garcia-interior-cerca-hotel-los-arcos-inn.jpg"
 fotoAlt: "Interior de las Grutas de García, Nuevo León, con sus formaciones de roca iluminadas"
 publicado: 2026-11-11
-actualizado: 2026-11-11
+actualizado: 2026-11-18
 lectura: 5
 vende: habitaciones
 destacado: true
@@ -65,7 +65,7 @@ Normalmente sí, pero se detiene cuando hay lluvia, viento fuerte o mantenimient
 
 Desde el centro de García toma el Camino a Grutas de García: son 9.5 kilómetros, unos 15 minutos en auto. A medio camino, en el kilómetro 18, pasas por [Xenpal](/blog/xenpal-con-ninos), por si quieres juntar los dos paseos.
 
-Si vienes de Monterrey, primero llegas al pueblo: aquí explicamos [cómo llegar a Los Arcos Inn](/ubicacion).
+Si vienes de Monterrey, primero llegas al pueblo: aquí explicamos [cómo llegar a Hotel Los Arcos Inn](/ubicacion).
 
 ## ¿Qué llevo?
 
@@ -77,4 +77,4 @@ No se permiten mascotas ni carriolas. La visita no se recomienda a personas con 
 
 ## ¿Dónde me quedo?
 
-A 15 minutos de la entrada. En el hotel hay [habitaciones para una a tres personas](/habitaciones) y, si son cuatro o más, [departamentos con cocina](/departamentos). Al bajar de la sierra te esperan la alberca y el jardín.
+A 15 minutos de la entrada. En el hotel hay [habitaciones para una a seis personas](/habitaciones) y, si son cuatro o más, [departamentos con cocina](/departamentos). Al bajar de la sierra te esperan la alberca y el jardín.

@@ -13,7 +13,7 @@ const seo = SEO.faq, total = FAQ.reduce((n, g) => n + g.items.length, 0);
 // a dónde lleva cada grupo: «cada respuesta enlaza a su página» (plan SEO)
 const DESTINO: Record<string, [string, string]> = {
   reservas: ['Reserva directo', '/contacto'], habitaciones: [T.inicio.verHabs, '/' + H.rutaHabs], alberca: [H.id === 'qa' ? 'Hotel con alberca en García' : 'Alberca, jardín y palapa techada', '/'],
-  palapa: [T.palapaBloque.ver, '/celebraciones'], reglas: ['Políticas de reservación', '/politicas'], ubicacion: ['Cómo llegar al hotel', '/ubicacion'],
+  palapa: [T.palapaBloque.ver, '/' + H.rutaPalapa], reglas: ['Políticas de reservación', '/politicas'], ubicacion: ['Cómo llegar al hotel', '/ubicacion'],
 };
 const schema = [{ '@context': 'https://schema.org', '@type': 'FAQPage', '@id': H.sitio + '/preguntas-frecuentes#faq', inLanguage: 'es-MX', about: { '@id': H.sitio + '/#hotel' },
   mainEntity: FAQ.flatMap((g) => g.items).map((p) => ({ '@type': 'Question', name: p.q, acceptedAnswer: { '@type': 'Answer', text: p.a } })) }];
@@ -40,5 +40,5 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'FAQPage', '@id': H
       </div>
     </div>
   </section>
-  <Enlaces enlaces={[[T.inicio.verHabs, '/' + H.rutaHabs], [T.palapaBloque.ver, '/celebraciones'], ['Cómo llegar al hotel', '/ubicacion']]} />
+  <Enlaces enlaces={[[T.inicio.verHabs, '/' + H.rutaHabs], [T.palapaBloque.ver, '/' + H.rutaPalapa], ['Cómo llegar al hotel', '/ubicacion']]} />
 </Base>

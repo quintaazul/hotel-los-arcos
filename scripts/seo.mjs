@@ -35,7 +35,7 @@ const pesos = (n) => String.fromCharCode(36) + n.toLocaleString('es-MX');
 const PERMITIDO = Object.fromEntries(['qa', 'la'].map((k, i) => [k, { 'las Grutas': [dist[i].grutas], Xenpal: [dist[i].xenpal], Monterrey: [dist[i].monterrey, 45] }]));
 const DISTANCIAS = [[/(?:[Aa]|[Uu]nos|≈|[Ss]on) (\d+) min(?:utos)?(?: en auto)?,? (?:de|del|a) (?:las |la entrada de las )?Grutas/g, 'las Grutas'], [/(?:[Aa]|[Uu]nos|≈) (\d+) min(?:utos)?(?: en auto)? (?:de|a) Xenpal/g, 'Xenpal'], [/Xenpal[^.|]{0,40}?(?:a|unos|≈) (\d+) min/g, 'Xenpal'], [/(?:[Aa]|[Uu]nos|≈) (\d+) min(?:utos)?(?: en auto)? de (?:Monterrey|la Macroplaza)/g, 'Monterrey'], [/Desde (?:Monterrey|la Macroplaza)[^.|]{0,40}?(?:≈|unos|alrededor de) (\d+) min/g, 'Monterrey']];
 const REDIRIGE = JSON.parse(readFileSync(R + 'src/data/redirecciones.json', 'utf8'));
-const VENDEN = /^\/(hospedaje|habitaciones|celebraciones|departamentos|empresas|ubicacion|contacto)(#.*)?$/;
+const VENDEN = /^\/(hospedaje|habitaciones|celebraciones|palapa|departamentos|empresas|ubicacion|contacto)(#.*)?$/;
 const lista = (d, b = '') => readdirSync(d).flatMap((f) => { const p = d + '/' + f; return statSync(p).isDirectory() ? (f === '_astro' ? [] : lista(p, b + f + '/')) : f.endsWith('.html') ? [b + f] : []; });
 const texto = (s) => s.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<svg[\s\S]*?<\/svg>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
 const at = (h, re) => (h.match(re) || [])[1] || '';

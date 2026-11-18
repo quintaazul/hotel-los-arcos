@@ -3,26 +3,26 @@ hotel: qa
 slug: posada-navidena-en-palapa
 corto: "Posada en la palapa"
 titulo: "Cómo organizar una posada navideña en palapa"
-tituloSeo: "Posada navideña en palapa en García, N.L. | Quinta Azul"
+tituloSeo: "Posada navideña en palapa en García | Hotel Quinta Azul"
 descripcion: "Cómo organizar una posada navideña en palapa en García, N.L.: cuándo apartar, qué llevar, cómo acomodar la noche y dónde se quedan tus invitados."
 tema: fiestas-en-la-palapa
 busqueda: "posada navideña en palapa"
-resumen: "Las posadas se hacen del 16 al 24 de diciembre. Nuestra palapa para fiestas recibe hasta 60 personas junto a la alberca, con asador, barra y baños: tú llevas la piñata, el ponche y la cena, y la fecha se aparta por WhatsApp."
+resumen: "Las posadas se hacen del 16 al 24 de diciembre. Nuestra palapa recibe hasta 60 personas junto a la alberca, con asador, refrigerador y baños: tú llevas la piñata, el ponche y la cena, y la fecha se aparta por WhatsApp."
 foto: "palapa-asador-columnas-atardecer-hotel-quinta-azul.jpg"
-fotoAlt: "El asador y la barra de la palapa del Hotel Quinta Azul, entre columnas de azulejo, al atardecer"
+fotoAlt: "El asador de la palapa del Hotel Quinta Azul, entre columnas de azulejo, al atardecer"
 publicado: 2026-11-11
-actualizado: 2026-11-11
+actualizado: 2026-11-18
 lectura: 4
 vende: palapa
 destacado: true
 datos:
   - ["Fechas", "16 al 24 de diciembre"]
   - ["Capacidad", "Hasta 60 personas"]
-  - ["En la palapa", "Asador, barra y baños"]
+  - ["En la palapa", "Asador, refrigerador y baños"]
 preguntas:
-  - ["¿Cuántas personas caben en la posada?", "Hasta 60 personas en la palapa para fiestas, que está junto a la alberca."]
+  - ["¿Cuántas personas caben en la posada?", "Hasta 60 personas en la palapa, que está junto a la alberca."]
   - ["¿Cuánto cuesta rentar la palapa para una posada?", "Depende de la fecha y del horario. Escríbenos por WhatsApp con el día y cuántos son, y te mandamos la cotización."]
-  - ["¿Los invitados pueden quedarse a dormir?", "Sí. Hay habitaciones desde $900 la noche y tarifa de grupo a partir de 3 habitaciones."]
+  - ["¿Los invitados pueden quedarse a dormir?", "Sí. Hay habitaciones para hasta 4 personas desde $900 + IVA la noche, y descuento para grupos de 3 habitaciones o más."]
   - ["¿Con cuánto tiempo conviene apartar?", "Los viernes y sábados de diciembre son los primeros en ocuparse. En cuanto tengas la fecha, escríbenos para revisarla."]
 ---
 
@@ -37,12 +37,11 @@ La tradición marca nueve noches, del 16 al 24 de diciembre. En la práctica, la
 Es un espacio techado junto a la alberca, para hasta 60 personas, con:
 
 - Asador de carbón.
-- Barra con bancos, para servir la cena y el ponche.
 - Refrigerador.
 - Baños.
 - Abanicos y techo completo.
 
-El estacionamiento está dentro del hotel y no tiene costo. Puedes ver cada cosa en la página de [renta de palapa para fiestas](/celebraciones).
+El estacionamiento está dentro del hotel y no tiene costo. Puedes ver cada cosa en la página de la [palapa con alberca](/celebraciones).
 
 ## ¿Qué llevo?
 
@@ -59,12 +58,12 @@ El estacionamiento está dentro del hotel y no tiene costo. Puedes ver cada cosa
 1. **Llegada.** Recibe con ponche mientras llegan todos.
 2. **La posada.** La mitad pide posada afuera y la otra mitad responde adentro.
 3. **La piñata.** Primero los niños, después los adultos.
-4. **La cena.** Se sirve en la barra y cada quien se acomoda.
+4. **La cena.** Se sirve en una mesa y cada quien se acomoda.
 5. **El brindis y los aguinaldos.** Al final, antes de que los más chicos se duerman.
 
 ## ¿Dónde se quedan los que vienen de fuera?
 
-En el mismo hotel. Las [habitaciones desde $900](/hospedaje) tienen aire acondicionado, pantalla, frigobar, microondas y WiFi, y si reservan 3 o más hay tarifa de grupo. Nadie tiene que manejar de regreso a Monterrey de noche.
+En el mismo hotel. Las [habitaciones desde $900 + IVA](/hospedaje) son para hasta 4 personas y tienen aire acondicionado, televisión, frigobar y microondas; si reservan 3 o más, hay descuento. Nadie tiene que manejar de regreso a Monterrey de noche.
 
 ## ¿Cómo aparto la fecha?
 

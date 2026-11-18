@@ -61,7 +61,8 @@ const hotel: Record<string, unknown> = {
   address: { '@type': 'PostalAddress', streetAddress: H.calle, addressLocality: 'García', addressRegion: 'Nuevo León', postalCode: '66000', addressCountry: 'MX' },
   geo: { '@type': 'GeoCoordinates', latitude: H.lat, longitude: H.lng },
   hasMap: mapsBuscar(),
-  sameAs: [H.facebook, H.igUrl],
+  sameAs: H.redes.map(([, , url]) => url),
+  foundingDate: H.fundado,
   // recepción y reservas: todos los días de 7:00 a 23:00
   openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '07:00', closes: '23:00' }],
   contactPoint: [{ '@type': 'ContactPoint', contactType: 'reservations', telephone: H.telLink, availableLanguage: ['es'], areaServed: 'MX', hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '07:00', closes: '23:00' } }],
@@ -69,16 +70,17 @@ const hotel: Record<string, unknown> = {
   checkinTime: '14:00',
   checkoutTime: '11:00',
   petsAllowed: false,
-  ...(H.id === 'qa' ? { smokingAllowed: false } : {}),
+  smokingAllowed: false,
   availableLanguage: ['es'],
   amenityFeature: H.incluye.map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
   containsPlace: [
-    { '@type': 'EventVenue', '@id': H.sitio + '/celebraciones#palapa', name: palapa, maximumAttendeeCapacity: 60, url: H.sitio + '/celebraciones' },
+    // La palapa de Quinta Azul se renta para reuniones de hasta 60 personas; la de Los Arcos es solo para huéspedes
+    ...(H.id === 'qa' ? [{ '@type': 'EventVenue', '@id': H.sitio + '/celebraciones#palapa', name: palapa, maximumAttendeeCapacity: 60, url: H.sitio + '/celebraciones' }] : []),
     ...H.habs.map((x) => ({ '@type': x.id === 'depa' ? 'Apartment' : 'HotelRoom', name: x.nombre, description: x.texto, occupancy: { '@type': 'QuantitativeValue', maxValue: x.personas }, ...(x.id === 'depa' ? { numberOfBedrooms: 2 } : x.camas ? { bed: x.camas } : {}), url: H.sitio + (x.id === 'depa' ? '/departamentos' : '/' + H.rutaHabs) })),
   ],
   makesOffer: H.habs.filter((x) => x.precio).map((x) => ({
     '@type': 'Offer', priceCurrency: 'MXN', price: x.precio,
-    priceSpecification: { '@type': 'UnitPriceSpecification', price: x.precio, priceCurrency: 'MXN', unitCode: 'DAY', unitText: 'noche' }, availability: 'https://schema.org/InStock', url: H.sitio + (x.id === 'depa' ? '/departamentos' : '/' + H.rutaHabs),
+    priceSpecification: { '@type': 'UnitPriceSpecification', price: x.precio, minPrice: x.precio, priceCurrency: 'MXN', unitCode: 'DAY', unitText: 'noche', valueAddedTaxIncluded: false }, availability: 'https://schema.org/InStock', url: H.sitio + (x.id === 'depa' ? '/departamentos' : '/' + H.rutaHabs),
     itemOffered: { '@type': x.id === 'depa' ? 'Apartment' : 'HotelRoom', name: x.nombre, occupancy: { '@type': 'QuantitativeValue', maxValue: x.personas }, ...(x.camas ? { bed: x.camas } : {}) }
   }))
 };

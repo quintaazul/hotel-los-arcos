@@ -76,7 +76,7 @@
 .autor p{display:flex;flex-direction:column;font-size:var(--t-chico);line-height:1.4;color:rgb(255 255 255 / .97)}
 .autor p b{font-size:var(--t-ui);font-weight:var(--p-fuerte)}
 .autor-fechas{padding-left:var(--e-4);border-left:1px solid rgb(255 255 255 / .4)}
-.indice-art h2{font-size:var(--t-base);font-weight:var(--p-medio);color:var(--c-texto-2)}
+.indice-art h2,.indice-art .indice-art-tit{font-size:var(--t-base);font-weight:var(--p-medio);color:var(--c-texto-2)}
 .resumen{margin-bottom:var(--e-10);padding:var(--e-6) var(--e-7);border-radius:var(--r-tarjeta);background:var(--c-marca-suave)}
 .cuerpo .resumen-tit{margin:0 0 var(--e-2);font-size:var(--t-micro);font-weight:var(--p-fuerte);letter-spacing:.09em;text-transform:uppercase;color:var(--c-texto-marca)}
 .cuerpo .resumen p:last-child{margin:0;font-size:var(--t-cuerpo-l);line-height:1.55;color:var(--c-texto)}

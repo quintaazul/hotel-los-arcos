@@ -1,7 +1,9 @@
 ---
 // Ubicación. Orden del documento del rediseño: dirección, mapa y botón de Google Maps; cómo llegar desde Monterrey
 // (en Quinta Azul, también desde el aeropuerto; en Los Arcos, del hotel a las Grutas); lo que encuentras al llegar;
-// qué hay cerca, con sus guías del blog; y los enlaces del plan SEO.
+// qué hay cerca, con sus guías del blog; y los enlaces del plan SEO. Desde el 17 de noviembre de 2026 (documento de
+// cambios) lleva además las secciones de texto de cada hotel —historia del centro, qué hay cerca, dónde comer— y un
+// bloque en inglés marcado con lang="en".
 import Base from '../layouts/Base.astro';
 import PortadaCorta from '../components/PortadaCorta.astro';
 import Mapa from '../components/Mapa.astro';
@@ -23,6 +25,8 @@ const t = T.ubicacion, seo = SEO.ubicacion;
     <div class="marco dos llegar">
       <div class="dos-txt">
         <Titulo lineas={[t.llegar.l]} ovalo={t.llegar.o} id="t-llegar" marca />
+        {t.intro && <p class="texto" data-aparece>{t.intro}</p>}
+        {t.llegar.texto && <p class="texto" data-aparece>{t.llegar.texto}</p>}
         <ol class="pasos" style={`--n:${H.pasos.length - 1}`}>{H.pasos.map((p, k) => <li data-aparece style={`--k:${k}`}><p>{p}</p></li>)}</ol>
         {t.extras.map((x) => <div class="llegar-extra" data-aparece><h3>{x.titulo}</h3><p>{x.texto}</p></div>)}
         <div class="llegar-pie" data-aparece>
@@ -34,6 +38,20 @@ const t = T.ubicacion, seo = SEO.ubicacion;
     </div>
   </section>
   <Mapa />
+  {t.secciones.map((x) => (
+    <section class="seccion sin-arriba" aria-labelledby={'t-' + x.id}>
+      <div class="marco">
+        <div class="habs-cab">
+          <Titulo lineas={[x.l]} ovalo={x.o} id={'t-' + x.id} marca />
+          <div class="lado">
+            {x.texto && <p class="texto" data-aparece>{x.texto}</p>}
+            {x.lista && <ul class="datos lista">{x.lista.map(([a, b], i) => <li data-aparece style={`--orden:${i}`}><Icono n="pin" /><span><b>{a}:</b> {b}</span></li>)}</ul>}
+            {x.fuente && <p class="nota-p" data-aparece>Fuente: <a href={x.fuente[1]} target="_blank" rel="noopener">{x.fuente[0]}</a></p>}
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
   <section class="seccion al-llegar" aria-labelledby="t-al-llegar">
     <div class="marco">
       <div class="habs-cab">
@@ -43,5 +61,13 @@ const t = T.ubicacion, seo = SEO.ubicacion;
     </div>
   </section>
   <BlogCorto forma="abanico" deTema={t.blog.tema} estricto mini="Del blog" lineas={[t.blog.l]} ovalo={t.blog.o} texto={t.blog.texto} clase="sin-arriba" />
+  <section class="seccion sin-arriba" aria-labelledby="t-in-english" lang={t.ingles.lang}>
+    <div class="marco">
+      <div class="habs-cab">
+        <Titulo lineas={[t.ingles.l]} ovalo={t.ingles.o} id="t-in-english" marca />
+        <div class="lado"><p class="texto" data-aparece>{t.ingles.texto}</p></div>
+      </div>
+    </div>
+  </section>
   <Enlaces enlaces={t.enlaces} />
 </Base>

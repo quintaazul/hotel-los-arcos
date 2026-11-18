@@ -10,11 +10,8 @@ import Foto from './Foto.astro';
 import Titulo from './Titulo.astro';
 import TarjetaArticulo from './TarjetaArticulo.astro';
 const simbolo = H.id === 'qa' ? 'simbolo' : 'arcos';
-const redes = [
-  { ico: 'instagram', t: 'Instagram ' + H.ig, href: H.igUrl },
-  { ico: 'facebook', t: 'Facebook', href: H.facebook },
-  { ico: 'wa', t: 'WhatsApp ' + H.tel, href: waLink() },
-];
+// Las redes salen de los datos del hotel (H.redes), las mismas que lleva el marcado para Google (sameAs)
+const redes = [...H.redes.map(([ico, t, href]) => ({ ico, t, href })), { ico: 'wa', t: 'WhatsApp ' + H.tel, href: waLink() }];
 const recientes = (await articulos()).slice(0, 3);
 ---
 <footer class="pie sobre-oscuro" id="pie">
@@ -31,7 +28,7 @@ const recientes = (await articulos()).slice(0, 3);
             <li><a href={'/' + H.rutaHabs}>Habitaciones</a></li>
             {H.id === 'la' && <li><a href="/departamentos">Departamentos</a></li>}
             {H.id === 'la' && <li><a href="/empresas">Empresas</a></li>}
-            <li><a href="/celebraciones">Celebraciones</a></li>
+            <li><a href={'/' + H.rutaPalapa}>{H.id === 'qa' ? 'Celebraciones' : 'Palapa'}</a></li>
             <li><a href="/ubicacion">Ubicación</a></li>
             <li><a href="/blog">Blog</a></li>
             <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>

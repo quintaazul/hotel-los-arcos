@@ -276,7 +276,8 @@ $$<HTMLFormElement>('form[data-enviar]').forEach((f) => {
     const d = new FormData();
     d.set('nombre', valor('nombre')); d.set('contacto', valor('contacto')); d.set('fechas', fechas); d.set('personas', valor('personas'));
     if (valor('llegada')) d.set('llegada', valor('llegada')); if (valor('llegada') && valor('salida')) d.set('salida', valor('salida'));   // aparte y en AAAA-MM-DD, para que el correo del hotel las muestre bien
-    d.set('habitacion', hab.includes('sencilla') ? 'sencilla' : hab.includes('doble') ? 'doble' : hab.includes('triple') ? 'triple' : hab.includes('departamento') ? 'departamento' : '');
+    // Quinta Azul tiene un solo tipo de habitación («habitacion»); Los Arcos, sencilla, triple y departamento
+    d.set('habitacion', hab.includes('sencilla') ? 'sencilla' : hab.includes('triple') ? 'triple' : hab.includes('departamento') ? 'departamento' : hab.startsWith('habitación') ? 'habitacion' : '');
     d.set('motivo', valor('motivo')); d.set('mensaje', valor('mensaje') || '(sin mensaje)'); d.set('privacidad', 'si');
     const token = (f.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement | null)?.value; if (token) d.set('cf-turnstile-response', token);
     f.classList.add('enviando'); if (fallo) fallo.hidden = true;

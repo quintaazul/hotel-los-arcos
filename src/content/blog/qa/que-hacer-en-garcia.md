@@ -3,7 +3,7 @@ hotel: qa
 slug: que-hacer-en-garcia
 corto: "Planes a 20 minutos"
 titulo: "Qué hacer en García, Nuevo León"
-tituloSeo: "Qué hacer en García, Nuevo León: planes cerca | Quinta Azul"
+tituloSeo: "Qué hacer en García, Nuevo León | Hotel Quinta Azul"
 descripcion: "Qué hacer en García, N.L.: centro histórico, Museo El Ojo, sierra, viñedo y planes en pareja, con la distancia en auto desde el centro."
 tema: planes-en-garcia
 busqueda: "qué hacer en García"
@@ -11,7 +11,7 @@ resumen: "En García puedes recorrer a pie el centro histórico y el Museo El Oj
 foto: "sierra-de-garcia-panoramica-cerca-hotel-quinta-azul.jpg"
 fotoAlt: "La sierra de García, Nuevo León, vista desde el camino"
 publicado: 2026-11-11
-actualizado: 2026-11-11
+actualizado: 2026-11-18
 lectura: 5
 vende: ubicacion
 esencial: true
@@ -66,4 +66,4 @@ La Vinícola Maravillas, en el ejido Maravillas, ofrece recorridos por el viñed
 - **Mediodía:** comida en el centro y vuelta por la plaza y los museos.
 - **Tarde:** alberca en el hotel, que abre hasta las 10 PM.
 
-Para quedarte, las [habitaciones desde $900](/hospedaje) están a unas cuadras de la plaza. Si vienes en auto, aquí explicamos [cómo llegar desde Monterrey](/ubicacion).
+Para quedarte, las [habitaciones desde $900 + IVA](/hospedaje) están a dos cuadras de la plaza. Si vienes en auto, aquí explicamos [cómo llegar desde Monterrey](/ubicacion).

@@ -3,7 +3,7 @@ hotel: la
 slug: departamento-o-cuarto-de-hotel
 corto: "¿Departamento o cuarto?"
 titulo: "¿Departamento o cuarto de hotel? Qué conviene según cuántos son"
-tituloSeo: "¿Departamento o cuarto de hotel en García, N.L.?"
+tituloSeo: "¿Departamento o cuarto de hotel? | Hotel Los Arcos Inn"
 descripcion: "Cuándo conviene un departamento con cocina y cuándo un cuarto de hotel en García, N.L., según cuántos viajan, cuántas noches y si van a cocinar."
 tema: estancias-largas
 busqueda: "departamento con cocina en García"
@@ -11,18 +11,18 @@ resumen: "Si viajan cuatro o más, o se quedan más de un par de noches, el depa
 foto: "departamento-cocina-equipada-hotel-los-arcos-inn.jpg"
 fotoAlt: "Cocina equipada de un departamento del Hotel Los Arcos Inn, en García, Nuevo León"
 publicado: 2026-11-09
-actualizado: 2026-11-11
+actualizado: 2026-11-18
 lectura: 3
 vende: departamentos
 esencial: true
 datos:
   - ["Departamento", "2 recámaras, sala y cocina"]
   - ["Para", "4 a 8 personas"]
-  - ["Se renta", "Por noche, semana o mes"]
+  - ["Para quedarse", "Una noche o varias semanas"]
 preguntas:
   - ["¿Cuántas personas caben en un departamento?", "De 4 a 8 personas, en 2 recámaras."]
   - ["¿Los departamentos están en otro lugar?", "No. Están dentro del mismo hotel, así que usan la alberca, el jardín y el estacionamiento."]
-  - ["¿Cuánto cuesta el departamento?", "Desde $2,000 la noche. Por semana o por mes hay tarifa especial: pídela por WhatsApp con tus fechas."]
+  - ["¿Cuánto cuesta el departamento?", "Desde $2,000 + IVA la noche. Si te quedas varios días, escríbenos con tus fechas y te damos el total."]
 ---
 
 La pregunta llega cada semana por WhatsApp: «Somos cinco, ¿qué nos conviene?». La respuesta depende de tres cosas: cuántos son, cuántas noches se quedan y si piensan cocinar.
@@ -31,10 +31,10 @@ La pregunta llega cada semana por WhatsApp: «Somos cinco, ¿qué nos conviene?�
 
 | <span class="sr">Concepto</span> | Habitación | Departamento |
 | --- | --- | --- |
-| Para cuántos | 1 a 3 personas | 4 a 8 personas |
+| Para cuántos | 1 a 6 personas | 4 a 8 personas |
 | Espacios | Recámara y baño | 2 recámaras, sala y cocina |
 | Cocina | Frigobar y microondas | Cocina equipada |
-| Precio | Desde $900 la noche | Desde $2,000 la noche |
+| Precio | Desde $900 + IVA la noche | Desde $2,000 + IVA la noche |
 
 Los dos tienen aire acondicionado, pantalla y WiFi, y comparten la alberca, el jardín y el estacionamiento.
 
@@ -55,4 +55,4 @@ Se combinan: un departamento y las habitaciones que hagan falta. A partir de 3 h
 
 ## ¿Cómo reservo?
 
-Mira las fotos y lo que incluye cada uno en [departamentos por semana o mes](/departamentos) y en [habitaciones sencillas y triples](/habitaciones). Después escríbenos por WhatsApp con las fechas y cuántos son.
+Mira las fotos y lo que incluye cada uno en [departamentos para una semana o más](/departamentos) y en [habitaciones sencillas y triples](/habitaciones). Después escríbenos por WhatsApp con las fechas y cuántos son.

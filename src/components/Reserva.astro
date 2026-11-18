@@ -58,12 +58,14 @@ const SEM = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
   type Parte = { hab: { nombre: string; precio: number | null }; n: number };
   function sugerida(p: number): Parte[] {
     const h = D.habs;
-    if (D.id === 'qa') return p <= 1 ? [{ hab: h[0], n: 1 }] : [{ hab: h[1], n: Math.floor(p / 2) }, ...(p % 2 ? [{ hab: h[0], n: 1 }] : [])];
+    // Quinta Azul: nueve habitaciones iguales, de 1 a 4 personas. Los Arcos: sencilla (1 o 2), triple (3 a 6) y
+    // departamento (4 a 8). Documento de cambios del 17 de noviembre de 2026.
+    if (D.id === 'qa') return [{ hab: h[0], n: Math.ceil(p / 4) }];
     if (p <= 2) return [{ hab: h[0], n: 1 }];
-    if (p === 3) return [{ hab: h[2], n: 1 }];
-    return [{ hab: h[3], n: Math.ceil(p / 8) }];
+    if (p <= 6) return [{ hab: h[1], n: 1 }];
+    return [{ hab: h[2], n: Math.ceil(p / 8) }];
   }
-  const enPlural = (nom: string) => (/^departamento/i.test(nom) ? nom.toLowerCase().replace('departamento', 'departamentos') : nom.toLowerCase().replace('habitación', 'habitaciones') + 's');
+  const enPlural = (nom: string) => (/^departamento/i.test(nom) ? nom.toLowerCase().replace('departamento', 'departamentos') : /^habitación (sencilla|triple)$/i.test(nom) ? nom.toLowerCase().replace('habitación', 'habitaciones') + 's' : nom.toLowerCase().replace('habitación', 'habitaciones'));
   const conArticulo = (nom: string) => (/^departamento/i.test(nom) ? 'el ' : 'la ') + nom.toLowerCase();
   const listado = (ps: Parte[]) => (ps.length === 1 && ps[0].n === 1 ? conArticulo(ps[0].hab.nombre) : ps.map((x) => x.n + ' ' + (x.n > 1 ? enPlural(x.hab.nombre) : x.hab.nombre.toLowerCase())).join(' y '));
   const txtNoches = () => noches() + (noches() === 1 ? ' noche' : ' noches');
@@ -76,7 +78,8 @@ const SEM = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
     ll.textContent = r.llegada ? fechaMedia(r.llegada) : 'Elige fecha'; ll.classList.toggle('sin-valor', !r.llegada);
     sa.textContent = r.salida ? fechaMedia(r.salida) : 'Elige fecha'; sa.classList.toggle('sin-valor', !r.salida);
     $('#val-personas')!.textContent = txtPersonas();
-    $('#val-estimado')!.textContent = !n ? 'elige tus fechas' : sinPrecio ? 'precio por confirmar' : dinero(total * n) + ' aprox.';
+    // Todos los precios son «desde» y sin IVA: el estimado lo dice igual
+    $('#val-estimado')!.textContent = !n ? 'elige tus fechas' : sinPrecio ? 'precio por confirmar' : 'desde ' + dinero(total * n) + ' + IVA';
     $('#sub-estimado')!.textContent = n ? txtNoches() + ' · ' + nombre : '';
     $('#pers-nota')!.textContent = 'Te sugerimos ' + listado(ps) + '.';
     $('#out-adultos')!.textContent = String(r.adultos); $('#out-ninos')!.textContent = String(r.ninos);

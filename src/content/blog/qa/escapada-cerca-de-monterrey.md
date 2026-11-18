@@ -3,7 +3,7 @@ hotel: qa
 slug: escapada-cerca-de-monterrey
 corto: "Escapada de dos días"
 titulo: "Escapada cerca de Monterrey: un fin de semana en García"
-tituloSeo: "Escapada cerca de Monterrey: 2 días en García | Quinta Azul"
+tituloSeo: "Escapada de 2 días cerca de Monterrey | Hotel Quinta Azul"
 descripcion: "Plan de dos días en García, N.L., a menos de una hora de Monterrey: sábado de sierra y pueblo, alberca hasta las 10 PM y domingo sin prisa."
 tema: escapadas
 busqueda: "escapada cerca de Monterrey"
@@ -11,7 +11,7 @@ resumen: "García queda a unos 38 km del centro de Monterrey. Sal el sábado tem
 foto: "alberca-atardecer-palmas-hotel-quinta-azul.jpg"
 fotoAlt: "La alberca del Hotel Quinta Azul al atardecer, con palmas"
 publicado: 2026-11-09
-actualizado: 2026-11-11
+actualizado: 2026-11-18
 lectura: 3
 vende: habitaciones
 verificado: 2026-11-11
@@ -46,4 +46,4 @@ Traje de baño, bloqueador, sandalias y una sudadera ligera: al caer el sol refr
 
 ## ¿Dónde me quedo?
 
-Las [habitaciones desde $900 la noche](/hospedaje) tienen dos camas queen, aire acondicionado, pantalla y WiFi. Para saber cómo entrar al pueblo y dónde dar vuelta, revisa [cómo llegar desde Monterrey](/ubicacion).
+Las [habitaciones desde $900 + IVA la noche](/hospedaje) son para hasta 4 personas, con dos camas queen, vista a la sierra, aire acondicionado y televisión. Para saber cómo entrar al pueblo y dónde dar vuelta, revisa [cómo llegar desde Monterrey](/ubicacion).

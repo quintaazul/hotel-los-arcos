@@ -4,7 +4,7 @@
 // reuniones en familia y de estancias largas. Un artículo nunca persigue una búsqueda del otro hotel.
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { H, waLink } from './hoteles';
-import { TIPOS, DESDE } from './textos';
+import { TIPOS, DESDE_IVA } from './textos';
 
 export type Art = CollectionEntry<'blog'>;
 // meta: la descripción para buscadores de la página del tema (propia, de 120 a 155 caracteres)
@@ -15,7 +15,7 @@ const QA = {
   // «Qué hacer en García» es la búsqueda de un artículo (/blog/que-hacer-en-garcia): ni el título del blog ni el
   // nombre de un tema la usan, para no competir con él.
   titulo: 'Guías para tu visita a García, N.L.',
-  seo: 'Blog del Hotel Quinta Azul: guías de García, N.L.',
+  seo: 'Guías de García, N.L. | Hotel Quinta Azul',
   descripcion: 'Guías del equipo del Hotel Quinta Azul: qué hacer en García, cómo organizar tu fiesta en la palapa y escapadas de fin de semana cerca de Monterrey.',
   entrada: 'Planes en García, ideas para tu fiesta en la palapa y escapadas de fin de semana, contadas por quienes te reciben en el hotel.',
   temas: [
@@ -23,34 +23,33 @@ const QA = {
     { id: 'fiestas-en-la-palapa', nombre: 'Fiestas en la palapa', texto: 'Cómo organizar tu fiesta junto a la alberca: qué hay, qué llevar y cómo apartar.', meta: 'Cómo organizar una fiesta en la palapa del Hotel Quinta Azul, en García, N.L.: qué hay, qué llevar, cómo apartar y dónde se quedan tus invitados.' },
     { id: 'escapadas', nombre: 'Escapadas desde Monterrey', texto: 'Fines de semana con alberca a media hora de Monterrey.', meta: 'Ideas para un fin de semana con alberca en García, N.L., cerca de Monterrey: qué hacer, qué llevar y dónde quedarte, por el Hotel Quinta Azul.' },
   ] as Tema[],
-  cierre: { titulo: 'Reserva directo o cotiza la palapa', texto: 'Te respondemos por WhatsApp de 7 AM a 11 PM.', enlace: 'Renta de palapa para fiestas', href: '/celebraciones' },
+  cierre: { titulo: 'Reserva directo o cotiza la palapa', texto: 'Te respondemos por WhatsApp de 7 AM a 11 PM.', enlace: 'Palapa con alberca en García', href: '/celebraciones' },
 };
 const LA = {
   titulo: 'Guías para visitar las Grutas de García y sus alrededores',
-  seo: 'Guía de las Grutas de García y alrededores | Los Arcos Inn',
-  descripcion: 'Guías del equipo de Los Arcos Inn para visitar las Grutas de García, Xenpal y sus alrededores, y para organizar estancias largas y reuniones.',
-  entrada: 'Las Grutas y lo que hay alrededor, reuniones en familia y estancias de semanas, explicado por el equipo que te recibe en el hotel.',
+  seo: 'Guía de las Grutas de García | Hotel Los Arcos Inn',
+  descripcion: 'Guías del equipo de Hotel Los Arcos Inn para visitar las Grutas de García, Xenpal y sus alrededores, y para hospedar a la familia por días o semanas.',
+  entrada: 'Las Grutas y lo que hay alrededor, dónde se queda la familia y estancias de semanas, explicado por el equipo que te recibe en el hotel.',
   temas: [
-    { id: 'grutas-y-alrededores', nombre: 'Grutas y alrededores', texto: 'Las Grutas de García y los paseos que quedan sobre el mismo camino.', meta: 'Guías de Los Arcos Inn para las Grutas de García y lo que hay sobre el mismo camino: horarios, precios, paseos con niños y cómo llegar.' },
-    { id: 'reuniones-en-familia', nombre: 'Reuniones en familia', texto: 'Ideas para juntar a la familia en el jardín y bajo la palapa techada.', meta: 'Ideas para reunir a la familia en el jardín con palapa techada de Los Arcos Inn, en García, N.L., y dónde se quedan los que vienen de fuera.' },
-    { id: 'estancias-largas', nombre: 'Estancias largas', texto: 'Departamentos con cocina para quedarse semanas o meses en García.', meta: 'Cuándo conviene un departamento con cocina en García, N.L., para quedarse varios días o semanas, explicado por el equipo de Los Arcos Inn.' },
+    { id: 'grutas-y-alrededores', nombre: 'Grutas y alrededores', texto: 'Las Grutas de García y los paseos que quedan sobre el mismo camino.', meta: 'Guías de Hotel Los Arcos Inn para las Grutas de García y lo que hay sobre el mismo camino: horarios, precios, paseos con niños y cómo llegar.' },
+    { id: 'reuniones-en-familia', nombre: 'Reuniones en familia', texto: 'Dónde se queda la familia cuando viene a una fiesta o de visita a García.', meta: 'Dónde hospedar a la familia que viene a una fiesta o de visita a García, N.L.: habitaciones y departamentos de Hotel Los Arcos Inn, en el centro.' },
+    { id: 'estancias-largas', nombre: 'Estancias largas', texto: 'Departamentos con cocina para quedarse semanas o meses en García.', meta: 'Cuándo conviene un departamento con cocina en García, N.L., para quedarse varios días o semanas, explicado por el equipo de Hotel Los Arcos Inn.' },
   ] as Tema[],
-  cierre: { titulo: 'Aparta tu estancia o cotiza tu reunión', texto: 'Te respondemos por WhatsApp de 7 AM a 11 PM.', enlace: 'Departamentos por semana o mes', href: '/departamentos' },
+  cierre: { titulo: 'Aparta tu estancia', texto: 'Te respondemos por WhatsApp de 7 AM a 11 PM.', enlace: 'Departamentos para una semana o más', href: '/departamentos' },
 };
 export const BLOG = H.id === 'qa' ? QA : LA;
 // Quien firma. Mientras no haya nombre, foto y puesto de una persona del hotel, firma el equipo (no se inventa a nadie).
-export const AUTOR = { nombre: 'Equipo del ' + H.nombre, puesto: 'Recepción y atención a huéspedes, en García, N.L.', foto: H.id === 'qa' ? 'simbolo-blanco.png' : 'arcos-blanco.png' };
+export const AUTOR = { nombre: 'Equipo de ' + H.nombre, puesto: 'Recepción y atención a huéspedes, en García, N.L.', foto: H.id === 'qa' ? 'simbolo-blanco.png' : 'arcos-blanco.png' };
 
 // La caja «Hospédate cerca» de cada artículo: lleva a la página que vende lo que el artículo cuenta.
-const palapa = H.id === 'qa' ? 'palapa para fiestas' : 'palapa techada';
 export const CAJAS: Record<Art['data']['vende'], Caja> = {
-  habitaciones: { titulo: 'Hospédate cerca', texto: H.id === 'qa' ? 'Habitaciones desde ' + DESDE + ' la noche, con alberca hasta las 10 PM y estacionamiento sin costo, en el centro de García.' : 'Habitaciones desde ' + DESDE + ' la noche, con alberca, jardín y estacionamiento sin costo, en el centro de García.',
-    enlace: H.id === 'qa' ? 'Ver habitaciones desde ' + DESDE : 'Habitaciones ' + TIPOS, href: '/' + H.rutaHabs, wa: 'quiero reservar una habitación' },
-  palapa: { titulo: H.id === 'qa' ? 'Haz tu fiesta aquí' : 'Reúne a los tuyos aquí', texto: H.id === 'qa' ? 'Palapa para fiestas de hasta 60 personas, junto a la alberca, con asador y barra. Tus invitados pueden quedarse a dormir.' : 'Palapa techada para hasta 60 personas, rodeada de jardín. Tus familiares pueden quedarse en las habitaciones o en un departamento.',
-    enlace: H.id === 'qa' ? 'Renta de palapa para fiestas' : 'Palapa techada para reuniones', href: '/celebraciones', wa: 'quiero cotizar la ' + palapa },
-  departamentos: { titulo: 'Quédate el tiempo que haga falta', texto: 'Departamentos con cocina, sala y dos recámaras dentro del hotel, por noche, semana o mes.',
-    enlace: 'Departamentos por semana o mes', href: '/departamentos', wa: 'quiero cotizar un departamento' },
-  empresas: { titulo: 'Hospeda a tu equipo', texto: 'Habitaciones por noche y departamentos por semana o mes, con estacionamiento privado, WiFi y factura.',
+  habitaciones: { titulo: 'Hospédate cerca', texto: H.id === 'qa' ? 'Habitaciones para 1 a 4 personas desde ' + DESDE_IVA + ' la noche, con alberca hasta las 10 PM y estacionamiento, en el centro de García.' : 'Habitaciones desde ' + DESDE_IVA + ' la noche, con alberca, jardín y estacionamiento, en el centro de García.',
+    enlace: H.id === 'qa' ? 'Ver habitaciones desde ' + DESDE_IVA : 'Habitaciones ' + TIPOS, href: '/' + H.rutaHabs, wa: 'quiero reservar una habitación' },
+  palapa: { titulo: H.id === 'qa' ? 'Haz tu reunión aquí' : 'La palapa, para los huéspedes', texto: H.id === 'qa' ? 'Palapa con asador para hasta 60 personas, junto a la alberca. Tus invitados pueden quedarse a dormir en el mismo hotel.' : 'Palapa techada con asador, parrilla de gas y televisión, en el jardín. Es solo para quienes se hospedan en el hotel.',
+    enlace: H.id === 'qa' ? 'Palapa con alberca en García' : 'Palapa techada para huéspedes', href: '/' + H.rutaPalapa, wa: H.id === 'qa' ? 'quiero cotizar la palapa' : 'quiero reservar' },
+  departamentos: { titulo: 'Quédate el tiempo que haga falta', texto: 'Departamentos con cocina, sala y dos recámaras dentro del hotel, para una noche o para varias semanas.',
+    enlace: 'Departamentos para una semana o más', href: '/departamentos', wa: 'quiero cotizar un departamento' },
+  empresas: { titulo: 'Hospeda a tu equipo', texto: 'Habitaciones por noche y departamentos para estancias largas, con estacionamiento privado, WiFi y factura.',
     enlace: 'Hospedaje para empresas con factura', href: '/empresas', wa: 'quiero cotizar hospedaje para mi empresa' },
   ubicacion: { titulo: 'Hospédate cerca', texto: H.id === 'qa' ? 'Estamos en el centro de García, a media hora de Monterrey: llegas, estacionas adentro y la alberca te espera.' : 'Estamos en el centro de García, a 15 minutos de las Grutas, con jardín, alberca y estacionamiento privado.',
     enlace: H.id === 'qa' ? 'Cómo llegar desde Monterrey' : 'Cómo llegar al hotel', href: '/ubicacion', wa: 'quiero reservar' },
