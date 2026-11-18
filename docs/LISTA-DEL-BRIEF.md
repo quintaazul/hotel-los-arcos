@@ -445,3 +445,22 @@ Se aplicaron los textos y datos del documento «Cambios para el desarrollador ·
 - [ ] 🏨 Reseñas reales y cortas para el inicio (2 o 3 por hotel, solo primer nombre y mes): hoy se enseña una
 - [ ] 🏨 Confirmar el precio «desde» de la habitación triple de Los Arcos ($1,500 + IVA): el documento no lo menciona
 - [ ] 🏨 Confirmar si Quinta Azul tiene WiFi: el documento no lo lista entre las amenidades de la habitación; el sitio lo sigue diciendo
+
+**Revisión pantalla por pantalla de estos cambios (17 de noviembre)**
+
+Se revisaron todas las páginas de los dos sitios en celular y en computadora, y se pasaron todos los revisores (8 pantallas, legibilidad, portadas, WhatsApp, huecos, efectos, óvalos y SEO: todos bien).
+
+- [x] La nota del estimado vuelve a ir en un renglón; «+ IVA», horas, porcentajes, kilómetros y teléfonos ya no se parten
+- [x] Los botones que se partían en celular llevan un rótulo corto para celular
+- [x] Fechas de los artículos en 17 de noviembre (estaban en 18 por la hora UTC con que se trabajó)
+- [x] Quinta Azul, con un solo tipo de habitación: sin «Compáralas», «Te conviene» ni «1 de 1»; el formulario dice «Habitación»
+- [x] «del Hotel…» en el texto corrido; el óvalo de Los Arcos vuelve a decir «a Los Arcos Inn»
+- [x] Aire entre secciones de Ubicación y la palapa, y sombreado de siete portadas
+- [x] Bloques del blog de Los Arcos que hablan de las Grutas abren con artículos de las Grutas
+- [x] Menos fotos repetidas en Celebraciones de Quinta Azul (con cuatro fotos de la palapa todavía se repite alguna)
+- [x] El botón de descuento y el de la portada de la palapa llevan lo elegido en WhatsApp
+- [x] Términos con TikTok y el horario de todo el sitio; erratas corregidas
+- [x] De los puntos técnicos de arriba, dos ya estaban: la copia de prueba quita a propósito el mapa del sitio (apunta al dominio real) y ya manda `X-Robots-Tag: noindex, nofollow`
+- [ ] 🏨 Capacidad de Los Arcos: el sitio dice «hasta 42 huéspedes», pero con sus propios datos (2 sencillas de 2, 4 triples de 6 y 2 departamentos de 8) salen 44
+- [ ] 🏨 Descuento de Quinta Azul: casi todo el sitio dice «desde el tercer día de estancia», pero Hospedaje dice «si te quedas tres noches o más». Falta saber cuál es
+- [ ] 🏨 Plaza de Los Arcos: el documento dice «3 minutos caminando por Morelos»; por calle son unos 600 m (más cerca de 7 u 8 minutos a pie)
