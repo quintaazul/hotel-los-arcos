@@ -464,3 +464,8 @@ Se revisaron todas las páginas de los dos sitios en celular y en computadora, y
 - [ ] 🏨 Capacidad de Los Arcos: el sitio dice «hasta 42 huéspedes», pero con sus propios datos (2 sencillas de 2, 4 triples de 6 y 2 departamentos de 8) salen 44
 - [ ] 🏨 Descuento de Quinta Azul: casi todo el sitio dice «desde el tercer día de estancia», pero Hospedaje dice «si te quedas tres noches o más». Falta saber cuál es
 - [ ] 🏨 Plaza de Los Arcos: el documento dice «3 minutos caminando por Morelos»; por calle son unos 600 m (más cerca de 7 u 8 minutos a pie)
+
+**Título de la portada de Quinta Azul (18 de noviembre)**
+
+- [x] Pasa de «Del otro lado te esperan días diferentes» a «Descansa con *la sierra de fondo*» (óvalo en «la sierra de fondo»). Queda en dos renglones, como Los Arcos, en los 9 tamaños; legibilidad, portadas que caben y revisión en 8 pantallas, bien
+- [ ] Alternativas que también caben, por si se prefiere otro enfoque: «Alberca, palapa y / vista a la sierra» o «Tu descanso en / el centro de García»
