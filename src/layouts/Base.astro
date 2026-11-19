@@ -87,7 +87,7 @@ const hotel: Record<string, unknown> = {
 const esquemas = [hotel, ...schema.map((n) => (n['@type'] === 'BlogPosting' && !n.image ? { ...n, image: [ogAbs] } : n))];
 ---
 <!doctype html>
-<html lang="es-MX" data-hotel={H.id}>
+<html lang="es-MX" data-hotel={H.id} data-analitica={H.analitica}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

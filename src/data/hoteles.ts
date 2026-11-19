@@ -20,6 +20,8 @@ export type Hotel = {
   rutaPalapa: string;
   fundado: string;
   turnstile: string;
+  /** Token público de Cloudflare Web Analytics (el mismo que usa el sitio publicado antes del rediseño) */
+  analitica: string;
   dir1: string; dir2: string; calle: string; lat: number; lng: number; pin: [number, number]; pinCel: [number, number];
   // Calificación y número de reseñas en Google, con la fecha del corte (se enseña junto a la cifra)
   rating: number; resenas: number; resenasAl: string; resena: string; habitaciones: number;
@@ -61,7 +63,7 @@ const qa: Hotel = {
   id: 'qa', nombre: 'Hotel Quinta Azul', corto: 'Quinta Azul', sitio: 'https://hotelquintaazul.com', rutaHabs: 'hospedaje',
   descripcion: 'Hotel con alberca y palapa en el centro de García, Nuevo León, a dos cuadras de la plaza. Nueve habitaciones con vista a la sierra, para 1 a 4 personas, desde $900\u00A0+\u00A0IVA por noche.',
   clave: 'Hotel con alberca en García, Nuevo León',
-  wa: '528129218643', tel: '81 2921 8643', telLink: '+528129218643', turnstile: '0x4AAAAAAEp0Zwo-xpt7mMKF', correo: 'hotelquintaazul02@gmail.com', ig: '@hotelquintaazul', igUrl: 'https://www.instagram.com/hotelquintaazul/', facebook: 'https://www.facebook.com/profile.php?id=61557575860076',
+  wa: '528129218643', tel: '81 2921 8643', telLink: '+528129218643', turnstile: '0x4AAAAAAEp0Zwo-xpt7mMKF', analitica: '03bafb2f5ee34a4c988aa3fd8ea7d4a2', correo: 'hotelquintaazul02@gmail.com', ig: '@hotelquintaazul', igUrl: 'https://www.instagram.com/hotelquintaazul/', facebook: 'https://www.facebook.com/profile.php?id=61557575860076',
   redes: [['instagram', 'Instagram @hotelquintaazul', 'https://www.instagram.com/hotelquintaazul/'], ['facebook', 'Facebook', 'https://www.facebook.com/profile.php?id=61557575860076'], ['tiktok', 'TikTok @hotel.quinta.azul', 'https://www.tiktok.com/@hotel.quinta.azul']],
   rutaPalapa: 'celebraciones', fundado: '2024-03-23',
   dir1: 'Bernardo Reyes esquina con Garza Ayala', dir2: 'Centro, García, N.L.', calle: 'Bernardo Reyes esquina con Garza Ayala, Centro',
@@ -147,7 +149,7 @@ const la: Hotel = {
   id: 'la', nombre: 'Hotel Los Arcos Inn', corto: 'Los Arcos Inn', sitio: 'https://www.hotelarcosinn.com', rutaHabs: 'habitaciones',
   descripcion: 'Hotel con jardín en el centro de García, Nuevo León, a 15 minutos de las Grutas de García. Habitaciones sencillas y triples, departamentos con cocina, alberca con chapoteadero y palapa techada para huéspedes.',
   clave: 'Hotel cerca de las Grutas de García, Nuevo León',
-  wa: '528126155485', tel: '81 2615 5485', telLink: '+528126155485', turnstile: '0x4AAAAAAEp0gFQd6jsJHiw2', correo: 'losarcos105@gmail.com', ig: '@losarcosinn105', igUrl: 'https://www.instagram.com/losarcosinn105/', facebook: 'https://www.facebook.com/profile.php?id=100063553089595',
+  wa: '528126155485', tel: '81 2615 5485', telLink: '+528126155485', turnstile: '0x4AAAAAAEp0gFQd6jsJHiw2', analitica: '1229b715140747ab92648d186fa19997', correo: 'losarcos105@gmail.com', ig: '@losarcosinn105', igUrl: 'https://www.instagram.com/losarcosinn105/', facebook: 'https://www.facebook.com/profile.php?id=100063553089595',
   redes: [['instagram', 'Instagram @losarcosinn105', 'https://www.instagram.com/losarcosinn105/'], ['facebook', 'Facebook', 'https://www.facebook.com/profile.php?id=100063553089595'], ['tiktok', 'TikTok @los_arcos_inn', 'https://www.tiktok.com/@los_arcos_inn']],
   rutaPalapa: 'palapa', fundado: '2019-03-01',
   dir1: 'Mariano Escobedo 105-A, entre Bernardo Reyes y Morelos', dir2: 'Centro, García, N.L.', calle: 'Mariano Escobedo 105-A, entre Bernardo Reyes y Morelos, Centro',

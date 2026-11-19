@@ -1,0 +1,46 @@
+// Publicación del rediseño de Los Arcos en su dominio real (www.hotelarcosinn.com).
+// Reemplaza al Worker «hotel-los-arcos» del sitio anterior: mismo nombre, mismo dominio, misma base de datos, mismo
+// correo y mismas variables; cambian el sitio (dist-la) y el servicio (servicio/worker.ts, que agrega los videos por
+// tramos y el correo nuevo). El secreto TURNSTILE_SECRET ya está guardado en el Worker y se conserva.
+// Publicar (con la sesión de Cloudflare de la cuenta de los hoteles): node scripts/publicar-produccion.mjs la
+// /api/*, /sitemap.xml y /video/* pasan siempre por el servicio (sin eso, el 404 del sitio los tapaba).
+// Volver al sitio anterior al instante:  npx wrangler rollback --name hotel-los-arcos  (elige la versión previa)
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "hotel-los-arcos",
+  "main": "../servicio/worker.ts",
+  "compatibility_date": "2026-09-05",
+  "routes": [{ "pattern": "www.hotelarcosinn.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "../dist-la",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/video/*", "/api/*", "/sitemap.xml"]
+  },
+  "observability": {
+    "enabled": true,
+    "traces": { "enabled": true }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "los-arcos-solicitudes",
+      "database_id": "f3e2e6a9-f6f0-4db0-96e4-ba83cfbbfaf5"
+    }
+  ],
+  "send_email": [
+    {
+      "name": "CORREO",
+      "destination_address": "losarcos105@gmail.com"
+    }
+  ],
+  "vars": {
+    "HOTEL": "la",
+    "TURNSTILE_HOSTNAMES": "www.hotelarcosinn.com,hotelarcosinn.com",
+    "CORREO_DESTINO": "losarcos105@gmail.com",
+    "CORREO_ORIGEN": "reservas@hotelarcosinn.com",
+    "ENTORNO": "produccion"
+  }
+}

@@ -4,6 +4,12 @@ const $$ = <T extends HTMLElement = HTMLElement>(s: string, r: ParentNode = docu
 import { hayFlota } from './controles';
 import { ponerEstancia } from './whatsapp';
 const raiz = document.documentElement;
+
+/* Visitas (Cloudflare Web Analytics, sin cookies): solo en el dominio real, nunca en las copias de prueba */
+if (raiz.dataset.analitica && /(^|\.)(hotelquintaazul|hotelarcosinn)\.com$/.test(location.hostname)) {
+  const s = document.createElement('script'); s.defer = true; s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+  s.setAttribute('data-cf-beacon', JSON.stringify({ token: raiz.dataset.analitica })); document.head.appendChild(s);
+}
 const lenis = () => (window as any).__lenis as { stop(): void; start(): void } | undefined;
 
 /* Puntos sobre la foto: se abre uno a la vez, con el ratón, con el teclado o al tocarlo; el índice de al lado hace lo mismo */
