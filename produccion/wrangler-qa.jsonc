@@ -1,0 +1,47 @@
+// Publicación del rediseño de Quinta Azul en su dominio real (hotelquintaazul.com, sin www; www.hotelquintaazul.com
+// lo sigue redirigiendo el Worker «hotel-quinta-azul-www», que no se toca).
+// Reemplaza al Worker «hotel-quinta-azul» del sitio anterior: mismo nombre, mismo dominio, misma base de datos, mismo
+// correo y mismas variables (leídas del Worker publicado el 19 nov 2026); cambian el sitio (dist-qa) y el servicio
+// (servicio/worker.ts). El secreto TURNSTILE_SECRET ya está guardado en el Worker y se conserva.
+// Publicar (con la sesión de Cloudflare de la cuenta de los hoteles): node scripts/publicar-produccion.mjs qa
+// /api/*, /sitemap.xml y /video/* pasan siempre por el servicio (sin eso, el 404 del sitio los tapaba).
+// Volver al sitio anterior al instante:  npx --yes wrangler@4 rollback --name hotel-quinta-azul  (la versión que anota el guion)
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "hotel-quinta-azul",
+  "main": "../servicio/worker.ts",
+  "compatibility_date": "2026-09-05",
+  "routes": [{ "pattern": "hotelquintaazul.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "../dist-qa",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/video/*", "/api/*", "/sitemap.xml"]
+  },
+  "observability": {
+    "enabled": true,
+    "traces": { "enabled": true }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "quinta-azul-solicitudes",
+      "database_id": "38b0142f-d6fd-484e-848d-0a8555622764"
+    }
+  ],
+  "send_email": [
+    {
+      "name": "CORREO",
+      "destination_address": "hotelquintaazul02@gmail.com"
+    }
+  ],
+  "vars": {
+    "HOTEL": "qa",
+    "TURNSTILE_HOSTNAMES": "hotelquintaazul.com,www.hotelquintaazul.com",
+    "CORREO_DESTINO": "hotelquintaazul02@gmail.com",
+    "CORREO_ORIGEN": "reservas@hotelquintaazul.com",
+    "ENTORNO": "produccion"
+  }
+}

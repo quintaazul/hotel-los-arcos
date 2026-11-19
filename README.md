@@ -2,7 +2,7 @@
 
 Un solo proyecto (Astro, sitio estático) que produce los dos sitios, en García, Nuevo León.
 
-**Esta es la rama `rediseno`.** Contiene el rediseño completo de los dos hoteles. **Los Arcos ya está publicado** con él en www.hotelarcosinn.com (desde el 19 de noviembre de 2026); Quinta Azul todavía no. El mismo contenido está en la rama `rediseno` de `quintaazul/hotel-quinta-azul` y de `quintaazul/hotel-los-arcos`. Subir cambios a GitHub no publica nada: se publica con `node scripts/publicar-produccion.mjs`.
+**Esta es la rama `rediseno`.** Contiene el rediseño completo de los dos hoteles. **Los dos hoteles están publicados** con él desde el 19 de noviembre de 2026: www.hotelarcosinn.com y hotelquintaazul.com. El mismo contenido está en la rama `rediseno` de `quintaazul/hotel-quinta-azul` y de `quintaazul/hotel-los-arcos`. Subir cambios a GitHub no publica nada: se publica con `node scripts/publicar-produccion.mjs`.
 
 Para verlo sin instalar nada: https://prueba-quinta-azul.bijuu-nexo.workers.dev y https://prueba-los-arcos.bijuu-nexo.workers.dev (copias de prueba, cerradas a buscadores).
 

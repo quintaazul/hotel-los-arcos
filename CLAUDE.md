@@ -5,18 +5,17 @@ Instrucciones para quien trabaje en este proyecto, sea una persona o un asistent
 ## Contexto: dónde vive este código (léelo primero)
 
 - Esto es la rama **`rediseno`** de los dos repositorios de los hoteles: `quintaazul/hotel-quinta-azul` y `quintaazul/hotel-los-arcos`. Es el mismo proyecto en los dos, porque un solo código produce los dos sitios. Las dos ramas se mantienen idénticas.
-- **Los Arcos ya está publicado con el rediseño** (desde el 19 de noviembre de 2026): www.hotelarcosinn.com sirve lo de esta rama. Su rama `main` es el sitio anterior y se conserva para volver atrás; ya no se publica desde ahí.
-- **Quinta Azul todavía no**: su rama `main` sigue siendo el sitio que está en hotelquintaazul.com. `main` y `rediseno` no comparten historial y **no se mezclan**: nada de merge ni rebase entre ellas.
+- **Los dos hoteles están publicados con el rediseño** desde el 19 de noviembre de 2026: www.hotelarcosinn.com y hotelquintaazul.com sirven lo de esta rama. La rama `main` de cada repositorio es el sitio anterior y se conserva para volver atrás; ya no se publica desde ahí. `main` y `rediseno` no comparten historial y **no se mezclan**: nada de merge ni rebase entre ellas.
 - Las copias de prueba siguen disponibles, cerradas a buscadores: https://prueba-quinta-azul.bijuu-nexo.workers.dev y https://prueba-los-arcos.bijuu-nexo.workers.dev
 - Subir cambios a GitHub **no publica nada**: ningún repositorio tiene publicación automática. Un sitio solo cambia cuando alguien ejecuta a mano la orden de publicar.
 - Para guardar un cambio del rediseño: commit en `rediseno` y subirlo a **los dos** repositorios. Si existe el remoto `hoteles` (apunta a los dos), basta `git push hoteles rediseno`; si no, un push a cada repositorio.
-- **Publicar en el dominio real**: `node scripts/publicar-produccion.mjs la` revisa todo sin subir; con `--si-publicar`, publica y comprueba el sitio en vivo. Usa `produccion/wrangler-la.jsonc` y necesita la sesión de Cloudflare de la cuenta de los hoteles. Quinta Azul se agrega cuando el dueño lo pida (falta su `produccion/wrangler-qa.jsonc`).
-- **Volver atrás** al instante si algo sale mal: `npx --yes wrangler@4 rollback --name hotel-los-arcos` (el guion de publicación anota qué versión estaba antes).
+- **Publicar en el dominio real**: `node scripts/publicar-produccion.mjs la|qa` revisa todo sin subir; con `--si-publicar`, publica y comprueba el sitio en vivo. Usa `produccion/wrangler-la.jsonc` o `produccion/wrangler-qa.jsonc` y necesita la sesión de Cloudflare de la cuenta de los hoteles.
+- **Volver atrás** al instante si algo sale mal: `npx --yes wrangler@4 rollback --name hotel-los-arcos` o `--name hotel-quinta-azul` (el guion de publicación anota qué versión estaba antes).
 
 ## Qué es
 
 - Un solo código (Astro, sitio estático) que produce **dos sitios**: Hotel Quinta Azul (`qa`, azul, hotelquintaazul.com) y Hotel Los Arcos Inn (`la`, naranja, www.hotelarcosinn.com), los dos en García, Nuevo León. El hotel se elige con `HOTEL=qa|la`; lo ponen los guiones, no hay que escribirlo a mano.
-- Es el **rediseño**. El sitio publicado hoy está en la rama `main` de cada repositorio y desde aquí no se toca.
+- Es el **rediseño**, y es lo que está publicado en los dos dominios. La rama `main` de cada repositorio guarda el sitio anterior (para volver atrás) y desde aquí no se toca.
 - Se trabaja y se responde **en español**. Todo lo que lee el dueño va en español, sin tecnicismos.
 
 ## Para empezar
@@ -97,7 +96,7 @@ El dueño mira el sitio **compilado** (4321 y 4322). Lo visual se itera en el ta
 ## Publicar
 
 - **Copia de prueba** (para enseñar y pedir opiniones; va cerrada a buscadores): compilar y después `node scripts/publicar-prueba.mjs qa|la`. Usa la sesión de Cloudflare del equipo (`npx wrangler login`); los nombres están en `prueba/wrangler-*.jsonc`. En noviembre de 2026 quedaron en https://prueba-quinta-azul.bijuu-nexo.workers.dev y https://prueba-los-arcos.bijuu-nexo.workers.dev.
-- **Producción**: `node scripts/publicar-produccion.mjs la` (y `--si-publicar` para subir). Publicar en producción solo cuando el dueño lo pida. Después de cada publicación, que alguien mande una solicitud real desde su celular y el hotel confirme que le llegó el correo.
+- **Producción**: `node scripts/publicar-produccion.mjs la|qa` (y `--si-publicar` para subir). Publicar en producción solo cuando el dueño lo pida. Después de cada publicación, que alguien mande una solicitud real desde su celular y el hotel confirme que le llegó el correo.
 
 ## Qué falta
 

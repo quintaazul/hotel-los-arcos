@@ -489,11 +489,24 @@ El dueño pidió subir Los Arcos al sitio oficial. Quedó publicado en https://w
 - No se encendió Bot Fight Mode a propósito: en el plan gratis no se puede hacer excepción y puede frenar la vista previa de los enlaces en WhatsApp y Facebook, que es por donde reserva la gente
 - [ ] Dar de alta el mapa del sitio en Search Console y en Bing
 - [ ] Pendientes de datos que ya están publicados así: capacidad (42 o 44), minutos a pie a la plaza, foto de la habitación triple y si los departamentos tienen aire, televisión y WiFi
-- [ ] Quinta Azul sigue con el sitio anterior hasta que se pida
+- [x] Quinta Azul también se publicó el mismo día (sección 19)
 - Volver al sitio anterior, si hiciera falta: `npx --yes wrangler@4 rollback --name hotel-los-arcos 9e7875ff-e770-41ab-8cd7-bb8defbc8391`
 
 ## 18. Cambios pequeños de Quinta Azul (19 de noviembre)
 
 - [x] La palapa recibe hasta **30** personas (antes decía 60) en todo el sitio nuevo: textos, preguntas, artículos del blog, datos para Google, cifras y el formulario de cotizar (abre en 20 y llega hasta 30). Los Arcos no cambia
-- [ ] El sitio publicado hoy de Quinta Azul (el anterior, rama `main`) todavía dice «hasta 60 personas»
+- [x] (Resuelto al publicar el rediseño el mismo día) El sitio anterior de Quinta Azul decía «hasta 60 personas»
 - [x] (Hecho el 19 de noviembre: las dos fotos regresaron limpias; fuera del cielo no cambió nada, medido píxel por píxel, y se guardaron con calidad 90 como las demás) Quitar las varillas y los restos de construcción del cielo en las dos fotos de la palapa que lo muestran. Paquete para Codex en `E:/hoteles-contenido/para-retocar/ronda-4` (lo arma `node scripts/ronda4-retoque.mjs`); las fotos regresan a `devueltas-4`. Se revisan con `node scripts/revision-retoque.mjs --carpeta=devueltas-4 --manifiesto=manifiesto-4.json` y, si quedan bien, sustituyen a las de `src/assets/qa/` con el mismo nombre (ya traen el acabado; no se les vuelve a aplicar)
+
+## 19. Quinta Azul publicado con el rediseño (19 de noviembre)
+
+El dueño pidió subir Quinta Azul al sitio oficial después de las fotos sin varillas. Quedó publicado en https://hotelquintaazul.com, en el mismo Worker que tenía (hotel-quinta-azul): mismo dominio, misma base de solicitudes, mismo correo del hotel y la misma clave anti-spam. `www.hotelquintaazul.com` lo sigue mandando a `hotelquintaazul.com` el Worker de redirección de siempre, que no se tocó.
+
+- [x] Configuración de producción en `produccion/wrangler-qa.jsonc`, con los enlaces y variables leídos del Worker publicado; `scripts/publicar-produccion.mjs` ya acepta `qa` y espera unos segundos antes de comprobar en vivo (recién publicado, dos páginas nuevas dieron 404 unos segundos mientras el sitio se repartía)
+- [x] Probado antes en esta PC con el mismo servicio: páginas, mapa del sitio, 404 y el formulario (guardó en una base de prueba y armó el correo para el hotel sin enviarlo)
+- [x] Las 5 direcciones del sitio anterior (`/`, `/hospedaje`, `/celebraciones`, `/ubicacion`, `/contacto`) existen igual en el rediseño: no hizo falta ninguna redirección
+- [x] Comprobado en vivo: las 14 páginas del mapa del sitio responden, `www` y `http` mandan a `https://hotelquintaazul.com`, cabeceras de seguridad, Web Analytics con el mismo token del sitio anterior, la verificación anti-spam carga en Contacto, sin errores en computadora ni celular. Ya dice «hasta 30 personas» y salen las fotos de la palapa sin varillas
+- [x] La rama `main` de Quinta Azul ahora dice que es el sitio anterior (`CLAUDE.md` y `README.md`), igual que la de Los Arcos
+- [ ] Prueba real del formulario desde un celular (no se hizo a propósito: le llega al hotel)
+- [ ] Dar de alta el mapa del sitio en Search Console y en Bing
+- Volver al sitio anterior, si hiciera falta: `npx --yes wrangler@4 rollback --name hotel-quinta-azul a721a9c3-cb82-45c5-a2bf-f6ab5fb298ee`
