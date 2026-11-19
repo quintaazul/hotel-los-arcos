@@ -298,7 +298,7 @@ No se tocó producción. Cuando se quiera publicar de verdad, esto es lo que hay
 - [ ] Seguridad en el panel de Cloudflare de cada dominio: TLS mínimo 1.2, modo «Completo (estricto)», Bot Fight Mode y una regla de límite de peticiones para el formulario (están en `servicio/LEEME.md`). Las cabeceras de seguridad ya salen solas al publicar el sitio nuevo
 - [ ] Probar el video en un iPhone real (la reproducción solo se probó de verdad en Chrome y Edge, en computadora y emulando celular)
 - [ ] En Cloudflare, dejar en «permitir» la opción de bots de inteligencia artificial (si está en «bloquear», el `robots.txt` no sirve de nada)
-- [ ] Dar de alta el mapa del sitio en Search Console y en Bing
+- [x] Search Console: los dos dominios ya estaban verificados en Google desde la migración, por un registro DNS (no por una etiqueta en la página), así que el rediseño no la rompe. El mapa del sitio sigue en la misma dirección (`/sitemap-index.xml`, también anunciado en robots.txt): Google lee solo las páginas nuevas. Opcional: entrar a Search Console > Sitemaps y confirmar que `sitemap-index.xml` aparece enviado; si no, agregarlo. Bing no está dado de alta (es opcional; se puede importar desde Search Console)
 - [ ] Redirigir `/planes` y sus artículos a `/blog` si llegaron a publicarse (en producción nunca existieron; solo en el prototipo)
 - [ ] Medir la velocidad ya en el dominio real
 - [x] (Hecho el 19 de noviembre por la API) Cifrado mínimo: en el panel de Cloudflare de cada dominio, SSL/TLS → Certificados de borde → «Versión mínima de TLS» = 1.2. Es gratis y solo deja fuera navegadores de 2013 o antes (lista en `servicio/LEEME.md`)
@@ -487,7 +487,7 @@ El dueño pidió subir Los Arcos al sitio oficial. Quedó publicado en https://w
 - [ ] DMARC más estricto (`p=quarantine`) cuando se confirme que los correos del formulario le llegan bien al hotel. Antes, preguntar si alguien manda correos como `@hotelarcosinn.com` o `@hotelquintaazul.com` desde Gmail u otro programa: esos irían a spam
 - [ ] DNSSEC: no se encendió. Hay que copiar un registro en Porkbun (el registrador) y no hay acceso desde aquí; un registro mal copiado deja el dominio sin responder. Es opcional
 - No se encendió Bot Fight Mode a propósito: en el plan gratis no se puede hacer excepción y puede frenar la vista previa de los enlaces en WhatsApp y Facebook, que es por donde reserva la gente
-- [ ] Dar de alta el mapa del sitio en Search Console y en Bing
+- [x] Search Console: los dos dominios ya estaban verificados en Google desde la migración, por un registro DNS (no por una etiqueta en la página), así que el rediseño no la rompe. El mapa del sitio sigue en la misma dirección (`/sitemap-index.xml`, también anunciado en robots.txt): Google lee solo las páginas nuevas. Opcional: entrar a Search Console > Sitemaps y confirmar que `sitemap-index.xml` aparece enviado; si no, agregarlo. Bing no está dado de alta (es opcional; se puede importar desde Search Console)
 - [ ] Pendientes de datos que ya están publicados así: capacidad (42 o 44), minutos a pie a la plaza, foto de la habitación triple y si los departamentos tienen aire, televisión y WiFi
 - [x] Quinta Azul también se publicó el mismo día (sección 19)
 - Volver al sitio anterior, si hiciera falta: `npx --yes wrangler@4 rollback --name hotel-los-arcos 9e7875ff-e770-41ab-8cd7-bb8defbc8391`
@@ -508,5 +508,5 @@ El dueño pidió subir Quinta Azul al sitio oficial después de las fotos sin va
 - [x] Comprobado en vivo: las 14 páginas del mapa del sitio responden, `www` y `http` mandan a `https://hotelquintaazul.com`, cabeceras de seguridad, Web Analytics con el mismo token del sitio anterior, la verificación anti-spam carga en Contacto, sin errores en computadora ni celular. Ya dice «hasta 30 personas» y salen las fotos de la palapa sin varillas
 - [x] La rama `main` de Quinta Azul ahora dice que es el sitio anterior (`CLAUDE.md` y `README.md`), igual que la de Los Arcos
 - [ ] Prueba real del formulario desde un celular (no se hizo a propósito: le llega al hotel)
-- [ ] Dar de alta el mapa del sitio en Search Console y en Bing
+- [x] Search Console: los dos dominios ya estaban verificados en Google desde la migración, por un registro DNS (no por una etiqueta en la página), así que el rediseño no la rompe. El mapa del sitio sigue en la misma dirección (`/sitemap-index.xml`, también anunciado en robots.txt): Google lee solo las páginas nuevas. Opcional: entrar a Search Console > Sitemaps y confirmar que `sitemap-index.xml` aparece enviado; si no, agregarlo. Bing no está dado de alta (es opcional; se puede importar desde Search Console)
 - Volver al sitio anterior, si hiciera falta: `npx --yes wrangler@4 rollback --name hotel-quinta-azul a721a9c3-cb82-45c5-a2bf-f6ab5fb298ee`
