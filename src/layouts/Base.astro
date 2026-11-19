@@ -74,8 +74,8 @@ const hotel: Record<string, unknown> = {
   availableLanguage: ['es'],
   amenityFeature: H.incluye.map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
   containsPlace: [
-    // La palapa de Quinta Azul se renta para reuniones de hasta 60 personas; la de Los Arcos es solo para huéspedes
-    ...(H.id === 'qa' ? [{ '@type': 'EventVenue', '@id': H.sitio + '/celebraciones#palapa', name: palapa, maximumAttendeeCapacity: 60, url: H.sitio + '/celebraciones' }] : []),
+    // La palapa de Quinta Azul se renta para reuniones de hasta 30 personas; la de Los Arcos es solo para huéspedes
+    ...(H.id === 'qa' ? [{ '@type': 'EventVenue', '@id': H.sitio + '/celebraciones#palapa', name: palapa, maximumAttendeeCapacity: 30, url: H.sitio + '/celebraciones' }] : []),
     ...H.habs.map((x) => ({ '@type': x.id === 'depa' ? 'Apartment' : 'HotelRoom', name: x.nombre, description: x.texto, occupancy: { '@type': 'QuantitativeValue', maxValue: x.personas }, ...(x.id === 'depa' ? { numberOfBedrooms: 2 } : x.camas ? { bed: x.camas } : {}), url: H.sitio + (x.id === 'depa' ? '/departamentos' : '/' + H.rutaHabs) })),
   ],
   makesOffer: H.habs.filter((x) => x.precio).map((x) => ({

@@ -491,3 +491,9 @@ El dueño pidió subir Los Arcos al sitio oficial. Quedó publicado en https://w
 - [ ] Pendientes de datos que ya están publicados así: capacidad (42 o 44), minutos a pie a la plaza, foto de la habitación triple y si los departamentos tienen aire, televisión y WiFi
 - [ ] Quinta Azul sigue con el sitio anterior hasta que se pida
 - Volver al sitio anterior, si hiciera falta: `npx --yes wrangler@4 rollback --name hotel-los-arcos 9e7875ff-e770-41ab-8cd7-bb8defbc8391`
+
+## 18. Cambios pequeños de Quinta Azul (19 de noviembre)
+
+- [x] La palapa recibe hasta **30** personas (antes decía 60) en todo el sitio nuevo: textos, preguntas, artículos del blog, datos para Google, cifras y el formulario de cotizar (abre en 20 y llega hasta 30). Los Arcos no cambia
+- [ ] El sitio publicado hoy de Quinta Azul (el anterior, rama `main`) todavía dice «hasta 60 personas»
+- [ ] Quitar las varillas y los restos de construcción del cielo en las dos fotos de la palapa que lo muestran. Paquete para Codex en `E:/hoteles-contenido/para-retocar/ronda-4` (lo arma `node scripts/ronda4-retoque.mjs`); las fotos regresan a `devueltas-4`. Se revisan con `node scripts/revision-retoque.mjs --carpeta=devueltas-4 --manifiesto=manifiesto-4.json` y, si quedan bien, sustituyen a las de `src/assets/qa/` con el mismo nombre (ya traen el acabado; no se les vuelve a aplicar)

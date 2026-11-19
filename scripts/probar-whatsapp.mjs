@@ -82,9 +82,9 @@ async function sitio(base, habs, rutaHabs, rutaPalapa) {
   await fc.locator('[data-contador] button').last().click(); await p.waitForTimeout(150);
   await fc.locator('button[type=submit]').click(); await p.waitForTimeout(300);
   const m9 = await abierto();
-  ok(/^Hola, quiero cotizar la palapa (.+ )?del Hotel [^\n]+\.\nFecha: [^\n]+ \d+ de [^\n]+\nPersonas: 41\nMotivo: .+$/.test(m9), '«Cotizar por WhatsApp» manda fecha, personas y motivo', m9);
+  ok(/^Hola, quiero cotizar la palapa (.+ )?del Hotel [^\n]+\.\nFecha: [^\n]+ \d+ de [^\n]+\nPersonas: 21\nMotivo: .+$/.test(m9), '«Cotizar por WhatsApp» manda fecha, personas y motivo', m9);
   const m10 = await enlace('.celebra a.fila-plan[href*="wa.me"]');
-  ok(/Fecha: /.test(m10) && /Personas: 41/.test(m10) && !/Motivo/.test(m10), 'Después, cada tipo de fiesta lleva la fecha y las personas (sin repetir el motivo)', m10);
+  ok(/Fecha: /.test(m10) && /Personas: 21/.test(m10) && !/Motivo/.test(m10), 'Después, cada tipo de fiesta lleva la fecha y las personas (sin repetir el motivo)', m10);
   const m11 = await enlace('.portada a.boton[href*="wa.me"]');
   ok(/Fecha: /.test(m11) && /Motivo: /.test(m11), 'El botón de la portada de Celebraciones lleva fecha, personas y motivo', m11);
   ok(!/Fecha:/.test(await enlace('.cabecera a.boton[href*="wa.me"]')) && /Llegada:/.test(await enlace('.cabecera a.boton[href*="wa.me"]')), 'El «Reservar» del menú sigue llevando la estancia, no la fiesta');

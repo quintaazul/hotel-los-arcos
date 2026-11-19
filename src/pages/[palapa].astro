@@ -1,6 +1,6 @@
 ---
 // La página de la palapa. Misma plantilla, dos enfoques:
-// · Quinta Azul, /celebraciones: «palapa con alberca» para reuniones de hasta 60 personas; se cotiza por fecha.
+// · Quinta Azul, /celebraciones: «palapa con alberca» para reuniones de hasta 30 personas; se cotiza por fecha.
 // · Los Arcos Inn, /palapa: «palapa techada» en el jardín, solo para huéspedes; no se rentan eventos (documento de
 //   cambios del 17 de noviembre de 2026). Antes vivía en /celebraciones, que redirige aquí (redirecciones.json).
 // El bloque de la palapa vive aquí y en el inicio, y en ningún otro lado (así lo pidió el dueño).
@@ -24,14 +24,14 @@ const t = T.celebraciones, seo = SEO.celebraciones, ruta = '/' + H.rutaPalapa;
 const seRenta = H.id === 'qa';   // Los Arcos: solo huéspedes
 const wa = (que: string) => waLink('Hola, quiero cotizar ' + que + ' ' + t.waBase + H.nombre);
 const incluye = H.palapa.incluye.filter(([ic]) => ic !== 'gente');
-const schema = seRenta ? [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id': H.sitio + ruta + '#palapa', name: 'Palapa del ' + H.nombre, url: H.sitio + ruta, maximumAttendeeCapacity: 60, containedInPlace: { '@id': H.sitio + '/#hotel' },
+const schema = seRenta ? [{ '@context': 'https://schema.org', '@type': 'EventVenue', '@id': H.sitio + ruta + '#palapa', name: 'Palapa del ' + H.nombre, url: H.sitio + ruta, maximumAttendeeCapacity: 30, containedInPlace: { '@id': H.sitio + '/#hotel' },
   address: { '@type': 'PostalAddress', streetAddress: H.calle, addressLocality: 'García', addressRegion: 'Nuevo León', postalCode: '66000', addressCountry: 'MX' }, amenityFeature: incluye.map(([, name]) => ({ '@type': 'LocationFeatureSpecification', name, value: true })) }] : [];
 ---
 <Base title={seo.title} description={seo.description} pagina="celebraciones" ogFoto={H.heroes.celebraciones} schema={schema}>
   <PortadaCorta img={H.heroes.celebraciones} alt={H.palapa.alt} clave={seo.h1} lineas={[t.portada.l]} ovalo={t.portada.o} frase={t.portada.texto}
     migas={[['/', 'Inicio'], [ruta, seRenta ? 'Celebraciones' : 'Palapa']]}
     botones={[{ t: t.cotizarBtn, href: seRenta ? wa('una fecha') : waLink(), ico: 'wa', clase: 'blanco', fuera: true }, { t: t.verBtn, href: '#t-palapa', clase: 'contorno', flecha: true }]}
-    tarjeta={seRenta ? { rotulo: 'Capacidad', valor: '60', sufijo: 'personas', texto: t.tarjeta } : undefined}
+    tarjeta={seRenta ? { rotulo: 'Capacidad', valor: '30', sufijo: 'personas', texto: t.tarjeta } : undefined}
     barra={incluye.map(([ico, b]) => ({ ico, b }))} />
   <Palapa pagina />
   <Puntos />
@@ -83,7 +83,7 @@ const schema = seRenta ? [{ '@context': 'https://schema.org', '@type': 'EventVen
       </div>
       <form class="formulario tarjeta-form" data-whatsapp={'Hola, quiero cotizar la palapa del ' + H.nombre} data-numero={H.wa} data-fiesta data-aparece>
         <Fecha id="e-fecha" nombre="Fecha" etiqueta="Fecha" requerido falta="Elige la fecha." />
-        <Contador id="e-personas" nombre="Personas" etiqueta="Personas" min={1} max={60} valor={40} />
+        <Contador id="e-personas" nombre="Personas" etiqueta="Personas" min={1} max={30} valor={20} />
         <Desplegable class="completo" id="e-tipo" nombre="Motivo" etiqueta={t.etiquetaOpc} opciones={t.opciones} />
         <div class="completo"><button class="boton" type="submit"><Icono n="wa" />Cotizar por WhatsApp</button></div>
       </form>

@@ -7,7 +7,7 @@ tituloSeo: "Carne asada para un grupo grande | Hotel Quinta Azul"
 descripcion: "Cómo organizar una carne asada para un grupo grande en García, N.L.: qué llevar, cómo repartir el asador y qué tiene la palapa del Hotel Quinta Azul."
 tema: fiestas-en-la-palapa
 busqueda: "carne asada para un grupo grande"
-resumen: "La palapa del hotel recibe hasta 60 personas y ya tiene asador, refrigerador, microondas, abanicos y baños, junto a la alberca. Ustedes llevan la carne, el carbón y la música; la fecha se aparta por WhatsApp."
+resumen: "La palapa del hotel recibe hasta 30 personas y ya tiene asador, refrigerador, microondas, abanicos y baños, junto a la alberca. Ustedes llevan la carne, el carbón y la música; la fecha se aparta por WhatsApp."
 foto: "palapa-barra-bancos-luz-de-tarde-hotel-quinta-azul.jpg"
 fotoAlt: "La palapa del Hotel Quinta Azul, con su asador, con luz de tarde"
 publicado: 2026-11-09
@@ -16,7 +16,7 @@ lectura: 3
 vende: palapa
 esencial: true
 datos:
-  - ["Capacidad", "Hasta 60 personas"]
+  - ["Capacidad", "Hasta 30 personas"]
   - ["Ya está ahí", "Asador, refrigerador y microondas"]
   - ["Cómo apartar", "Por WhatsApp, con la fecha"]
 preguntas:
@@ -30,7 +30,7 @@ En el norte, casi cualquier motivo termina en carne asada: un cumpleaños, el pa
 
 ## ¿Qué hay en la palapa?
 
-Un espacio techado junto a la alberca, para hasta 60 personas, con lo que una carne asada necesita: asador, bancos para cenar, televisión grande para el partido, refrigerador para las bebidas, microondas, abanicos y baños. La lista completa y las fotos están en la página de la [palapa con alberca](/celebraciones).
+Un espacio techado junto a la alberca, para hasta 30 personas, con lo que una carne asada necesita: asador, bancos para cenar, televisión grande para el partido, refrigerador para las bebidas, microondas, abanicos y baños. La lista completa y las fotos están en la página de la [palapa con alberca](/celebraciones).
 
 ## ¿Qué llevo?
 

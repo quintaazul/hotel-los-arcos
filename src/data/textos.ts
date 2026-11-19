@@ -45,7 +45,7 @@ const rutaPalapa = '/' + H.rutaPalapa;
 const SEO_QA = {
   inicio: { title: 'Hotel con alberca y palapa en García | Hotel Quinta Azul', description: 'Hotel en el centro de García, N.L., a dos cuadras de la plaza: 9 habitaciones con vista a la sierra, alberca hasta las 10 PM y palapa con asador.', h1: 'Hotel en el centro de García, Nuevo León, con alberca y palapa' },
   habitaciones: { title: 'Habitaciones en García, hasta 4 personas | Hotel Quinta Azul', description: 'Habitaciones en García, N.L., para hasta 4 personas: aire acondicionado, frigobar, microondas y agua caliente a toda hora. Desde ' + DESDE_IVA + ' por noche.', h1: 'Habitaciones en García, N.L., para 1 a 4 personas' },
-  celebraciones: { title: 'Palapa con alberca en García | Hotel Quinta Azul', description: 'Palapa con asador para hasta 60 personas junto a la alberca en García, N.L. Tus invitados pueden quedarse a dormir en el mismo hotel.', h1: 'Palapa con alberca en García para reuniones de hasta 60 personas' },
+  celebraciones: { title: 'Palapa con alberca en García | Hotel Quinta Azul', description: 'Palapa con asador para hasta 30 personas junto a la alberca en García, N.L. Tus invitados pueden quedarse a dormir en el mismo hotel.', h1: 'Palapa con alberca en García para reuniones de hasta 30 personas' },
   ubicacion: { title: 'Cómo llegar a García desde Monterrey | Hotel Quinta Azul', description: 'Cómo llegar a Hotel Quinta Azul en el centro de García, N.L., desde Monterrey. Qué ver cerca: el templo, el Parián, las huertas y las Grutas.', h1: 'Cómo llegar al Hotel Quinta Azul en el centro de García' },
   contacto: { title: 'Reserva por WhatsApp en García, N.L. | Hotel Quinta Azul', description: 'Reserva en Hotel Quinta Azul por WhatsApp o al ' + TEL_TXT + ', o envía el formulario. Te respondemos todos los días de 7 AM a 11 PM.', h1: 'Reservaciones en Hotel Quinta Azul' },
   faq: { title: 'Preguntas frecuentes antes de reservar | Hotel Quinta Azul', description: 'Respuestas sobre reservas, anticipo, habitaciones, alberca, la palapa con asador, reglas y cómo llegar al Hotel Quinta Azul en García, N.L.', h1: 'Preguntas frecuentes del Hotel Quinta Azul' },
@@ -74,7 +74,7 @@ export const SEO: Record<string, Seo> = esQA ? SEO_QA : SEO_LA;
 const QA = {
   palapa: 'palapa con asador',
   inicio: {
-    cinta: ['Alberca hasta las 10\u00A0PM', 'Palapa con asador para 60 personas', 'A dos cuadras de la plaza', 'A ' + D.monterrey + ' minutos de Monterrey', 'Reserva directo por WhatsApp'],
+    cinta: ['Alberca hasta las 10\u00A0PM', 'Palapa con asador para 30 personas', 'A dos cuadras de la plaza', 'A ' + D.monterrey + ' minutos de Monterrey', 'Reserva directo por WhatsApp'],
     habs: { l: 'Habitaciones con vista a la sierra,', o: 'hasta 4 personas', texto: 'Una habitación para descansar de verdad: aire acondicionado, televisión, frigobar y microondas para lo que traigas del camino, y un baño con agua caliente que los huéspedes mencionan una y otra vez. Caben hasta cuatro, así que el viaje en pareja, con los niños o con los amigos cabe en el mismo cuarto. Desde ' + DESDE_IVA + ' por noche, según cuántos se quedan.' },
     comparar: { l: '¿Cuántos', o: 'se quedan?', texto: 'Caben hasta cuatro en una habitación. Dinos cuántos son y te damos el total exacto.' },
     directo: { t: 'Por qué reservar directo', razones: [['mano', 'Tratas con el hotel', 'Sin plataformas de por medio ni sus comisiones.'], ['wa', 'Respuesta por WhatsApp', 'Todos los días, de 7\u00A0AM a 11\u00A0PM.'], ['factura', 'Facturamos sin problema', 'Pide tu factura al reservar o al llegar.']] as [string, string, string][] },
@@ -130,7 +130,7 @@ const QA = {
         lista: [['Los Primos', 'cocina mexicana que abre temprano, buena para desayunar antes de las Grutas. Lo más pedido es la arrachera.'], ['Casco Antiguo', 'taquería del centro para una comida sencilla.'], ['La Mexicana', 'cocina mexicana que cierra tarde, para cenar después de la alberca.']] },
     ] as SeccionTxt[],
     ingles: { id: 'in-english', l: 'In', o: 'English', lang: 'en', texto: 'Hotel Quinta Azul is in downtown García, two blocks from the main square, about 38\u00A0km (24 miles) from downtown Monterrey and 15 minutes from the García Caves. Nine rooms for up to four guests, a pool open until 10\u00A0PM and on-site parking. Check‑in 2\u00A0PM, check-out 11\u00A0AM. Book by WhatsApp: +52\u00A081\u00A02921\u00A08643.' } as SeccionTxt,
-    alLlegar: { l: 'Lo que encuentras', o: 'al llegar', items: [['alberca', 'Alberca abierta hasta las 10\u00A0PM, con chapoteadero'], ['fiesta', 'Palapa con asador para hasta 60 personas'], ['auto', 'Estacionamiento dentro del hotel']] as [string, string][] },
+    alLlegar: { l: 'Lo que encuentras', o: 'al llegar', items: [['alberca', 'Alberca abierta hasta las 10\u00A0PM, con chapoteadero'], ['fiesta', 'Palapa con asador para hasta 30 personas'], ['auto', 'Estacionamiento dentro del hotel']] as [string, string][] },
     blog: { l: 'Planes a', o: 'pocos minutos', texto: 'Guías del blog, con sus distancias desde el hotel.', tema: ['planes-en-garcia', 'escapadas'] },
     enlaces: [['Habitaciones desde ' + DESDE_IVA, '/hospedaje'], ['Qué hacer en García', '/blog/que-hacer-en-garcia'], ['Reserva directo', '/contacto']] as Enlace[],
   },
@@ -243,7 +243,7 @@ const FAQ_QA: GrupoFaq[] = [
     { id: 'alberca-costo', q: '¿La alberca tiene costo extra?', a: 'No. Está incluida en tu estancia.' },
   ] },
   { id: 'palapa', nombre: 'La palapa', items: [
-    { id: 'palapa-capacidad', q: '¿Cuántas personas caben en la palapa?', a: 'Hasta 60, junto a la alberca.' },
+    { id: 'palapa-capacidad', q: '¿Cuántas personas caben en la palapa?', a: 'Hasta 30, junto a la alberca.' },
     { id: 'palapa-incluye', q: '¿Qué tiene la palapa?', a: 'Asador, bancos, televisión grande, refrigerador, microondas, abanicos y baños exteriores. Ustedes traen la comida; lo demás ya está aquí.' },
     { id: 'palapa-musica', q: '¿Se puede poner música?', a: 'Sí: la música alta se permite hasta las 8 de la noche. Después ya no se hace ruido, porque hay huéspedes descansando.' },
     { id: 'palapa-precio', q: '¿Cuánto cuesta rentar la palapa?', a: 'Depende de la fecha y del horario. Escríbenos por WhatsApp con el día y cuántas personas van y te mandamos la cotización.' },

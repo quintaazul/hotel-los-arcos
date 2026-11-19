@@ -7,7 +7,7 @@ tituloSeo: "Posada navideña en palapa en García | Hotel Quinta Azul"
 descripcion: "Cómo organizar una posada navideña en palapa en García, N.L.: cuándo apartar, qué llevar, cómo acomodar la noche y dónde se quedan tus invitados."
 tema: fiestas-en-la-palapa
 busqueda: "posada navideña en palapa"
-resumen: "Las posadas se hacen del 16 al 24 de diciembre. Nuestra palapa recibe hasta 60 personas junto a la alberca, con asador, refrigerador y baños: tú llevas la piñata, el ponche y la cena, y la fecha se aparta por WhatsApp."
+resumen: "Las posadas se hacen del 16 al 24 de diciembre. Nuestra palapa recibe hasta 30 personas junto a la alberca, con asador, refrigerador y baños: tú llevas la piñata, el ponche y la cena, y la fecha se aparta por WhatsApp."
 foto: "palapa-asador-columnas-atardecer-hotel-quinta-azul.jpg"
 fotoAlt: "El asador de la palapa del Hotel Quinta Azul, entre columnas de azulejo, al atardecer"
 publicado: 2026-11-11
@@ -17,10 +17,10 @@ vende: palapa
 destacado: true
 datos:
   - ["Fechas", "16 al 24 de diciembre"]
-  - ["Capacidad", "Hasta 60 personas"]
+  - ["Capacidad", "Hasta 30 personas"]
   - ["En la palapa", "Asador, refrigerador y baños"]
 preguntas:
-  - ["¿Cuántas personas caben en la palapa?", "Hasta 60 personas en la palapa, que está junto a la alberca."]
+  - ["¿Cuántas personas caben en la palapa?", "Hasta 30 personas en la palapa, que está junto a la alberca."]
   - ["¿Cuánto cuesta rentar la palapa para una posada?", "Depende de la fecha y del horario. Escríbenos por WhatsApp con el día y cuántos son, y te mandamos la cotización."]
   - ["¿Los invitados pueden quedarse a dormir?", "Sí. Hay habitaciones para hasta 4 personas desde $900 + IVA la noche, y descuento para grupos de 3 habitaciones o más."]
   - ["¿Con cuánto tiempo conviene apartar?", "Los viernes y sábados de diciembre son los primeros en ocuparse. En cuanto tengas la fecha, escríbenos para revisarla."]
@@ -34,7 +34,7 @@ La tradición marca nueve noches, del 16 al 24 de diciembre. En la práctica, la
 
 ## ¿Qué tiene la palapa?
 
-Es un espacio techado junto a la alberca, para hasta 60 personas, con:
+Es un espacio techado junto a la alberca, para hasta 30 personas, con:
 
 - Asador de carbón.
 - Bancos para cenar y platicar.
