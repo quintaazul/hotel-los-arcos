@@ -35,7 +35,8 @@ paso('4. ¿La sesión de Cloudflare es la de los hoteles?');
 let versiones = '';
 try { versiones = corre('npx --yes wrangler@4 deployments list --name ' + c.worker + ' -c ' + c.conf); }
 catch (e) { console.log(String(e.stderr || e.message).slice(-600)); console.log('✗ Esta sesión de wrangler no ve el Worker «' + c.worker + '». Inicia sesión con la cuenta de los hoteles (npx wrangler login) y vuelve a correr esto.'); process.exit(1); }
-const ultima = (versiones.match(/Version\(s\):[\s\S]*?\(100%\)\s+([0-9a-f-]{36})/) || versiones.match(/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/g)?.slice(-1) || [])[1] ?? (versiones.match(/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/g) || []).slice(-1)[0];
+// la lista va de la más vieja a la más nueva: la versión publicada es la última que sirve al 100 %
+const ultima = [...versiones.matchAll(/\(100%\)\s+([0-9a-f]{8}-[0-9a-f-]{27})/g)].map((m) => m[1]).pop();
 console.log('✓ La sesión ve «' + c.worker + '». Versión publicada ahora (para volver atrás): ' + (ultima || 'ver «npx wrangler deployments list»'));
 
 if (!publicar) { console.log('\nTodo listo. No se subió nada. Para publicar: node scripts/publicar-produccion.mjs ' + h + ' --si-publicar'); process.exit(0); }

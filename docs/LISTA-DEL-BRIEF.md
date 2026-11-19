@@ -472,3 +472,19 @@ Se revisaron todas las páginas de los dos sitios en celular y en computadora, y
 
 - [x] Pasa de «Del otro lado te esperan días diferentes» a «Descansa con *la sierra de fondo*» (óvalo en «la sierra de fondo»). Queda en dos renglones, como Los Arcos, en los 9 tamaños; legibilidad, portadas que caben y revisión en 8 pantallas, bien
 - [ ] Alternativas que también caben, por si se prefiere otro enfoque: «Alberca, palapa y / vista a la sierra» o «Tu descanso en / el centro de García»
+
+## 17. Los Arcos publicado con el rediseño (19 de noviembre)
+
+El dueño pidió subir Los Arcos al sitio oficial. Quedó publicado en https://www.hotelarcosinn.com, en el mismo Worker que tenía (hotel-los-arcos): mismo dominio, misma base de solicitudes, mismo correo del hotel y la misma clave anti-spam.
+
+- [x] Configuración de producción en `produccion/wrangler-la.jsonc` y guion `scripts/publicar-produccion.mjs` (revisa, comprueba la cuenta, publica y verifica en vivo)
+- [x] Probado antes en esta PC con el mismo servicio: páginas, redirecciones, videos por tramos, cabeceras y el formulario (guardó en una base de prueba y armó el correo sin enviarlo)
+- [x] Las 5 direcciones del sitio anterior siguen funcionando (`/celebraciones` → `/palapa`); `hotelarcosinn.com` sin www y `http` mandan a `https://www`
+- [x] Cloudflare Web Analytics con el mismo token del sitio anterior (no se corta el historial de visitas)
+- [x] Comprobado en vivo: las páginas responden, el formulario recibe solo POST, el mapa del sitio y robots están abiertos a buscadores y la revisión en celular y computadora pasa
+- [ ] Prueba real del formulario desde un celular (no se hizo a propósito: le llega al hotel). La verificación anti-spam carga, pero no se puede completar desde un navegador automatizado
+- [ ] En el panel de Cloudflare: TLS mínimo 1.2 y el registro DMARC (pasos en `servicio/LEEME.md`)
+- [ ] Dar de alta el mapa del sitio en Search Console y en Bing
+- [ ] Pendientes de datos que ya están publicados así: capacidad (42 o 44), minutos a pie a la plaza, foto de la habitación triple y si los departamentos tienen aire, televisión y WiFi
+- [ ] Quinta Azul sigue con el sitio anterior hasta que se pida
+- Volver al sitio anterior, si hiciera falta: `npx --yes wrangler@4 rollback --name hotel-los-arcos 9e7875ff-e770-41ab-8cd7-bb8defbc8391`
