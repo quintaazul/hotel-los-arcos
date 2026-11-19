@@ -301,8 +301,8 @@ No se tocó producción. Cuando se quiera publicar de verdad, esto es lo que hay
 - [ ] Dar de alta el mapa del sitio en Search Console y en Bing
 - [ ] Redirigir `/planes` y sus artículos a `/blog` si llegaron a publicarse (en producción nunca existieron; solo en el prototipo)
 - [ ] Medir la velocidad ya en el dominio real
-- [ ] Cifrado mínimo: en el panel de Cloudflare de cada dominio, SSL/TLS → Certificados de borde → «Versión mínima de TLS» = 1.2. Es gratis y solo deja fuera navegadores de 2013 o antes (lista en `servicio/LEEME.md`)
-- [ ] Correo: revisar el registro DMARC de cada dominio. Es un renglón de DNS, gratis
+- [x] (Hecho el 19 de noviembre por la API) Cifrado mínimo: en el panel de Cloudflare de cada dominio, SSL/TLS → Certificados de borde → «Versión mínima de TLS» = 1.2. Es gratis y solo deja fuera navegadores de 2013 o antes (lista en `servicio/LEEME.md`)
+- [x] (Hecho el 19 de noviembre, en observación) Correo: revisar el registro DMARC de cada dominio. Es un renglón de DNS, gratis
 - [ ] DNSSEC: firmar los dos dominios (un botón en Cloudflare y un registro en Porkbun). Opcional; lo marca internet.nl
 
 ## 13. Analizadores externos (12 de noviembre)
@@ -483,7 +483,10 @@ El dueño pidió subir Los Arcos al sitio oficial. Quedó publicado en https://w
 - [x] Cloudflare Web Analytics con el mismo token del sitio anterior (no se corta el historial de visitas)
 - [x] Comprobado en vivo: las páginas responden, el formulario recibe solo POST, el mapa del sitio y robots están abiertos a buscadores y la revisión en celular y computadora pasa
 - [ ] Prueba real del formulario desde un celular (no se hizo a propósito: le llega al hotel). La verificación anti-spam carga, pero no se puede completar desde un navegador automatizado
-- [ ] En el panel de Cloudflare: TLS mínimo 1.2 y el registro DMARC (pasos en `servicio/LEEME.md`)
+- [x] Seguridad en Cloudflare, hecha por la API en los dos dominios (19 de noviembre): TLS mínimo 1.2 (antes 1.0; comprobado que 1.0 y 1.1 se rechazan y 1.2 y 1.3 entran), SSL «completo (estricto)» (antes «completo»; los dos dominios solo tienen Workers, sin servidor de origen), registro DMARC en observación (`v=DMARC1; p=none`) y límite al formulario: más de 5 envíos en 10 segundos desde una misma IP se bloquean 10 segundos
+- [ ] DMARC más estricto (`p=quarantine`) cuando se confirme que los correos del formulario le llegan bien al hotel. Antes, preguntar si alguien manda correos como `@hotelarcosinn.com` o `@hotelquintaazul.com` desde Gmail u otro programa: esos irían a spam
+- [ ] DNSSEC: no se encendió. Hay que copiar un registro en Porkbun (el registrador) y no hay acceso desde aquí; un registro mal copiado deja el dominio sin responder. Es opcional
+- No se encendió Bot Fight Mode a propósito: en el plan gratis no se puede hacer excepción y puede frenar la vista previa de los enlaces en WhatsApp y Facebook, que es por donde reserva la gente
 - [ ] Dar de alta el mapa del sitio en Search Console y en Bing
 - [ ] Pendientes de datos que ya están publicados así: capacidad (42 o 44), minutos a pie a la plaza, foto de la habitación triple y si los departamentos tienen aire, televisión y WiFi
 - [ ] Quinta Azul sigue con el sitio anterior hasta que se pida

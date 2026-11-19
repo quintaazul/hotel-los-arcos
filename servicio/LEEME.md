@@ -56,7 +56,7 @@ Hoy los sitios publicados no mandan ninguna cabecera de seguridad (nota **F** en
 
 Se comprueba con `node scripts/seguridad.mjs <url>` (cabeceras por tipo de respuesta, bloqueos de la política en todas las páginas, pedidos a otros dominios, cookies y el formulario).
 
-**En el panel de Cloudflare de cada dominio** (no se toca desde este proyecto), conviene revisar al publicar:
+**En Cloudflare, ya hecho por la API el 19 de noviembre de 2026 en los dos dominios:** TLS mínimo 1.2, SSL completo (estricto), DMARC en observación (`p=none`) y un límite de 5 envíos cada 10 segundos por IP al formulario. Bot Fight Mode se dejó apagado a propósito (puede frenar la vista previa de los enlaces en WhatsApp). Lo que sigue es la explicación de cada ajuste:
 
 - SSL/TLS → modo **Completo (estricto)**; **Versión mínima de TLS 1.2**; **TLS 1.3** encendido; **Usar siempre HTTPS** encendido (hoy ya redirige).
 - Seguridad → **Bot Fight Mode** encendido. Ojo: en «Bots de IA», dejar **permitir** (si se bloquean, el sitio no sale en los buscadores con IA).
