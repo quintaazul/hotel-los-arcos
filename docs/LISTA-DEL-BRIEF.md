@@ -441,10 +441,13 @@ Se aplicaron los textos y datos del documento «Cambios para el desarrollador ·
 
 **Pendiente del hotel (preguntas P1 a P15 del documento)**
 
-- [ ] 🏨 P1 porcentaje del descuento · P2 reglas, precio y si hay barra en la palapa de Quinta Azul · P6 amenidades por habitación en Los Arcos · P9 si hay tarifa por semana o mes · P13 llegada después de las 11 PM · P14 formato de precio que pida el contador · P15 «El Mexicano» en Dónde comer
+- [x] P1, P2 y P6, respondidas por el cliente el 18 de noviembre (versión nueva del documento): descuentos de Quinta Azul (más de 3 días baja el precio por noche; grupos según personas y habitaciones; empresas con más de 3 personas, 2 %), palapa de Quinta Azul con bancos (no barra), televisión grande y música alta hasta las 8 PM, y lo que trae cada tipo de habitación de Los Arcos (la triple está en planta alta, tiene sofá cama y no trae frigobar). Reglas de la casa confirmadas: solo personas registradas, basura y muebles, aire con la puerta cerrada y apagado al salir
+- [ ] 🏨 P9 si hay tarifa por semana o mes · P13 llegada después de las 11 PM · P14 formato de precio que pida el contador · P15 «El Mexicano» en Dónde comer
+- [ ] 🏨 Precio de la palapa de Quinta Azul: el documento no lo da; se sigue cotizando por WhatsApp
 - [ ] 🏨 Reseñas reales y cortas para el inicio (2 o 3 por hotel, solo primer nombre y mes): hoy se enseña una
 - [ ] 🏨 Confirmar el precio «desde» de la habitación triple de Los Arcos ($1,500 + IVA): el documento no lo menciona
 - [ ] 🏨 Confirmar si Quinta Azul tiene WiFi: el documento no lo lista entre las amenidades de la habitación; el sitio lo sigue diciendo
+- [ ] 🏨 Los Arcos: el documento no dice si los departamentos tienen aire acondicionado, televisión o WiFi; el sitio ya no lo afirma en su ficha (sí dice WiFi como servicio del hotel)
 
 **Revisión pantalla por pantalla de estos cambios (17 de noviembre)**
 

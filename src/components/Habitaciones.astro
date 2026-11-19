@@ -27,12 +27,16 @@ const SUG: Record<number, { ids: string[]; texto: string }> = H.id === 'qa' ? {
   8: { ids: ['depa'], texto: `Para ocho: un departamento con cocina, ${iva(pr('depa'))} la noche. Si son más, suma una habitación.` },
 };
 const INICIAL = 2;
+// Cuando cada tipo trae cosas distintas (Los Arcos), la tabla dice lo de cada uno en una fila «Incluye»; si todos
+// traen lo mismo (Quinta Azul), lo marca fila por fila.
+const porTipo = habs.some((x) => x.incluye);
+const incluyeDe = (x: (typeof habs)[number]) => x.incluye ?? H.incluye.slice(0, 5);
 const filas: [string, (x: (typeof habs)[number]) => string][] = [
   ['Capacidad', (x) => x.para ?? '<span class="no">Por confirmar</span>'],
   ['Camas', (x) => x.camas ?? '<span class="no">Por confirmar</span>'],
   ['Precio por noche', (x) => x.precio ? 'Desde <b class="num">' + dinero(x.precio) + '</b>&nbsp;+&nbsp;IVA' : '<span class="no">Por confirmar</span>'],
-  ['Aire acondicionado', () => 'ok'], ['Pantalla y WiFi', () => 'ok'], ['Frigobar y microondas', () => 'ok'], ['Baño privado', () => 'ok'],
-  ...(H.id === 'la' ? [['Cocina y sala', (x: (typeof habs)[number]) => (x.id === 'depa' ? 'ok' : '<span class="no">—</span>')] as [string, (x: (typeof habs)[number]) => string]] : [])
+  ...(porTipo ? [['Incluye', (x: (typeof habs)[number]) => incluyeDe(x).filter(([ic]) => ic !== 'cama').map(([, t], i) => (i ? t.charAt(0).toLowerCase() + t.slice(1) : t)).join(', ')] as [string, (x: (typeof habs)[number]) => string]]
+    : [['Aire acondicionado', () => 'ok'], ['Pantalla y WiFi', () => 'ok'], ['Frigobar y microondas', () => 'ok'], ['Baño privado', () => 'ok']] as [string, (x: (typeof habs)[number]) => string][])
 ];
 const precio = (p: number | null) => p ? `<span class="precio"><small>Desde</small> ${dinero(p)}<small>+ IVA / noche</small></span>` : '<span class="pendiente">Precio por confirmar</span>';
 const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(n) ? 'el ' : 'la ') + n.toLowerCase() + ' en el ' + H.nombre;
@@ -65,7 +69,7 @@ const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(
             <p class="meta"><span><Icono n="persona" />{x.para ?? 'Capacidad por confirmar'}</span>{x.camas && <span><Icono n="cama" />{x.camas}</span>}</p>
             <p class="texto">{x.texto}</p>
             <div class="precio-l" set:html={precio(x.precio)} />
-            <ul class="chips lista">{H.incluye.slice(0, 5).map(([ic, t]) => <li><Icono n={ic} />{t}</li>)}</ul>
+            <ul class="chips lista">{incluyeDe(x).slice(0, 6).map(([ic, t]) => <li><Icono n={ic} />{t}</li>)}</ul>
             <div class="botones">
               <a class="boton" href={waLink(msgHab(x.nombre))} target="_blank" rel="noopener"><Icono n="wa" />Reservar esta</a>
               <button type="button" class="boton contorno" data-detalle={x.id}><span class="solo-pc">Ver fotos y detalles</span><span class="solo-cel">Detalles</span></button>
@@ -135,7 +139,7 @@ const msgHab = (n: string) => 'Hola, quiero reservar ' + (/^departamento/i.test(
         <p class="meta" style="display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--c-texto-2)"><span style="display:inline-flex;gap:8px;align-items:center"><Icono n="persona" />{x.para ?? 'Capacidad por confirmar'}</span>{x.camas && <span style="display:inline-flex;gap:8px;align-items:center"><Icono n="cama" />{x.camas}</span>}<span style="display:inline-flex;gap:8px;align-items:center"><Icono n="ducha" />Baño privado</span></p>
         <p class="texto">{x.texto}</p>
         <p class="cajon-sub" role="heading" aria-level="3">Incluye</p>
-        <ul class="incluye lista">{H.incluye.map(([ic, t]) => <li><Icono n={ic} />{t}</li>)}</ul>
+        <ul class="incluye lista">{[...(x.incluye ?? []), ...H.incluye].map(([ic, t]) => <li><Icono n={ic} />{t}</li>)}</ul>
         <p class="cajon-sub" role="heading" aria-level="3">Antes de reservar</p>
         <dl class="reglas-mini"><div><dt>Entrada</dt><dd>2:00 PM</dd></div><div><dt>Salida</dt><dd>11:00 AM</dd></div><div><dt>Anticipo</dt><dd>50&nbsp;%</dd></div><div><dt>Mascotas</dt><dd>No</dd></div></dl>
       </div>

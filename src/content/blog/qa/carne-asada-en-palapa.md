@@ -11,7 +11,7 @@ resumen: "La palapa del hotel recibe hasta 60 personas y ya tiene asador, refrig
 foto: "palapa-barra-bancos-luz-de-tarde-hotel-quinta-azul.jpg"
 fotoAlt: "La palapa del Hotel Quinta Azul, con su asador, con luz de tarde"
 publicado: 2026-11-09
-actualizado: 2026-11-17
+actualizado: 2026-11-19
 lectura: 3
 vende: palapa
 esencial: true
@@ -30,7 +30,7 @@ En el norte, casi cualquier motivo termina en carne asada: un cumpleaños, el pa
 
 ## ¿Qué hay en la palapa?
 
-Un espacio techado junto a la alberca, para hasta 60 personas, con lo que una carne asada necesita: asador, refrigerador para las bebidas, microondas, abanicos y baños. La lista completa y las fotos están en la página de la [palapa con alberca](/celebraciones).
+Un espacio techado junto a la alberca, para hasta 60 personas, con lo que una carne asada necesita: asador, bancos para cenar, televisión grande para el partido, refrigerador para las bebidas, microondas, abanicos y baños. La lista completa y las fotos están en la página de la [palapa con alberca](/celebraciones).
 
 ## ¿Qué llevo?
 
@@ -38,7 +38,7 @@ Un espacio techado junto a la alberca, para hasta 60 personas, con lo que una ca
 - Carbón y con qué encenderlo.
 - Bebidas y hielo.
 - Platos, vasos, servilletas y pinzas para el asador.
-- Bocina, si quieren música.
+- Bocina, si quieren música: la música alta se permite hasta las 8 de la noche.
 
 Una regla que casi nunca falla para calcular: entre 300 y 400 gramos de carne por adulto y la mitad por niño.
 

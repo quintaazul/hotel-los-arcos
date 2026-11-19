@@ -16,8 +16,9 @@ import Enlaces from '../components/Enlaces.astro';
 import { H, waLink, dinero } from '../data/hoteles';
 import { T, SEO } from '../data/textos';
 export function getStaticPaths() { return [{ params: { habs: __HOTEL__ === 'qa' ? 'hospedaje' : 'habitaciones' } }]; }
-// Reglas de la casa: las mismas en los dos hoteles (documento de cambios del 17 de noviembre de 2026)
-const reglas: [string, string, string][] = [['Entrada', '2:00 PM', ''], ['Salida', '11:00 AM', ''], ['Anticipo', '50\u00A0%', 'No es reembolsable.'], ['Edad', '18+', 'Con identificación.'], ['Mascotas y visitas', 'No', ''], ['Fumar', 'No', 'En las habitaciones.']];
+// Reglas de la casa: las mismas en los dos hoteles, confirmadas por el cliente el 18 de noviembre de 2026
+const reglas: [string, string, string][] = [['Entrada', '2:00 PM', ''], ['Salida', '11:00 AM', ''], ['Anticipo', '50\u00A0%', 'No es reembolsable.'], ['Edad', '18+', 'Con identificación.'], ['Mascotas', 'No', ''], ['Fumar', 'No', 'Dentro de las habitaciones.'],
+  ['Registro', 'Solo huéspedes', 'Solo las personas registradas en la habitación pueden estar en las instalaciones.'], ['Basura y muebles', 'En su lugar', 'La basura va en su lugar y los muebles se quedan dentro de la habitación.'], ['Aire acondicionado', 'Puerta cerrada', 'Con el aire encendido, la puerta cerrada; al salir, el aire apagado.'], ['Ruido', 'Se cuida', 'Para que todos duerman.']];
 const pie = (f: string) => (H.galeria.find(([x]) => x === f) || ['', ''])[1];
 const resto = H.galeria.filter(([f]) => !H.mosaico.includes(f));
 const hora = (x: string) => x.split(' ');

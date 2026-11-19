@@ -94,15 +94,15 @@ const QA = {
     portada: { l: 'Habitaciones', o: 'desde ' + DESDE_IVA, texto: 'Un viaje a García puede ser muchas cosas. Todos terminan igual: en una habitación tranquila donde se duerme bien.' },
     lista: { l: 'Precio según', o: 'cuántos se quedan', texto: 'Las nueve habitaciones son iguales, así que no tienes que escoger tipo: solo dinos cuántos son. Para una persona, desde ' + DESDE_IVA + ' por noche, y el precio cambia con cada persona, hasta cuatro. Escríbenos y te damos el total exacto.' },
     galeria: { l: 'Míralas', o: 'por dentro', texto: 'Fotos tomadas en el hotel. Toca cualquiera para verla en grande.' },
-    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2\u00A0PM, salida a las 11\u00A0AM. Atendemos de 7 de la mañana a 11 de la noche, todos los días, y se cuida el ruido para que todos duerman.', incluye: 'Qué trae cada habitación', notiene: 'Lo que no tenemos: desayuno, restaurante ni lavandería. A cambio, el centro de García está a dos cuadras.' },
-    grupos: { l: 'Descuento desde', o: 'el tercer día', texto: 'Si te quedas tres noches o más, o vienen en grupo de tres habitaciones o más, hay descuento. Escríbenos con tus fechas y te decimos cuánto. Pensado para quien viene a trabajar, a visitar a la familia o a conocer García sin prisa.', boton: 'Preguntar por el descuento' },
+    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2\u00A0PM, salida a las 11\u00A0AM. Atendemos de 7 de la mañana a 11 de la noche, todos los días.', incluye: 'Qué trae cada habitación', notiene: 'Lo que no tenemos: desayuno, restaurante ni lavandería. A cambio, el centro de García está a dos cuadras.' },
+    grupos: { l: 'Descuento si te quedas', o: 'más de tres días', texto: 'Si te quedas más de tres días, el precio por noche baja: por ejemplo, una habitación de $1,200 + IVA queda en $1,100 + IVA. Para grupos de tres habitaciones o más, el precio depende de cuántas personas se quedan y cuántas habitaciones ocupan; escríbenos y te lo cotizamos. Las empresas con grupos de más de tres personas tienen 2\u00A0% de descuento.', boton: 'Preguntar por el descuento' },
     blog: { l: 'Para planear', o: 'tu visita', texto: 'Dos lecturas cortas antes de venir.' },
     enlaces: [['Palapa con alberca en García', rutaPalapa], ['Todas las preguntas frecuentes', '/preguntas-frecuentes'], ['Cómo llegar al hotel', '/ubicacion']] as Enlace[],
   },
   celebraciones: {
     portada: { l: 'Palapa con', o: 'alberca', texto: 'En Nuevo León lo importante se celebra alrededor del asador: la carne asada es tradición regia y desde 2023 es patrimonio cultural del estado.' },
     cotizarBtn: 'Cotizar mi fecha', verBtn: 'Ver la palapa', tarjeta: 'Se aparta por fecha. Cotízala por WhatsApp.',
-    bloque: { l: 'Qué incluye', o: 'la palapa', texto: 'En la palapa del Hotel Quinta Azul caben el cumpleaños de la abuela, la posada de la oficina o la reunión de primos que no se ven desde hace años: la familia completa, la alberca a un lado y nadie con prisa por irse. Ustedes traen la comida; lo demás ya está aquí.' },
+    bloque: { l: 'Qué incluye', o: 'la palapa', texto: 'En la palapa del Hotel Quinta Azul caben el cumpleaños de la abuela, la posada de la oficina o la reunión de primos que no se ven desde hace años: la familia completa, la alberca a un lado y nadie con prisa por irse. Ustedes traen la comida; lo demás ya está aquí. En los bancos se cena, se platica y se ve el partido en la televisión mientras sale la carne asada. La música alta se permite hasta las 8 de la noche; después ya no se hace ruido, porque hay huéspedes descansando.' },
     puntos: { l: 'La palapa,', o: 'punto por punto' },
     alberca: { l: 'Alberca y chapoteadero', o: 'para los niños', texto: 'Mientras los grandes están en el asador, los niños están en el agua, a la vista de todos: la alberca y el chapoteadero quedan junto a la palapa.' } as Cab | null,
     tiposCab: { l: 'Qué puedes', o: 'celebrar aquí', texto: 'Elige tu reunión y te abrimos WhatsApp con el mensaje listo para cotizar.' },
@@ -166,7 +166,7 @@ const LA: typeof QA = {
     portada: { l: 'Cuartos', o: 'desde ' + DESDE_IVA, texto: 'Las familias que vienen a García casi nunca son de dos. Por eso una triple recibe hasta seis personas: los papás, los niños y la abuela, juntos.' },
     lista: { l: 'Precio según', o: 'cuántos se quedan', texto: 'Desde ' + DESDE_IVA + ' por noche; el departamento, desde ' + precioDe('depa') + ' + IVA. El total depende de cuántas personas se quedan. Escríbenos y te lo damos exacto.' },
     galeria: { l: 'Así son', o: 'por dentro', texto: 'Todas las fotos se tomaron en el hotel. Tócalas para ampliarlas.' },
-    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2\u00A0PM, salida a las 11\u00A0AM, y se cuida el ruido para que todos duerman.', incluye: 'Todas incluyen', notiene: '' },
+    reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2\u00A0PM, salida a las 11\u00A0AM.', incluye: 'Todas incluyen', notiene: '' },
     grupos: { l: '¿Son cuatro', o: 'o más?', texto: 'La triple recibe hasta seis personas, y para 4 a 8 hay departamentos con cocina, sala y dos recámaras. Si prefieren varios cuartos, desde 3 habitaciones hay tarifa de grupo.', boton: 'Cotizar para un grupo' },
     blog: { l: 'Antes de', o: 'subir a las Grutas', texto: 'Lo que conviene leer para armar el viaje.', tema: 'grutas-y-alrededores' },
     enlaces: [['Departamentos con cocina para 4 a 8 personas', '/departamentos'], ['Palapa techada para huéspedes', rutaPalapa], ['Preguntas frecuentes', '/preguntas-frecuentes']] as Enlace[],
@@ -222,7 +222,7 @@ export const T = esQA ? QA : LA;
 const FAQ_QA: GrupoFaq[] = [
   { id: 'reservas', nombre: 'Reservas y pagos', items: [
     { id: 'apartar', q: '¿Cómo aparto?', a: 'Por WhatsApp, con el 50\u00A0% de anticipo (no reembolsable).' },
-    { id: 'precio', q: '¿Cuánto cuesta una noche?', a: 'Desde ' + DESDE_IVA + ' por noche para una persona; el precio cambia con cada persona, hasta cuatro. Hay descuento desde el tercer día de estancia y para grupos de 3 habitaciones o más.' },
+    { id: 'precio', q: '¿Cuánto cuesta una noche?', a: 'Desde ' + DESDE_IVA + ' por noche para una persona; el precio cambia con cada persona, hasta cuatro. Si te quedas más de tres días, el precio por noche baja.' },
     { id: 'cancelar', q: '¿Qué pasa si cancelo?', a: 'El anticipo no es reembolsable: si cancelas, no se devuelve.' },
     { id: 'directo', q: '¿Conviene reservar directo con el hotel?', a: 'Sí. Al reservar con nosotros no pagas comisiones de plataformas y te atendemos por WhatsApp.' },
     { id: 'factura', q: '¿Dan factura?', a: 'Sí, facturamos sin problema. Pídela al reservar o al llegar.' },
@@ -232,7 +232,7 @@ const FAQ_QA: GrupoFaq[] = [
     { id: 'caben', q: '¿Cuántos caben por habitación?', a: 'Hasta cuatro personas. El precio cambia según cuántos sean.' },
     { id: 'incluye', q: '¿Qué trae cada habitación?', a: 'Vista a la sierra, aire acondicionado, televisión, frigobar, microondas y baño con agua caliente, toallas, shampoo y jabón.' },
     { id: 'camas', q: '¿Qué camas tienen las habitaciones?', a: 'Las nueve habitaciones son iguales, con dos camas queen.' },
-    { id: 'grupo', q: '¿Hay descuento?', a: 'Sí: desde el tercer día de estancia y para grupos de 3 habitaciones o más. Escríbenos con tus fechas y te decimos cuánto.' },
+    { id: 'grupo', q: '¿Hay descuento?', a: 'Sí. Si te quedas más de tres días, el precio por noche baja (por ejemplo, de $1,200 a $1,100 + IVA). Para grupos de 3 habitaciones o más, el precio depende de cuántas personas y habitaciones son, y las empresas con grupos de más de tres personas tienen 2 % de descuento.' },
     { id: 'desayuno', q: '¿Hay desayuno o restaurante?', a: 'No. A dos cuadras, en el centro, hay dónde desayunar y cenar.' },
     { id: 'lavanderia', q: '¿Hay lavandería?', a: 'No tenemos lavandería, desayuno ni restaurante. A cambio, el centro de García está a dos cuadras.' },
     { id: 'traer', q: '¿Qué traigo?', a: 'Traje de baño, lo que quieras para el frigobar y, si vas a usar la palapa, la carne. La primera noche, la plaza está a dos cuadras para cenar; al día siguiente, sal temprano a las Grutas y regresa a la alberca en la tarde.' },
@@ -244,15 +244,16 @@ const FAQ_QA: GrupoFaq[] = [
   ] },
   { id: 'palapa', nombre: 'La palapa', items: [
     { id: 'palapa-capacidad', q: '¿Cuántas personas caben en la palapa?', a: 'Hasta 60, junto a la alberca.' },
-    { id: 'palapa-incluye', q: '¿Qué tiene la palapa?', a: 'Asador, refrigerador, microondas, abanicos y baños exteriores. Ustedes traen la comida; lo demás ya está aquí.' },
+    { id: 'palapa-incluye', q: '¿Qué tiene la palapa?', a: 'Asador, bancos, televisión grande, refrigerador, microondas, abanicos y baños exteriores. Ustedes traen la comida; lo demás ya está aquí.' },
+    { id: 'palapa-musica', q: '¿Se puede poner música?', a: 'Sí: la música alta se permite hasta las 8 de la noche. Después ya no se hace ruido, porque hay huéspedes descansando.' },
     { id: 'palapa-precio', q: '¿Cuánto cuesta rentar la palapa?', a: 'Depende de la fecha y del horario. Escríbenos por WhatsApp con el día y cuántas personas van y te mandamos la cotización.' },
     { id: 'palapa-hospedaje', q: '¿Mis invitados pueden quedarse a dormir?', a: 'Sí. Hay nueve habitaciones para hasta 4 personas cada una, desde ' + DESDE_IVA + ' por noche.' },
   ] },
   { id: 'reglas', nombre: 'Reglas', items: [
     { id: 'mascotas', q: '¿Puedo llevar a mi mascota?', a: 'No se admiten mascotas.' },
-    { id: 'fumar', q: '¿Se puede fumar?', a: 'No se fuma en las habitaciones.' },
+    { id: 'fumar', q: '¿Se puede fumar?', a: 'No se fuma dentro de las habitaciones.' },
     { id: 'edad', q: '¿Hay edad mínima para registrarse?', a: 'Sí: hay que ser mayor de 18 años y presentar identificación.' },
-    { id: 'visitas', q: '¿Puedo recibir visitas?', a: 'No se admiten visitas, y se cuida el ruido para que todos duerman.' },
+    { id: 'visitas', q: '¿Puedo recibir visitas?', a: 'Solo las personas registradas en la habitación pueden estar en las instalaciones.' },
   ] },
   { id: 'ubicacion', nombre: 'Ubicación', items: [
     { id: 'donde', q: '¿Dónde está el hotel?', a: 'En Bernardo Reyes esquina con Garza Ayala, Centro, García, Nuevo León, a dos cuadras de la plaza.' },
@@ -273,8 +274,8 @@ const FAQ_LA: GrupoFaq[] = [
   { id: 'habitaciones', nombre: 'Habitaciones y departamentos', items: [
     { id: 'horarios', q: '¿A qué hora puedo llegar?', a: 'La entrada es a partir de las 2\u00A0PM y la salida a las 11\u00A0AM.' },
     { id: 'caben', q: '¿Cuántos caben?', a: 'De una a seis personas por habitación, y hasta ocho en un departamento.' },
-    { id: 'incluye', q: '¿Qué tienen las habitaciones?', a: 'Aire acondicionado, pantalla, frigobar, microondas, WiFi y baño privado, además de alberca, jardín y estacionamiento.' },
-    { id: 'depa', q: '¿Cómo son los departamentos?', a: 'Tienen 2 recámaras, sala y cocina, para 4 a 8 personas, y están dentro del mismo hotel.' },
+    { id: 'incluye', q: '¿Qué tienen las habitaciones?', a: 'La sencilla: cama queen, aire acondicionado, televisión, frigobar, microondas y baño. La triple, en la planta alta: tres camas queen (una con sofá cama), aire acondicionado, televisión, microondas y baño. El departamento: cuatro camas, cocina, sala, comedor y baño.' },
+    { id: 'depa', q: '¿Cómo son los departamentos?', a: 'Tienen cuatro camas en dos recámaras, cocina, sala, comedor y baño, para 4 a 8 personas, y están dentro del mismo hotel.' },
     { id: 'depa-semana', q: '¿Me puedo quedar una semana o más?', a: 'Sí. Escríbenos con tus fechas y te damos el total de tu estancia.' },
     { id: 'depa-contrato', q: '¿Hay que firmar contrato o dejar aval?', a: 'No es una renta de casa: es hospedaje dentro del hotel. Al cotizar te explicamos cómo se aparta.' },
     { id: 'grupo', q: '¿Tienen precio para grupos?', a: 'Sí, cuando reservan 3 habitaciones o más.' },
@@ -293,8 +294,8 @@ const FAQ_LA: GrupoFaq[] = [
   { id: 'reglas', nombre: 'Reglas', items: [
     { id: 'mascotas', q: '¿Puedo llevar a mi mascota?', a: 'No se admiten mascotas.' },
     { id: 'edad', q: '¿Quién puede registrarse?', a: 'Personas mayores de 18 años, con identificación.' },
-    { id: 'fumar', q: '¿Se puede fumar?', a: 'No se fuma en las habitaciones.' },
-    { id: 'visitas', q: '¿Puedo recibir visitas?', a: 'No se admiten visitas, y se cuida el ruido para que todos descansen.' },
+    { id: 'fumar', q: '¿Se puede fumar?', a: 'No se fuma dentro de las habitaciones.' },
+    { id: 'visitas', q: '¿Puedo recibir visitas?', a: 'Solo las personas registradas en la habitación pueden estar en las instalaciones.' },
   ] },
   { id: 'ubicacion', nombre: 'Ubicación', items: [
     { id: 'donde', q: '¿Cuál es la dirección?', a: 'Mariano Escobedo 105-A, entre Bernardo Reyes y Morelos, Centro, García, Nuevo León.' },
@@ -311,7 +312,7 @@ export const pregunta = (id: string): Pregunta => FAQ.flatMap((g) => g.items).fi
 // 2026: propias de esa página; ninguna sale en dos. La lista completa vive solo en /preguntas-frecuentes
 // (scripts/seo.mjs comprueba que no se repitan). Las del inicio son las del documento de cambios del 17 de noviembre.
 export const FAQ_DE: Record<string, string[]> = esQA
-  ? { inicio: ['horarios', 'caben', 'estacionamiento', 'mascotas', 'desayuno', 'apartar', 'traer'], habitaciones: ['incluye', 'camas', 'grupo', 'lavanderia'], celebraciones: ['palapa-capacidad', 'palapa-incluye', 'palapa-precio', 'palapa-hospedaje'], contacto: ['cancelar', 'directo', 'atencion', 'factura'] }
+  ? { inicio: ['horarios', 'caben', 'estacionamiento', 'mascotas', 'desayuno', 'apartar', 'traer'], habitaciones: ['incluye', 'camas', 'grupo', 'lavanderia'], celebraciones: ['palapa-capacidad', 'palapa-incluye', 'palapa-musica', 'palapa-precio', 'palapa-hospedaje'], contacto: ['cancelar', 'directo', 'atencion', 'factura'] }
   : { inicio: ['horarios', 'caben', 'estacionamiento', 'mascotas', 'palapa-eventos', 'grutas', 'traer', 'apartar'], habitaciones: ['incluye', 'precio', 'alberca-ninos', 'visitas'], departamentos: ['depa', 'depa-semana', 'depa-contrato'], empresas: ['factura', 'pago', 'grupo'], celebraciones: ['palapa-incluye', 'palapa-familia', 'alberca-horario'], contacto: ['cancelar', 'atencion', 'donde'] };
 export const FAQ_TIT: Record<string, Cab> = {
   habitaciones: { l: 'Preguntas sobre', o: 'las habitaciones' },

@@ -11,7 +11,7 @@ resumen: "Si viajan cuatro o más, o se quedan más de un par de noches, el depa
 foto: "departamento-cocina-equipada-hotel-los-arcos-inn.jpg"
 fotoAlt: "Cocina equipada de un departamento del Hotel Los Arcos Inn, en García, Nuevo León"
 publicado: 2026-11-09
-actualizado: 2026-11-17
+actualizado: 2026-11-19
 lectura: 3
 vende: departamentos
 esencial: true
@@ -33,10 +33,10 @@ La pregunta llega cada semana por WhatsApp: «Somos cinco, ¿qué nos conviene?�
 | --- | --- | --- |
 | Para cuántos | 1 a 6 personas | 4 a 8 personas |
 | Espacios | Recámara y baño | 2 recámaras, sala y cocina |
-| Cocina | Frigobar y microondas | Cocina equipada |
+| Cocina | Microondas (y frigobar en la sencilla) | Cocina, sala y comedor |
 | Precio | Desde $900 + IVA la noche | Desde $2,000 + IVA la noche |
 
-Los dos tienen aire acondicionado, pantalla y WiFi, y comparten la alberca, el jardín y el estacionamiento.
+Los dos tienen baño propio y comparten la alberca, el jardín, la palapa y el estacionamiento.
 
 ## ¿Cuándo conviene el departamento?
 

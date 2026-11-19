@@ -11,7 +11,7 @@ resumen: "Las posadas se hacen del 16 al 24 de diciembre. Nuestra palapa recibe 
 foto: "palapa-asador-columnas-atardecer-hotel-quinta-azul.jpg"
 fotoAlt: "El asador de la palapa del Hotel Quinta Azul, entre columnas de azulejo, al atardecer"
 publicado: 2026-11-11
-actualizado: 2026-11-17
+actualizado: 2026-11-19
 lectura: 4
 vende: palapa
 destacado: true
@@ -37,7 +37,9 @@ La tradición marca nueve noches, del 16 al 24 de diciembre. En la práctica, la
 Es un espacio techado junto a la alberca, para hasta 60 personas, con:
 
 - Asador de carbón.
-- Refrigerador.
+- Bancos para cenar y platicar.
+- Televisión grande.
+- Refrigerador y microondas.
 - Baños.
 - Abanicos y techo completo.
 
@@ -50,7 +52,7 @@ El estacionamiento está dentro del hotel y no tiene costo. Puedes ver cada cosa
 - Piñata, dulces y un palo para romperla.
 - Bolsitas de aguinaldo para los niños.
 - Velitas y la letra de la letanía, si van a pedir posada.
-- Música, platos, vasos y servilletas.
+- Música (la música alta se permite hasta las 8 de la noche), platos, vasos y servilletas.
 - Un suéter: en diciembre las noches de García son frías.
 
 ## ¿Cómo acomodo la noche?

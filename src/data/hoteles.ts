@@ -6,6 +6,9 @@
 export type Hab = {
   id: string; nombre: string; corto: string; personas: number; para: string | null; camas: string | null;
   precio: number | null; texto: string; fotos: [string, string][];
+  // Lo que trae ese tipo de habitación, cuando no todos traen lo mismo (Los Arcos, confirmado el 18 de noviembre de
+  // 2026). Sin este dato, las fichas enseñan lo de «incluye» del hotel.
+  incluye?: [string, string][];
 };
 export type Hotel = {
   id: 'qa' | 'la'; nombre: string; corto: string; sitio: string; rutaHabs: string;
@@ -80,21 +83,22 @@ const qa: Hotel = {
   incluye: [['montana', 'Vista a la sierra'], ['frio', 'Aire acondicionado'], ['tv', 'Televisión'], ['refri', 'Frigobar'], ['micro', 'Microondas'], ['ducha', 'Baño con agua caliente'], ['ok', 'Toallas, shampoo y jabón'], ['wifi', 'WiFi'], ['auto', 'Estacionamiento'], ['alberca', 'Alberca']],
   incluido: [
     { t: 'Alberca hasta las 10 PM', p: 'Alberca principal y chapoteadero, con la sierra de fondo.', img: 'alberca-atardecer-palmas-hotel-quinta-azul.jpg', alt: 'Alberca con palmas al atardecer' },
-    { t: 'Palapa con asador', p: 'Hasta 60 personas, con asador, refrigerador y baños.', img: 'palapa-barra-bancos-alberca-al-fondo-hotel-quinta-azul.jpg', alt: 'La palapa del Hotel Quinta Azul, junto a la alberca' },
+    { t: 'Palapa con asador', p: 'Hasta 60 personas, con asador, bancos y televisión grande.', img: 'palapa-barra-bancos-alberca-al-fondo-hotel-quinta-azul.jpg', alt: 'La palapa del Hotel Quinta Azul, junto a la alberca' },
     { t: 'Estacionamiento', p: 'Dentro del hotel, toda tu estancia.', img: 'estacionamiento-con-autos-hotel-quinta-azul.jpg', alt: 'Estacionamiento privado dentro del hotel' },
     { t: 'WiFi y escritorio', p: 'Trabaja en la mañana, nada en la tarde.', img: 'escritorio-espejo-orquidea-hotel-quinta-azul.jpg', alt: 'Escritorio con espejo y silla en la habitación' }
   ],
-  palapa: { s: 'Palapa con asador', o: 'para tus reuniones', texto: 'Hay reuniones que no caben en la sala de la casa. Para esas está la palapa: hasta 60 personas junto a la alberca, con asador, refrigerador, microondas, abanicos y baños. Cumpleaños, posadas, la carne asada del domingo o el partido con toda la familia: una vez pusimos pantalla en la palapa para que una familia viera aquí la final del Mundial. Y cuando la reunión se alarga, el cuarto está a unos pasos.',
+  palapa: { s: 'Palapa con asador', o: 'para tus reuniones', texto: 'Hay reuniones que no caben en la sala de la casa. Para esas está la palapa: hasta 60 personas junto a la alberca, con asador, bancos, televisión grande, refrigerador, microondas, abanicos y baños. Cumpleaños, posadas, la carne asada del domingo o el partido en la pantalla grande con toda la familia. La música alta se vale hasta las 8 de la noche, y cuando la reunión se alarga, el cuarto está a unos pasos.',
     img: 'palapa-asador-barra-atardecer-hotel-quinta-azul.jpg', alt: 'La palapa del Hotel Quinta Azul, con asador, junto a la alberca',
     // En Celebraciones este bloque enseña otra foto: la de arriba es también la de «punto por punto», dos pantallas abajo
     imgPag: 'palapa-asador-columnas-atardecer-hotel-quinta-azul.jpg', altPag: 'El asador de la palapa del Hotel Quinta Azul, entre columnas de azulejo',
     galeria: [['patio-edificio-arbol-palma-hotel-quinta-azul.jpg', 'El patio para convivir'], ['alberca-sierra-cielo-rosa-hotel-quinta-azul.jpg', 'La sierra de fondo'], ['patio-habitaciones-desde-arriba-hotel-quinta-azul.jpg', 'Las habitaciones, a unos pasos'], ['edificio-azul-patio-atardecer-hotel-quinta-azul.jpg', 'El hotel al atardecer']],
-    // Sin «barra con bancos» hasta que el hotel confirme qué incluye la palapa (pregunta P2 del documento de cambios)
-    incluye: [['gente', 'Hasta 60 personas'], ['asador', 'Asador'], ['refri', 'Refrigerador y microondas'], ['abanico', 'Abanicos'], ['ducha', 'Baños exteriores'], ['alberca', 'Junto a la alberca']],
+    // Confirmado por el hotel el 18 de noviembre de 2026: bancos (no barra), televisión grande y música alta hasta las 8 PM
+    incluye: [['gente', 'Hasta 60 personas'], ['asador', 'Asador'], ['sillon', 'Bancos'], ['tv', 'Televisión grande'], ['refri', 'Refrigerador y microondas'], ['abanico', 'Abanicos'], ['ducha', 'Baños exteriores'], ['alberca', 'Junto a la alberca']],
     puntos: { img: 'palapa-asador-barra-atardecer-hotel-quinta-azul.jpg', alt: 'La palapa del Hotel Quinta Azul: asador, bancos y abanicos de techo',
-      lista: [{ x: 11, y: 50, t: 'Asador', p: 'Ustedes traen la comida; lo demás ya está aquí.' },
+      lista: [{ x: 11, y: 50, t: 'Asador', p: 'Ustedes traen la comida; lo demás ya está aquí.' }, { x: 58, y: 60, t: 'Bancos', p: 'Para cenar, platicar y ver el partido mientras sale la carne asada.' },
         { x: 72, y: 29, t: 'Abanicos y sombra', p: 'Techo completo y abanicos para las tardes de calor.' }, { x: 40, y: 84, t: 'Hasta 60 personas', p: 'Espacio abierto para acomodar a tus invitados, a unos pasos de la alberca.' }] } },
-  ofertas: [['Desde el tercer día de estancia', 'descuento'], ['Desde 3 habitaciones', 'descuento de grupo']],
+  // Descuentos confirmados el 18 de noviembre de 2026
+  ofertas: [['Más de 3 días', 'baja el precio por noche'], ['Grupos de 3 habitaciones o más', 'precio según personas y habitaciones'], ['Empresas con más de 3 personas', '2 % de descuento']],
   cierre: { s: 'Guárdalo para tu', o: 'próxima fiesta' },
   pasos: ['Desde Monterrey toma la carretera a García (Monterrey-García).', 'Sigue derecho hasta el centro de García.', 'Gira en Bernardo Reyes; estamos en la esquina con Garza Ayala.', 'Estaciona dentro del hotel, sin costo.'],
   heroes: { habitaciones: 'habitacion-camas-cojines-lampara-hotel-quinta-azul.jpg', celebraciones: 'palapa-barra-bancos-alberca-al-fondo-hotel-quinta-azul.jpg', ubicacion: 'sierra-camino-a-xenpal-cerca-hotel-quinta-azul.jpg', contacto: 'edificio-azul-patio-atardecer-hotel-quinta-azul.jpg', planes: 'sierra-canon-camino-a-xenpal-cerca-hotel-quinta-azul.jpg' },
@@ -103,7 +107,7 @@ const qa: Hotel = {
     datos: [['wifi', 'WiFi en todas las habitaciones'], ['auto', 'Estacionamiento dentro del hotel, sin costo'], ['ok', 'Factura para tu empresa']], sello: ['8', 'minutos del corredor industrial'] },
   mosaico: ['cama-cojines-orquidea-detalle-hotel-quinta-azul.jpg', 'escritorio-espejo-orquidea-hotel-quinta-azul.jpg', 'habitacion-closet-pantalla-frigobar-hotel-quinta-azul.jpg', 'habitacion-camas-frigobar-pantalla-hotel-quinta-azul.jpg', 'bano-regadera-cancel-hotel-quinta-azul.jpg'],
   grupos: { img: 'patio-habitaciones-desde-arriba-hotel-quinta-azul.jpg', alt: 'El patio y las habitaciones del Hotel Quinta Azul, vistos desde arriba al atardecer',
-    datos: [['etiqueta', 'Descuento desde el tercer día de estancia'], ['etiqueta', 'Descuento para grupos de 3 habitaciones o más'], ['auto', 'Estacionamiento dentro del hotel']], sello: ['9', 'habitaciones en dos plantas'] },
+    datos: [['etiqueta', 'Más de 3 días: baja el precio por noche'], ['gente', 'Grupos de 3 habitaciones o más: precio a la medida'], ['factura', 'Empresas con más de 3 personas: 2 % de descuento'], ['auto', 'Estacionamiento dentro del hotel']], sello: ['9', 'habitaciones en dos plantas'] },
   distancias: [[30, 'Monterrey', 'Por la carretera a García'], [15, 'Grutas de García', '9.5 km'], [11, 'Xenpal', 'Sobre el camino a las Grutas'], [3, 'Plaza principal', 'En auto; también se llega a pie']],
   planesFotos: { grutas: 'grutas-de-garcia-interior-cerca-hotel-quinta-azul.jpg', distancias: 'terraza-vista-sierra-atardecer-hotel-quinta-azul.jpg', palapa: 'palapa-barra-bancos-luz-de-tarde-hotel-quinta-azul.jpg', trabajo: 'escritorio-espejo-orquidea-hotel-quinta-azul.jpg', alberca: 'alberca-atardecer-palmas-hotel-quinta-azul.jpg', xenpal: 'xenpal-entrada-arco-letrero-cerca-hotel-quinta-azul.jpg' },
   pagos: ['factura', 'Facturamos', 'Factura para tus gastos de viaje.'],
@@ -160,15 +164,16 @@ const la: Hotel = {
   habs: [
     // Documento de cambios del 17 de noviembre de 2026: 2 sencillas (1 o 2 personas), 4 triples (3 a 6) y 2 departamentos
     // (4 a 8). La habitación doble ya no se vende. Todos los precios son «desde» y sin IVA.
-    { id: 'sencilla', nombre: 'Habitación sencilla', corto: 'Sencilla', personas: 2, para: '1 o 2 personas', camas: '1 cama queen', precio: 900, texto: 'Para quien viene solo o en pareja, por trabajo o de paso. Hay dos.',
+    { id: 'sencilla', nombre: 'Habitación sencilla', corto: 'Sencilla', personas: 2, para: '1 o 2 personas', camas: '1 cama queen', precio: 900, texto: 'Para quien viene solo o en pareja, por trabajo o de paso. Hay dos, cada una con cama queen, aire acondicionado, televisión, frigobar, microondas y baño.', incluye: [['cama', 'Cama queen'], ['frio', 'Aire acondicionado'], ['tv', 'Televisión'], ['refri', 'Frigobar'], ['micro', 'Microondas'], ['ducha', 'Baño']],
       fotos: [['recamara-cama-queen-detalle-hotel-los-arcos-inn.jpg', 'Habitación sencilla con cama queen del Hotel Los Arcos Inn'], ['habitacion-sencilla-cama-queen-hotel-los-arcos-inn.jpg', 'La cama queen vista de frente, con aire acondicionado'], ['bano-lavabo-negro-toallas-hotel-los-arcos-inn.jpg', 'Baño privado con lavabo'], ['departamento-escritorio-para-trabajar-hotel-los-arcos-inn.jpg', 'Escritorio con WiFi']] },
-    { id: 'triple', nombre: 'Habitación triple', corto: 'Triple', personas: 6, para: '3 a 6 personas', camas: '3 camas queen', precio: 1500, texto: 'La habitación de las familias: espacio para que nadie duerma apretado y para que la plática siga antes de apagar la luz. Hay cuatro.',
+    { id: 'triple', nombre: 'Habitación triple', corto: 'Triple', personas: 6, para: '3 a 6 personas', camas: '3 camas queen, una con sofá cama', precio: 1500, texto: 'La habitación de las familias, en la planta alta: tres camas queen, y una de ellas tiene además sofá cama, con aire acondicionado, televisión, microondas y baño. Espacio para que nadie duerma apretado y para que la plática siga antes de apagar la luz. Hay cuatro.', incluye: [['cama', 'Tres camas queen, una con sofá cama'], ['frio', 'Aire acondicionado'], ['tv', 'Televisión'], ['micro', 'Microondas'], ['ducha', 'Baño']],
       fotos: [['habitacion-dos-camas-de-lado-hotel-los-arcos-inn.jpg', 'Habitación con camas queen del Hotel Los Arcos Inn'], ['departamento-escritorio-para-trabajar-hotel-los-arcos-inn.jpg', 'Escritorio con WiFi']] },
-    { id: 'depa', nombre: 'Departamento con cocina', corto: 'Departamento', personas: 8, para: 'De 4 a 8 personas', camas: '2 recámaras', precio: 2000, texto: 'Dos recámaras, sala y cocina. Para quedarse varios días, desayunar en casa y salir a las Grutas sin prisa.',
+    { id: 'depa', nombre: 'Departamento con cocina', corto: 'Departamento', personas: 8, para: 'De 4 a 8 personas', camas: '4 camas en 2 recámaras', precio: 2000, texto: 'Cuatro camas, cocina, sala, comedor y baño. Para quedarse varios días, desayunar en casa y salir a las Grutas sin prisa.', incluye: [['cama', 'Cuatro camas'], ['olla', 'Cocina'], ['sillon', 'Sala'], ['comida', 'Comedor'], ['ducha', 'Baño']],
       fotos: [['departamento-sala-sofa-pantalla-grande-hotel-los-arcos-inn.jpg', 'Sala del departamento con sofá y pantalla'], ['departamento-cocina-barra-bancos-hotel-los-arcos-inn.jpg', 'Cocina equipada con barra para cuatro'], ['departamento-dos-recamaras-hotel-los-arcos-inn.jpg', 'Las dos recámaras vistas desde la sala'], ['recamara-cama-queen-detalle-hotel-los-arcos-inn.jpg', 'Recámara con cama queen'], ['recamara-dos-camas-hotel-los-arcos-inn.jpg', 'Recámara con dos camas'], ['departamento-bano-regadera-cancel-hotel-los-arcos-inn.jpg', 'Baño con regadera y cancel de vidrio'], ['departamento-sala-pantalla-luz-de-tarde-hotel-los-arcos-inn.jpg', 'Sala del segundo departamento'], ['departamento-cocina-luz-de-tarde-hotel-los-arcos-inn.jpg', 'Cocina y comedor del segundo departamento'], ['departamento-recamara-dos-camas-rosa-hotel-los-arcos-inn.jpg', 'Recámara con dos camas del segundo departamento'], ['departamento-closet-con-equipaje-hotel-los-arcos-inn.jpg', 'Clóset abierto, cómoda y espejo'], ['departamento-sala-vista-al-jardin-hotel-los-arcos-inn.jpg', 'La sala, con vista a la alberca']] }
   ],
   notaPrecio: 'Precios por noche, más IVA.',
-  incluye: [['frio', 'Aire acondicionado'], ['tv', 'Pantalla'], ['refri', 'Frigobar y microondas'], ['wifi', 'WiFi'], ['ducha', 'Baño privado'], ['auto', 'Estacionamiento'], ['alberca', 'Alberca y chapoteadero'], ['hoja', 'Jardín']],
+  // Lo que comparten todas las unidades; lo de cada tipo va en su «incluye» (la triple no trae frigobar)
+  incluye: [['ducha', 'Baño privado'], ['wifi', 'WiFi'], ['auto', 'Estacionamiento'], ['alberca', 'Alberca y chapoteadero'], ['hoja', 'Jardín'], ['asador', 'Palapa con asador']],
   incluido: [
     { t: 'Alberca y chapoteadero', p: 'Abiertos hasta las 10 PM, rodeados de jardín.', img: 'alberca-flotadores-camastros-atardecer-hotel-los-arcos-inn.jpg', alt: 'Alberca y chapoteadero en el jardín' },
     { t: 'Palapa techada', p: 'Con asador, para los huéspedes, rodeada de jardín.', img: 'fachada-palapa-puerta-de-cerca-atardecer-hotel-los-arcos-inn.jpg', alt: 'La palapa techada vista desde la alberca, al atardecer' },
