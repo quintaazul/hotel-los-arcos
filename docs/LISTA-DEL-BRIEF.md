@@ -465,7 +465,7 @@ Se revisaron todas las páginas de los dos sitios en celular y en computadora, y
 - [x] Términos con TikTok y el horario de todo el sitio; erratas corregidas
 - [x] De los puntos técnicos de arriba, dos ya estaban: la copia de prueba quita a propósito el mapa del sitio (apunta al dominio real) y ya manda `X-Robots-Tag: noindex, nofollow`
 - [ ] 🏨 Capacidad de Los Arcos: el sitio dice «hasta 42 huéspedes», pero con sus propios datos (2 sencillas de 2, 4 triples de 6 y 2 departamentos de 8) salen 44
-- [ ] 🏨 Descuento de Quinta Azul: casi todo el sitio dice «desde el tercer día de estancia», pero Hospedaje dice «si te quedas tres noches o más». Falta saber cuál es
+- [x] 🏨 Descuento de Quinta Azul: el hotel respondió el 18 de noviembre (más de 3 días baja el precio por noche; grupos de 3 habitaciones o más según personas y habitaciones; empresas con más de 3 personas, 2 %). Ya lo dice igual en todo el sitio
 - [ ] 🏨 Plaza de Los Arcos: el documento dice «3 minutos caminando por Morelos»; por calle son unos 600 m (más cerca de 7 u 8 minutos a pie)
 
 **Título de la portada de Quinta Azul (18 de noviembre)**

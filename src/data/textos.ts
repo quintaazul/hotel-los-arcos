@@ -17,7 +17,7 @@ import { H, dinero } from './hoteles';
 export const precioDe = (id: string) => dinero(H.habs.find((x) => x.id === id)?.precio ?? 0);
 /** El precio más bajo del hotel, para los «desde $…» */
 export const DESDE = dinero(Math.min(...H.habs.map((x) => x.precio ?? Infinity)));
-/** «$900 + IVA»: así se dice siempre un precio en el sitio */
+/** «$900\u00A0+\u00A0IVA»: así se dice siempre un precio en el sitio */
 /** El teléfono escrito dentro de un texto: con espacios duros, para que no se parta entre renglones */
 const TEL_TXT = H.tel.replace(/ /g, '\u00A0');
 export const DESDE_IVA = DESDE + '\u00A0+\u00A0IVA';
@@ -95,7 +95,7 @@ const QA = {
     lista: { l: 'Precio según', o: 'cuántos se quedan', texto: 'Las nueve habitaciones son iguales, así que no tienes que escoger tipo: solo dinos cuántos son. Para una persona, desde ' + DESDE_IVA + ' por noche, y el precio cambia con cada persona, hasta cuatro. Escríbenos y te damos el total exacto.' },
     galeria: { l: 'Míralas', o: 'por dentro', texto: 'Fotos tomadas en el hotel. Toca cualquiera para verla en grande.' },
     reglas: { l: 'Reglas', o: 'de la casa', texto: 'Son pocas, y son para que todos descansen. Entrada a partir de las 2\u00A0PM, salida a las 11\u00A0AM. Atendemos de 7 de la mañana a 11 de la noche, todos los días.', incluye: 'Qué trae cada habitación', notiene: 'Lo que no tenemos: desayuno, restaurante ni lavandería. A cambio, el centro de García está a dos cuadras.' },
-    grupos: { l: 'Descuento si te quedas', o: 'más de tres días', texto: 'Si te quedas más de tres días, el precio por noche baja: por ejemplo, una habitación de $1,200 + IVA queda en $1,100 + IVA. Para grupos de tres habitaciones o más, el precio depende de cuántas personas se quedan y cuántas habitaciones ocupan; escríbenos y te lo cotizamos. Las empresas con grupos de más de tres personas tienen 2\u00A0% de descuento.', boton: 'Preguntar por el descuento' },
+    grupos: { l: 'Descuento si te quedas', o: 'más de tres días', texto: 'Si te quedas más de tres días, el precio por noche baja: por ejemplo, una habitación de $1,200\u00A0+\u00A0IVA queda en $1,100\u00A0+\u00A0IVA. Para grupos de tres habitaciones o más, el precio depende de cuántas personas se quedan y cuántas habitaciones ocupan; escríbenos y te lo cotizamos. Las empresas con grupos de más de tres personas tienen 2\u00A0% de descuento.', boton: 'Preguntar por el descuento' },
     blog: { l: 'Para planear', o: 'tu visita', texto: 'Dos lecturas cortas antes de venir.' },
     enlaces: [['Palapa con alberca en García', rutaPalapa], ['Todas las preguntas frecuentes', '/preguntas-frecuentes'], ['Cómo llegar al hotel', '/ubicacion']] as Enlace[],
   },
@@ -232,7 +232,7 @@ const FAQ_QA: GrupoFaq[] = [
     { id: 'caben', q: '¿Cuántos caben por habitación?', a: 'Hasta cuatro personas. El precio cambia según cuántos sean.' },
     { id: 'incluye', q: '¿Qué trae cada habitación?', a: 'Vista a la sierra, aire acondicionado, televisión, frigobar, microondas y baño con agua caliente, toallas, shampoo y jabón.' },
     { id: 'camas', q: '¿Qué camas tienen las habitaciones?', a: 'Las nueve habitaciones son iguales, con dos camas queen.' },
-    { id: 'grupo', q: '¿Hay descuento?', a: 'Sí. Si te quedas más de tres días, el precio por noche baja (por ejemplo, de $1,200 a $1,100 + IVA). Para grupos de 3 habitaciones o más, el precio depende de cuántas personas y habitaciones son, y las empresas con grupos de más de tres personas tienen 2 % de descuento.' },
+    { id: 'grupo', q: '¿Hay descuento?', a: 'Sí. Si te quedas más de tres días, el precio por noche baja (por ejemplo, de $1,200 a $1,100\u00A0+\u00A0IVA). Para grupos de 3 habitaciones o más, el precio depende de cuántas personas y habitaciones son, y las empresas con grupos de más de tres personas tienen 2\u00A0% de descuento.' },
     { id: 'desayuno', q: '¿Hay desayuno o restaurante?', a: 'No. A dos cuadras, en el centro, hay dónde desayunar y cenar.' },
     { id: 'lavanderia', q: '¿Hay lavandería?', a: 'No tenemos lavandería, desayuno ni restaurante. A cambio, el centro de García está a dos cuadras.' },
     { id: 'traer', q: '¿Qué traigo?', a: 'Traje de baño, lo que quieras para el frigobar y, si vas a usar la palapa, la carne. La primera noche, la plaza está a dos cuadras para cenar; al día siguiente, sal temprano a las Grutas y regresa a la alberca en la tarde.' },
